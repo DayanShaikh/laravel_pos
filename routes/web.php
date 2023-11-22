@@ -1,0 +1,74 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\ConfigTypeController;
+use App\Http\Controllers\ConfigVariableController;
+use App\Http\Controllers\RolesController;
+use App\Http\Controllers\PermissionsController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ConfigController;
+use App\Http\Controllers\ItemCategoryController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\SupplierConroller;
+use App\Http\Controllers\PurchaseController;
+
+Route::get('/', function () {return redirect('sign-in');})->middleware('guest');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+Route::get('sign-up', [RegisterController::class, 'create'])->middleware('guest')->name('register');
+Route::post('sign-up', [RegisterController::class, 'store'])->middleware('guest');
+Route::get('sign-in', [SessionsController::class, 'create'])->middleware('guest');
+Route::post('sign-in', [SessionsController::class, 'store'])->middleware('guest')->name('login');
+Route::post('verify', [SessionsController::class, 'show'])->middleware('guest');
+Route::post('reset-password', [SessionsController::class, 'update'])->middleware('guest')->name('password.update');
+Route::get('verify', function () {
+	return view('sessions.password.verify');
+})->middleware('guest')->name('verify'); 
+Route::get('/reset-password/{token}', function ($token) {
+	return view('sessions.password.reset', ['token' => $token]);
+})->middleware('guest')->name('password.reset');
+
+Route::post('sign-out', [SessionsController::class, 'destroy'])->middleware('auth')->name('logout');
+Route::get('profile', [ProfileController::class, 'create'])->middleware('auth')->name('profile');
+Route::post('user-profile', [ProfileController::class, 'update'])->middleware('auth');
+Route::group(['middleware' => 'auth'], function () {
+	// Permission
+	Route::resource('permission', PermissionsController::class);
+	Route::post('Permission-bulkaction', [PermissionsController::class, 'bulkAction'])->name('permission.bulkAction');
+	// Roles
+	Route::resource('role', RolesController::class);
+	Route::post('role-bulkaction', [RolesController::class, 'bulkAction'])->name('role.bulkAction');
+	//User
+	Route::resource('user', UserController::class);
+	Route::get('users-update-active-status/{user}/{status}', [UserController::class, 'status'])->name('users.status');
+	Route::post('user-bulkaction', [UserController::class, 'bulkAction'])->name('user.bulkAction');
+	//config_type
+	Route::resource('config_type', ConfigTypeController::class);
+	Route::post('config_type_bulkaction', [ConfigTypeController::class, 'bulkAction'])->name('config_type.bulkAction');
+	//config_variable
+	Route::resource('config_variable', ConfigVariableController::class);
+	Route::post('config_type-bulkaction', [ConfigVariableController::class, 'bulkAction'])->name('config_variable.bulkAction');
+	//config
+	Route::get('config/{id}', [ConfigController::class, 'index'])->name('config.index');
+	Route::post('config/store/{id}', [ConfigController::class, 'store'])->name('config.store');
+	//item_Category
+	Route::resource('item_category', ItemCategoryController::class);
+	Route::get('item_category-update-active-status/{item}/{status}', [ItemCategoryController::class, 'status'])->name('item_category.status');
+	Route::post('item_category-bulkaction', [ItemCategoryController::class, 'bulkAction'])->name('item_category.bulkAction');
+	//item
+	Route::resource('item', ItemController::class);
+	Route::get('item-update-active-status/{item}/{status}', [ItemController::class, 'status'])->name('item.status');
+	Route::post('item-bulkaction', [ItemController::class, 'bulkAction'])->name('item.bulkAction');
+	//Supplier
+	Route::resource('supplier', SupplierConroller::class);
+	Route::get('supplier-update-active-status/{item}/{status}', [SupplierConroller::class, 'status'])->name('supplier.status');
+	Route::post('supplier-bulkaction', [SupplierConroller::class, 'bulkAction'])->name('supplier.bulkAction');
+	//purchase
+	Route::resource('purchase', PurchaseController::class);
+	Route::get('purchase-update-active-status/{item}/{status}', [PurchaseController::class, 'status'])->name('purchase.status');
+	Route::post('purchase-bulkaction', [PurchaseController::class, 'bulkAction'])->name('purchase.bulkAction');
+	
+});
