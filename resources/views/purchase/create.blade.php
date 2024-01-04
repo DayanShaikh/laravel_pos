@@ -2,7 +2,7 @@
     <x-navbars.sidebar activePage="tables"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <x-navbars.navs.auth titlePage="Dashboard"></x-navbars.navs.auth>
-        <div class="container-fluid py-4">
+        <div class="container-fluid py-4" ng-app="purchase" ng-controller="purchaseController" id="purchaseController">
             <div class="row">
                 <div class="col-12 ">
                     <div class="card z-index-0 fadeIn3 fadeInBottom">
@@ -62,25 +62,25 @@
                                                                 </div>
                                                             </td>
                                                             <td class="text-right">
-                                                                <div class="input-group input-group-outline">
+                                                                <div class="input-group input-group-outline null is-filled">
                                                                     <label class="form-label">Unit Purchase Price<span class="login-danger">*</span></label>
                                                                     <input type="text" class="form-control" ng-model="purchase.items[ $index ].purchase_price" ng-change="update_total( $index )" />
                                                                 </div>
                                                             </td>
                                                             <td class="text-right">
-                                                                <div class="input-group input-group-outline">
+                                                                <div class="input-group input-group-outline null is-filled">
                                                                     <label class="form-label">Unit Sale Price<span class="login-danger">*</span></label>
                                                                     <input type="text" class="form-control" ng-model="purchase.items[ $index ].sale_price" ng-change="update_total( $index )" />
                                                                 </div>
                                                             </td>
                                                             <td class="text-right">
-                                                                <div class="input-group input-group-outline">
+                                                                <div class="input-group input-group-outline null is-filled">
                                                                     <label class="form-label">Quantity<span class="login-danger">*</span></label>
                                                                     <input type="text" class="form-control" ng-model="purchase.items[ $index ].quantity" ng-change="update_total( $index )" />
                                                                 </div>
                                                             </td>
                                                             <td class="text-right">
-                                                                <div class="input-group input-group-outline">
+                                                                <div class="input-group input-group-outline null is-filled">
                                                                     <label class="form-label">Total Price<span class="login-danger">*</span></label>
                                                                     <input type="text" class="form-control" ng-model="purchase.items[ $index ].total" ng-change="update_total( $index )" />
                                                                 </div>

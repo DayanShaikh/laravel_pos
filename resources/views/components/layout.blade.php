@@ -49,7 +49,6 @@
 <body class="{{ $bodyClass }}">
 
     {{ $slot }}
-
     <script src="{{ asset('assets') }}/js/jquery.min.js"></script>
     {{-- <script src="{{ asset('assets') }}/js/bootstrap.js"></script> --}}
     <script src="{{ asset('assets') }}/js/core/popper.min.js"></script>
@@ -175,5 +174,12 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('assets') }}/js/material-dashboard.min.js?v=3.0.0"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-mask/1.8.7/mask.js"></script>
+    {{-- <script src="{{ asset('assets') }}/js/angular.min.js"></script> --}}
+    <script src="{{ asset('assets') }}/js/angular-moment.min.js"></script>
+    <script src="{{ asset('assets') }}/js/angular-locale_de-de.js"></script>
+    <script src="{{ asset('assets') }}/js/angular-animate.js"></script>
+    <script src="{{ asset('assets') }}/js/purchase.angular.js"></script>
 </body>
 </html>
