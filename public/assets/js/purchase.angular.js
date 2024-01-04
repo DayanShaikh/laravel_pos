@@ -56,6 +56,7 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 			$scope.wctAJAX( {action: 'get_items'}, function( response ){
 				$scope.items = response;
 			});
+			console.log($scope.items);
 			if( $scope.purchase_id > 0 ) {
 				$scope.wctAJAX( {action: 'get_purchase', id: $scope.purchase_id}, function( response ){
 					$scope.purchase = response;
@@ -128,27 +129,49 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 			}
 			$scope.update_total(position);
 		}
-		$scope.wctAJAX = function( wctData, wctCallback ) {
+		$scope.wctAJAX = function(wctData, wctCallback) {
 			wctData.tab = 'addedit';
 			wctRequest = {
-				method: 'POST',
-				url: 'purchase_manage.php',
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				method: 'POST',  // Make sure it's a POST request
+				url: '/purchase/CreateUpdate',  // Adjust the URL as needed
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 				transformRequest: function(obj) {
 					var str = [];
-					for(var p in obj){
+					for (var p in obj) {
 						str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
 					}
 					return str.join("&");
 				},
 				data: wctData
-			}
-			$http(wctRequest).then(function(wctResponse){
+			};
+		
+			$http(wctRequest).then(function(wctResponse) {
 				wctCallback(wctResponse.data);
-			}, function () {
+			}, function() {
 				console.log("Error in fetching data");
 			});
-		}
+		};
+		// $scope.wctAJAX = function( wctData, wctCallback ) {
+		// 	wctData.tab = 'addedit';
+		// 	wctRequest = {
+		// 		method: 'POST',
+		// 		url: 'purchase_manage.php',
+		// 		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+		// 		transformRequest: function(obj) {
+		// 			var str = [];
+		// 			for(var p in obj){
+		// 				str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+		// 			}
+		// 			return str.join("&");
+		// 		},
+		// 		data: wctData
+		// 	}
+		// 	$http(wctRequest).then(function(wctResponse){
+		// 		wctCallback(wctResponse.data);
+		// 	}, function () {
+		// 		console.log("Error in fetching data");
+		// 	});
+		// }
 		$scope.save_purchase = function () {
 			$scope.errors = [];
 			if( $scope.processing == false ){

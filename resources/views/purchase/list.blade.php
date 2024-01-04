@@ -6,7 +6,7 @@
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <div class="card-header p-0 my-3 mx-3">
-                <form method="GET" action="{{ route('item.index') }}">
+                <form method="GET" action="">
                     @csrf
                     <div class="row justify-content-end text-end">
                         <div class="col-lg-3 col-md-6"></div>
@@ -51,9 +51,9 @@
                         </div>
                         @endif
                         <div class=" me-3 my-3 text-end">
-                            <a class="btn bg-gradient-dark mb-0" href="{{ route('purchase.create')}}"><i class="material-icons text-sm">add</i></a>
+                            <a class="btn bg-gradient-dark mb-0" href="{{ route('purchase.CreateUpdate')}}"><i class="material-icons text-sm">add</i></a>
                         </div>
-                        <form method="POST" action="{{ route('item.bulkAction') }}" id="myForm">
+                        <form method="POST" action="" id="myForm">
                             @csrf
                             @method('POST')
                             <div class="card-body px-0 pb-2">

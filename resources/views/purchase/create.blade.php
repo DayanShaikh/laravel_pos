@@ -23,7 +23,7 @@
                                 @csrf
                                 <div class="input-group input-group-outline mt-3 datepicker-container null is-filled">
                                     <label for="datepicker" class="form-label">date <span class="login-danger"> *</span></label>
-                                    <input type="text" class="form-control" id="datepicker" name="date">
+                                    <input  type="text" class="form-control" id="datepicker" name="date">
                                 </div>
                                 <div class="input-group input-group-outline is-filled form-select mt-3">
                                     {{-- <label class="form-label">Configuration Type</label> --}}
