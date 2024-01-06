@@ -19,8 +19,8 @@ return new class extends Migration
             $table->integer('total_price');
             $table->integer('discount');
             $table->integer('net_price');
-            $table->integer('note');
-            $table->boolean('status');
+            $table->string('note');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

@@ -51,7 +51,7 @@
                         </div>
                         @endif
                         <div class=" me-3 my-3 text-end">
-                            <a class="btn bg-gradient-dark mb-0" href="{{ route('purchase.CreateUpdate')}}"><i class="material-icons text-sm">add</i></a>
+                            <a class="btn bg-gradient-dark mb-0" href="{{ route('purchase.create')}}"><i class="material-icons text-sm">add</i></a>
                         </div>
                         <form method="POST" action="" id="myForm">
                             @csrf

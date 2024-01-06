@@ -67,7 +67,7 @@
                                                     </div>
                                                 </th>
                                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">s.no</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Item Category</th>
+                                                {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Item Category</th> --}}
                                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">title</th>
                                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Unit Price</th>
                                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sale Price</th>
@@ -86,9 +86,9 @@
                                                 <td class="align-middle text-center">
                                                     <span class="text-secondary text-xs font-weight-bold">{{$sn++}}</span>
                                                 </td>
-                                                <td class="align-middle text-center">
+                                                {{-- <td class="align-middle text-center">
                                                     <span class="text-secondary text-xs font-weight-bold">{{ $items->ItemCategory->title}}</span>
-                                                </td>
+                                                </td> --}}
                                                 <td class="align-middle text-center">
                                                     <span class="text-secondary text-xs font-weight-bold">{{ $items->title}}</span>
                                                 </td>

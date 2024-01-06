@@ -10,7 +10,7 @@
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-3">
                                 <div class="row">
                                     <div class="col my-xl-2">
-                                        <h6 class="text-white text-capitalize ps-3">Add Purchase</h6>
+                                        <h6 class="text-white text-capitalize ps-3">@{{get_action()}} Purchase</h6>
                                     </div>
                                 </div>
                             </div>
@@ -19,19 +19,15 @@
                             <a href="{{route('item.index')}}" class="btn bg-gradient-dark"><i class="fa fa-arrow-right"></i></a>
                         </div>
                         <div class="card-body p-0 px-3">
-                            <form role="form" method="POST" action="{{route('item.store') }}" class="text-start">
-                                @csrf
                                 <div class="input-group input-group-outline mt-3 datepicker-container null is-filled">
                                     <label for="datepicker" class="form-label">date <span class="login-danger"> *</span></label>
-                                    <input  type="text" class="form-control" id="datepicker" name="date">
+                                    <input type="text" ng-model="purchase.datetime_added" data-controllerid="purchaseController" class="form-control" id="datepicker">
                                 </div>
                                 <div class="input-group input-group-outline is-filled form-select mt-3">
                                     {{-- <label class="form-label">Configuration Type</label> --}}
-                                    <select class="form-control ps-3 py-0" name="supplier">
+                                    <select class="form-control ps-3 py-0" ng-model="purchase.supplier_id">
                                         <option value="">Select Supplier </option>
-                                        @foreach($supplier as $suppliers)
-                                        <option value="{{$suppliers->id}}">{{$suppliers->name}} </option>
-                                        @endforeach
+                                        <option ng-repeat="supplier in suppliers" value="@{{ supplier.id }}">@{{ supplier.name }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group mt-5">
@@ -52,12 +48,14 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr ng-repeat="item in purchase.items">
-                                                            <td class="text-center serial_number"></td>
+                                                        <td class="text-center serial_number">@{{ $index+1 }}</td>
+                                                            {{-- <td class="text-center serial_number"></td> --}}
                                                             <td>
                                                                 <div class="input-group input-group-outline is-filled form-select">
                                                                     {{-- <label class="form-label">Configuration Type</label> --}}
-                                                                    <select class="form-control ps-3 py-0" name="item_category_id">
+                                                                    <select class="form-control ps-3 py-0" ng-model="purchase.items[ $index ].item_id" ng-change="getItems(purchase.items[ $index ].item_id, item)" chosen convert-to-number>
                                                                         <option value="">Select Items </option>
+                                                                        <option ng-repeat="item in items" value="@{{ item.id }}">@{{ item.title }} (@{{item.quantity}})</option>
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -92,7 +90,7 @@
                                                         <tr style="border-bottom:1px solid #7a7a7a4a">
                                                             <div class="input-group input-group-outline">
                                                                 <th colspan="5" class="text-end">Total Items</th>
-                                                                <th class="text-right"></th>
+                                                                <th class="text-right">@{{ purchase.quantity }}</th>
                                                                 <th class="text-right">&nbsp;</th>
                                                             </div>
                                                         </tr>
@@ -123,12 +121,11 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-1 col-sm-6 col-12">
-                                    <button class="btn bg-gradient-primary w-100 my-4 mb-2" type="submit" data-target="successToast">Submit</button>
+                                    <button class="btn bg-gradient-primary w-100 my-4 mb-2" type="submit" data-target="successToast" ng-disabled="processing" ng-click="save_purchase()" title="Submit Record">Submit</button>
                                 </div>
                                 {{-- <div class="text-center">
                                     <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Sign in</button>
                                 </div> --}}
-                            </form>
                         </div>
                     </div>
                 </div>

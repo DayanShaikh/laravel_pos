@@ -23,9 +23,7 @@
 
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets') }}/img/apple-icon.png">
     <link rel="icon" type="image/png" href="{{ asset('assets') }}/img/favicon.png">
-    <title>
-        Wamtsol POS
-    </title>
+    <title>POS</title>
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
     <!-- Nucleo Icons -->
@@ -174,9 +172,9 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('assets') }}/js/material-dashboard.min.js?v=3.0.0"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-mask/1.8.7/mask.js"></script>
-    {{-- <script src="{{ asset('assets') }}/js/angular.min.js"></script> --}}
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script> --}}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-mask/1.8.7/mask.js"></script> --}}
+    <script src="{{ asset('assets') }}/js/angular.min.js"></script>
     <script src="{{ asset('assets') }}/js/angular-moment.min.js"></script>
     <script src="{{ asset('assets') }}/js/angular-locale_de-de.js"></script>
     <script src="{{ asset('assets') }}/js/angular-animate.js"></script>
