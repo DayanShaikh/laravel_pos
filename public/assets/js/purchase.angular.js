@@ -1,6 +1,5 @@
 angular.module('purchase', ['ngAnimate']).controller('purchaseController',
-
-	function ($scope, $http, $interval, $filter) {
+	function ($scope, $http, $interval, $filter, $location) {
 		$scope.categories = [];
 		$scope.suppliers = [];
 		$scope.items = [];
@@ -11,7 +10,6 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 		$scope.purchase_id = 0;
 		$scope.numberMask = "";
 		$scope.purchase = {
-			id: 0,
 			datetime_added: '',
 			supplier: angular.copy($scope.supplier),
 			items: [],
@@ -24,7 +22,6 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 		};
 
 		$scope.item = {
-			"id": 0,
 			"item_id": undefined,
 			"item_category_id": 0,
 			"purchase_price": 0,
@@ -32,8 +29,6 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 			"purchase_quantity": 0,
 			"quantity": 0,
 			"total": 0,
-			// "unit_id": ''
-			// "return": 0
 
 		};
 
@@ -48,10 +43,30 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 		};
 		$scope.fetchData();
 
+		function getPurchaseIdFromUrl() {
+            var pathSegments = $location.absUrl().split('/');
+            var purchaseIndex = pathSegments.indexOf('edit');
+            if (purchaseIndex > -1 && pathSegments[purchaseIndex + 1]) {
+                return pathSegments[purchaseIndex + 1];
+            }
+            return null;
+        }
+        $scope.purchase_id = getPurchaseIdFromUrl() || 0;
+
+		// $scope.editPurchase = function (purchase_id) {
+		// 	$scope.wctAJAX({ action: '/api/purchase/show/'+$scope.purchase_id }, function (response) {
+		// 		$scope.purchase = response.data.purchase;
+		// 	});
+		// };
+		// console.log($scope.editPurchase($scope.purchase_id));
+		// console.log('/api/purchase/show/' + $scope.purchase_id);
 		angular.element(document).ready(function () {
 			if ($scope.purchase_id > 0) {
-				$scope.wctAJAX({ action: 'get_purchase', id: $scope.purchase_id }, function (response) {
-					$scope.purchase = response;
+				$http.get('/api/purchase/show/' + $scope.purchase_id).then(function (response) {
+					$scope.purchase = response.data.purchase;
+					console.log($scope.purchase);
+				}, function (error) {
+					console.error("Error fetching data", error);
 				});
 			}
 			else {
@@ -131,7 +146,7 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 		$scope.wctAJAX = function (wctData, wctCallback) {
 			wctRequest = {
 				method: 'POST',
-				url: '/api/purchase/store',
+				url: '/api/purchase/show/' + $scope.purchase_id,
 				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 				transformRequest: function (obj) {
 					var str = [];
@@ -151,16 +166,18 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 
 		$scope.save_purchase = function () {
 			$scope.errors = [];
-			if ($scope.processing == false) {
+			if (!$scope.processing) {
 				$scope.processing = true;
 				data = { action: '/api/purchase/store', purchase: JSON.stringify($scope.purchase) };
 				$scope.wctAJAX(data, function (response) {
 					$scope.processing = false;
 					if (response.status == 1) {
-						// window.location.href='purchase_manage.php?tab=list=';
+						window.location.href = 'create';
+						$scope.successMessage = response.message;
 					}
 					else {
 						$scope.errors = response.error;
+						// $scope.errorMessage = response.data.message;
 					}
 				});
 			}

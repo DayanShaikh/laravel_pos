@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('purchase_items', function (Blueprint $table) {
             $table->id();
-            $table->integer('purchase_id');
+            $table->integer('purchase_id')->nullable();
             $table->integer('item_id');
             $table->integer('purchase_price');
             $table->integer('sale_price');

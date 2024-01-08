@@ -7,6 +7,7 @@ use App\Models\Purchase;
 use App\Models\Supplier;
 use App\Models\Item;
 use Carbon\Carbon;
+use App\Models\PurchaseItems;
 
 class PurchaseController extends Controller
 {
@@ -32,7 +33,16 @@ class PurchaseController extends Controller
         $items = Item::all();
         return response()->json(['suppliers' => $suppliers, 'items' => $items, 'date' => $date]);
     }
+    public function edit($id)
+    {
+        return view('purchase.create');
+    }
+    public function show($id)
+    {
+        $purchase = Purchase::with('PurchaseItems')->find($id);
+        return response()->json(['purchase' => $purchase]);
 
+    }
     public function store(Request $request)
     {
         // return json_decode($request->input('purchase'), true);
@@ -47,10 +57,17 @@ class PurchaseController extends Controller
             'net_price' => $data['net_total'],
             'note' => $data['notes'],
         ]);
-
-        foreach ($data['items'] as $items){
-            
+        // return $purchase->id;
+        foreach ($data['items'] as $items) {
+            PurchaseItems::create([
+                'purchase_id' => $purchase->id,
+                'item_id' => $items['item_id'],
+                'purchase_price' => $items['purchase_price'],
+                'sale_price' => $items['sale_price'],
+                'quantity' => $items['quantity'],
+                'total' => $items['total'],
+            ]);
         }
-
+        return response()->json(['status' => 1, 'message' => 'Purchase created Successfully']);
     }
 }

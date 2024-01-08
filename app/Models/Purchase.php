@@ -18,4 +18,9 @@ class Purchase extends Model
         'net_price',
         'note',
     ];
+
+    public function PurchaseItems()
+    {
+        return $this->hasMany(PurchaseItems::class, 'purchase_id');
+    }
 }

@@ -19,4 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get('/get_data', [PurchaseController::class, 'fetch']);
-Route::post('/purchase/store', [PurchaseController::class, 'store'])->name('purchase.store');
+Route::post('/purchase/store', [PurchaseController::class, 'store']);
+Route::get('/purchase/show/{id}', [PurchaseController::class, 'show']);

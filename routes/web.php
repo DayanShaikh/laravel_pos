@@ -69,4 +69,5 @@ Route::group(['middleware' => 'auth'], function () {
 	//purchase
 	Route::get('purchase/', [PurchaseController::class, 'index'])->name('purchase.index');
 	Route::get('purchase/create', [PurchaseController::class, 'create'])->name('purchase.create');
+	Route::get('purchase/edit/{id}', [PurchaseController::class, 'edit'])->name('purchase.edit');
 });

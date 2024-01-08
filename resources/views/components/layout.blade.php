@@ -175,6 +175,7 @@
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script> --}}
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-mask/1.8.7/mask.js"></script> --}}
     <script src="{{ asset('assets') }}/js/angular.min.js"></script>
+    {{-- <script src="{{ asset('assets') }}/js/angular-route.js"></script> --}}
     <script src="{{ asset('assets') }}/js/angular-moment.min.js"></script>
     <script src="{{ asset('assets') }}/js/angular-locale_de-de.js"></script>
     <script src="{{ asset('assets') }}/js/angular-animate.js"></script>
