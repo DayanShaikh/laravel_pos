@@ -53,13 +53,6 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
         }
         $scope.purchase_id = getPurchaseIdFromUrl() || 0;
 
-		// $scope.editPurchase = function (purchase_id) {
-		// 	$scope.wctAJAX({ action: '/api/purchase/show/'+$scope.purchase_id }, function (response) {
-		// 		$scope.purchase = response.data.purchase;
-		// 	});
-		// };
-		// console.log($scope.editPurchase($scope.purchase_id));
-		// console.log('/api/purchase/show/' + $scope.purchase_id);
 		angular.element(document).ready(function () {
 			if ($scope.purchase_id > 0) {
 				$http.get('/api/purchase/show/' + $scope.purchase_id).then(function (response) {
@@ -70,12 +63,12 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 				});
 			}
 			else {
-				$scope.wctAJAX({ action: 'get_datetime' }, function (response) {
-					$scope.purchase.datetime_added = JSON.parse(response);
-				});
-				$scope.wctAJAX({ action: 'get_date' }, function (response) {
-					$scope.purchase.date_added = JSON.parse(response);
-				});
+				// $scope.wctAJAX({ action: 'get_datetime' }, function (response) {
+				// 	$scope.purchase.datetime_added = JSON.parse(response);
+				// });
+				// $scope.wctAJAX({ action: 'get_date' }, function (response) {
+				// 	$scope.purchase.date_added = JSON.parse(response);
+				// });
 				$scope.purchase.items.push(angular.copy($scope.item));
 			}
 			setTimeout(function () { init_date_picker(); }, 200);
