@@ -106,7 +106,7 @@
                                                     <span class="text-secondary text-xs font-weight-bold"></span>
                                                 </td>
                                                 <td class="align-middle text-end px-4">
-                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('item.edit', $purchases->id)}}"  title="Edit">
+                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('purchase.edit', $purchases->id)}}"  title="Edit">
                                                         <i class="material-icons">edit</i>
                                                         <div class="ripple-container"></div>
                                                     </a>

@@ -17,9 +17,9 @@ return new class extends Migration
             $table->integer('supplier_id');
             $table->integer('total_items');
             $table->integer('total_price');
-            $table->integer('discount');
+            $table->integer('discount')->nullable();
             $table->integer('net_price');
-            $table->string('note');
+            $table->string('note')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

@@ -30,12 +30,13 @@
                         <div class="card-body p-0 px-3">
                             <div class="input-group input-group-outline mt-3 datepicker-container null is-filled">
                                 <label for="datepicker" class="form-label">date <span class="login-danger"> *</span></label>
-                                <input type="text" ng-model="purchase.datetime_added" data-controllerid="purchaseController" class="form-control" id="datepicker">
+                                <input type="text" ng-model="purchase.date" data-controllerid="purchaseController" class="form-control" id="datepicker">
                             </div>
                             <div class="input-group input-group-outline is-filled form-select mt-3">
                                 {{-- <label class="form-label">Configuration Type</label> --}}
-                                <select class="form-control ps-3 py-0" ng-model="purchase.supplier_id">
+                                <select class="form-control ps-3 py-0" ng-model="purchase.supplier_id" ng-options="supplier.id as supplier.name for supplier in suppliers">
                                     <option value="">Select Supplier </option>
+                                    
                                     <option ng-repeat="supplier in suppliers" value="@{{ supplier.id }}">@{{ supplier.name }}</option>
                                 </select>
                             </div>

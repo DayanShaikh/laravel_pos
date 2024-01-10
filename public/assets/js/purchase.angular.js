@@ -10,8 +10,8 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 		$scope.purchase_id = 0;
 		$scope.numberMask = "";
 		$scope.purchase = {
-			datetime_added: '',
-			supplier: angular.copy($scope.supplier),
+			date: '',
+			supplier_id: 0,
 			items: [],
 			quantity: 0,
 			total: 0,
@@ -20,7 +20,6 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 			net_total: 0,
 			notes: ''
 		};
-
 		$scope.item = {
 			"item_id": undefined,
 			"item_category_id": 0,
@@ -36,7 +35,7 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 			$http.get('/api/get_data').then(function (response) {
 				$scope.suppliers = response.data.suppliers;
 				$scope.items = response.data.items;
-				$scope.purchase.datetime_added = response.data.date;
+				$scope.purchase.date = response.data.date;
 			}, function (error) {
 				console.error("Error fetching data", error);
 			});
@@ -44,31 +43,31 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 		$scope.fetchData();
 
 		function getPurchaseIdFromUrl() {
-            var pathSegments = $location.absUrl().split('/');
-            var purchaseIndex = pathSegments.indexOf('edit');
-            if (purchaseIndex > -1 && pathSegments[purchaseIndex + 1]) {
-                return pathSegments[purchaseIndex + 1];
-            }
-            return null;
-        }
-        $scope.purchase_id = getPurchaseIdFromUrl() || 0;
+			var pathSegments = $location.absUrl().split('/');
+			var purchaseIndex = pathSegments.indexOf('edit');
+			if (purchaseIndex > -1 && pathSegments[purchaseIndex + 1]) {
+				return pathSegments[purchaseIndex + 1];
+			}
+			return null;
+		}
+		$scope.purchase_id = getPurchaseIdFromUrl() || 0;
 
 		angular.element(document).ready(function () {
 			if ($scope.purchase_id > 0) {
 				$http.get('/api/purchase/show/' + $scope.purchase_id).then(function (response) {
 					$scope.purchase = response.data.purchase;
-					console.log($scope.purchase);
+					$scope.purchase.date = new Date($scope.purchase.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
 				}, function (error) {
 					console.error("Error fetching data", error);
 				});
 			}
 			else {
-				// $scope.wctAJAX({ action: 'get_datetime' }, function (response) {
-				// 	$scope.purchase.datetime_added = JSON.parse(response);
-				// });
-				// $scope.wctAJAX({ action: 'get_date' }, function (response) {
-				// 	$scope.purchase.date_added = JSON.parse(response);
-				// });
+				$scope.wctAJAX({ action: 'get_datetime' }, function (response) {
+					$scope.purchase.date = JSON.parse(response);
+				});
+				$scope.wctAJAX({ action: 'get_date' }, function (response) {
+					$scope.purchase.date_added = JSON.parse(response);
+				});
 				$scope.purchase.items.push(angular.copy($scope.item));
 			}
 			setTimeout(function () { init_date_picker(); }, 200);
@@ -135,47 +134,87 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 			}
 			$scope.update_total(position);
 		}
-
-		$scope.wctAJAX = function (wctData, wctCallback) {
-			wctRequest = {
-				method: 'POST',
-				url: '/api/purchase/show/' + $scope.purchase_id,
-				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-				transformRequest: function (obj) {
-					var str = [];
-					for (var p in obj) {
-						str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-					}
-					return str.join("&");
-				},
-				data: wctData
-			}
-			$http(wctRequest).then(function (wctResponse) {
-				wctCallback(wctResponse.data);
-			}, function () {
-				console.log("Error in fetching data");
-			});
-		}
-
-		$scope.save_purchase = function () {
-			$scope.errors = [];
-			if (!$scope.processing) {
-				$scope.processing = true;
-				data = { action: '/api/purchase/store', purchase: JSON.stringify($scope.purchase) };
-				$scope.wctAJAX(data, function (response) {
-					$scope.processing = false;
-					if (response.status == 1) {
-						window.location.href = 'create';
-						$scope.successMessage = response.message;
-					}
-					else {
-						$scope.errors = response.error;
-						// $scope.errorMessage = response.data.message;
-					}
+		if ($scope.purchase_id > 0) {
+			$scope.wctAJAX = function (wctData, wctCallback) {
+				wctRequest = {
+					method: 'POST',
+					url: '/api/purchase/update/'+ $scope.purchase_id,
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					transformRequest: function (obj) {
+						var str = [];
+						for (var p in obj) {
+							str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+						}
+						return str.join("&");
+					},
+					data: wctData
+				}
+				$http(wctRequest).then(function (wctResponse) {
+					wctCallback(wctResponse.data);
+				}, function () {
+					console.log("Error in fetching data");
 				});
 			}
-		}
 
+			$scope.save_purchase = function () {
+				$scope.errors = [];
+				if (!$scope.processing) {
+					$scope.processing = true;
+					data = { action: '/api/purchase/update/'+ $scope.purchase_id, purchase: JSON.stringify($scope.purchase) };
+					$scope.wctAJAX(data, function (response) {
+						$scope.processing = false;
+						if (response.status == 1) {
+							// window.location.href = 'create';
+							$scope.successMessage = response.message;
+						}
+						else {
+							$scope.errors = response.error;
+							// $scope.errorMessage = response.data.message;
+						}
+					});
+				}
+			}
+		} else {
+			$scope.wctAJAX = function (wctData, wctCallback) {
+				wctRequest = {
+					method: 'POST',
+					url: '/api/purchase/store',
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					transformRequest: function (obj) {
+						var str = [];
+						for (var p in obj) {
+							str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+						}
+						return str.join("&");
+					},
+					data: wctData
+				}
+				$http(wctRequest).then(function (wctResponse) {
+					wctCallback(wctResponse.data);
+				}, function () {
+					console.log("Error in fetching data");
+				});
+			}
+
+			$scope.save_purchase = function () {
+				$scope.errors = [];
+				if (!$scope.processing) {
+					$scope.processing = true;
+					data = { action: '/api/purchase/store', purchase: JSON.stringify($scope.purchase) };
+					$scope.wctAJAX(data, function (response) {
+						$scope.processing = false;
+						if (response.status == 1) {
+							// window.location.href = 'purchase/edit/'+ $scope.purchase_id;
+							$scope.successMessage = response.message;
+						}
+						else {
+							$scope.errors = response.error;
+							// $scope.errorMessage = response.data.message;
+						}
+					});
+				}
+			}
+		}
 		$scope.print_barcode = function (id) {
 			$("<iframe>")
 				.hide()
@@ -183,25 +222,19 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 				.appendTo("body");
 		}
 
-		$scope.$watch('purchase.supplier.id', function (newValue, oldValue) {
+		$scope.$watch('purchase.supplier_id', function (newValue, oldValue) {
 			if (newValue == "") {
-				$scope.purchase.supplier.name = angular.copy($scope.supplier.name);
-				$scope.purchase.supplier.supplier_code = angular.copy($scope.supplier.supplier_code);
-				$scope.purchase.supplier.address = angular.copy($scope.supplier.address);
-				$scope.purchase.supplier.phone = angular.copy($scope.supplier.phone);
-				//$scope.purchase.purchase_price_mask = '9999999';
-			}
-			else {
+				$scope.purchase.supplier.name = "";
+			} else {
+				console.log(newValue);
 				var supplier = $filter('filter')($scope.suppliers, { id: newValue }, true);
 				if (supplier.length > 0) {
-					supplier = supplier[0];
-					$scope.purchase.supplier.name = supplier.name;
-					$scope.purchase.supplier.supplier_code = supplier.supplier_code;
-					$scope.purchase.supplier.address = supplier.address;
-					$scope.purchase.supplier.phone = supplier.phone;
+					$scope.purchase.supplier.name = supplier[0].name;
+				} else {
+					$scope.purchase.supplier.name = "";
 				}
 			}
-		})
+		});
 	}
 ).directive('convertToNumber', function () {
 	return {
