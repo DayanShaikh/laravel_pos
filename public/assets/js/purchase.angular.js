@@ -164,7 +164,7 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 					$scope.wctAJAX(data, function (response) {
 						$scope.processing = false;
 						if (response.status == 1) {
-							// window.location.href = 'create';
+							window.location.reload(true);
 							$scope.successMessage = response.message;
 						}
 						else {
@@ -204,7 +204,7 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 					$scope.wctAJAX(data, function (response) {
 						$scope.processing = false;
 						if (response.status == 1) {
-							// window.location.href = 'purchase/edit/'+ $scope.purchase_id;
+							window.location.href = '/';
 							$scope.successMessage = response.message;
 						}
 						else {

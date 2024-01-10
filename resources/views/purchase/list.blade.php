@@ -32,31 +32,19 @@
                                 <h6 class="text-white mx-3">Manage Items</h6>
                             </div>
                         </div>
-                        @if (session()->has('message'))
-                        <div class="alert alert-success alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
-                            <strong>{{ session()->get('message') }}</strong>
-                            {{-- <strong>This Is testing</strong> --}}
+                        {{-- <div ng-show="successMessage" class="alert alert-success alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
+                            <strong>@{{ successMessage }}</strong>
                             <button type="button" class="btn-close text-lg py-1 opacity-10" data-bs-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                        </div>
-                        @endif
-                        @if (session()->has('error'))
-                        <div class="alert alert-danger alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
-                            <strong>{{ session()->get('error') }}</strong>
-                            {{-- <strong>This Is testing</strong> --}}
-                            <button type="button" class="btn-close text-lg py-1 opacity-10" data-bs-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        @endif
+                        </div> --}}
                         <div class=" me-3 my-3 text-end">
                             <a class="btn bg-gradient-dark mb-0" href="{{ route('purchase.create')}}"><i class="material-icons text-sm">add</i></a>
                         </div>
                         <form method="POST" action="" id="myForm">
                             @csrf
                             @method('POST')
-                            <div class="card-body px-0 pb-2">
+                            <div class="card-body">
                                 <div class="table-responsive p-0">
                                     <table class="table align-items-center mb-0">
                                         <thead>
@@ -88,7 +76,7 @@
                                                     <span class="text-secondary text-xs font-weight-bold">{{$sn++}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold"></span>
+                                                    <span class="text-secondary text-xs font-weight-bold">{{\Carbon\Carbon::parse($purchases->date)->format('d-m-Y')}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     <span class="text-secondary text-xs font-weight-bold"></span>
@@ -106,7 +94,7 @@
                                                     <span class="text-secondary text-xs font-weight-bold"></span>
                                                 </td>
                                                 <td class="align-middle text-end px-4">
-                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('purchase.edit', $purchases->id)}}"  title="Edit">
+                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('purchase.edit', $purchases->id)}}" title="Edit">
                                                         <i class="material-icons">edit</i>
                                                         <div class="ripple-container"></div>
                                                     </a>

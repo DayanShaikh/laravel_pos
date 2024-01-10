@@ -5715,7 +5715,7 @@ fieldset:disabled .btn {
 
 .card-body {
   flex: 1 1 auto;
-  padding: 1rem 1rem;
+  /* padding: 1rem 1rem; */
 }
 
 .card-title {
@@ -20845,7 +20845,7 @@ fieldset:disabled .btn {
 
 .card .card-body {
   font-family: "Roboto", Helvetica, Arial, sans-serif;
-  padding: 1.5rem;
+  /* padding: 1.5rem; */
 }
 
 .card.card-plain {
