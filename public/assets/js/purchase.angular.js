@@ -204,7 +204,7 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 					$scope.wctAJAX(data, function (response) {
 						$scope.processing = false;
 						if (response.status == 1) {
-							window.location.href = '/';
+							window.history.back();
 							$scope.successMessage = response.message;
 						}
 						else {

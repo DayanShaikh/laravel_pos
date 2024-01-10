@@ -13,11 +13,17 @@ class PurchaseController extends Controller
 {
     public function index(Request $request)
     {
-        
+
         $sn = 1;
         $rowsPerPage = $request->input('rowsPerPage', 10);
-        $purchase = Purchase::with('supplier')->paginate($rowsPerPage);
-        return view('purchase.list', compact('purchase', 'rowsPerPage', 'sn'));
+        $date = $request->input('date') ?? "";
+        if (!empty($date)) {
+            $format_date = Carbon::parse($date)->format('Y-m-d');
+            $purchase = Purchase::where('date', 'like', '%' . $format_date . '%')->paginate($rowsPerPage);
+        }else{
+            $purchase = Purchase::with('supplier')->paginate($rowsPerPage);
+        }
+        return view('purchase.list', compact('purchase', 'rowsPerPage', 'sn', 'date'));
     }
 
     /**
@@ -33,16 +39,6 @@ class PurchaseController extends Controller
         $suppliers = Supplier::all();
         $items = Item::all();
         return response()->json(['suppliers' => $suppliers, 'items' => $items, 'date' => $date]);
-    }
-    public function edit($id)
-    {
-        return view('purchase.create');
-    }
-    public function show($id)
-    {
-        $purchase = Purchase::with('items')->find($id);
-        return response()->json(['purchase' => $purchase]);
-
     }
     public function store(Request $request)
     {
@@ -69,7 +65,16 @@ class PurchaseController extends Controller
         }
         return response()->json(['status' => 1, 'message' => 'Purchase created Successfully']);
     }
+    public function edit($id)
+    {
+        return view('purchase.create');
+    }
+    public function show($id)
+    {
+        $purchase = Purchase::with('items')->find($id);
+        return response()->json(['purchase' => $purchase]);
 
+    }
     public function update(Request $request, $id)
     {
 
@@ -85,28 +90,74 @@ class PurchaseController extends Controller
         $purchase->note = $data['note'];
         $purchase->save();
 
-        // return $data['items'];
         foreach ($data['items'] as $items) {
             $purchase_item = PurchaseItems::where('purchase_id', $id)->where('item_id', $items['item_id'])->first();
-                if ($purchase_item) {
-                    $purchase_item->update([
-                        'purchase_price' => $items['purchase_price'],
-                        'sale_price' => $items['sale_price'],
-                        'quantity' => $items['quantity'],
-                        'total' => $items['total'],
-                    ]);
-                }else{
-                    PurchaseItems::create([
-                        'purchase_id' => $purchase->id,
-                        'item_id' => $items['item_id'],
-                        'purchase_price' => $items['purchase_price'],
-                        'sale_price' => $items['sale_price'],
-                        'quantity' => $items['quantity'],
-                        'total' => $items['total'],
-                    ]);
-                }
-            
+            if ($purchase_item) {
+                $purchase_item->update([
+                    'purchase_price' => $items['purchase_price'],
+                    'sale_price' => $items['sale_price'],
+                    'quantity' => $items['quantity'],
+                    'total' => $items['total'],
+                ]);
+            } else {
+                PurchaseItems::create([
+                    'purchase_id' => $purchase->id,
+                    'item_id' => $items['item_id'],
+                    'purchase_price' => $items['purchase_price'],
+                    'sale_price' => $items['sale_price'],
+                    'quantity' => $items['quantity'],
+                    'total' => $items['total'],
+                ]);
+            }
+
         }
         return response()->json(['status' => 1, 'message' => 'Purchase Update Successfully']);
+    }
+
+    public function status($id, $status)
+    {
+        $purchase = Purchase::find($id);
+        $purchase->status = $status;
+        $purchase->save();
+        return redirect()->back()->with('message', 'Status Update Successfully');
+    }
+
+    public function delete($id)
+    {
+        Purchase::find($id)->delete();
+        PurchaseItems::where('purchase_id', $id)->delete();
+        return redirect()->back()->with('message', 'Record delete Successfully');
+    }
+
+    public function bulkAction(Request $request)
+    {
+        $action = $request->action;
+        $multi = $request->input('multidelete', []);
+        // dd($multi);
+        if (empty($multi)) {
+            return redirect()->back()->with('error', 'No Records Selected');
+        }
+        if ($action == 'delete') {
+            foreach ($multi as $multis) {
+                Purchase::where('id', $multis)->delete();
+                PurchaseItems::where('purchase_id', $multis)->delete();
+            }
+            return redirect()->back()->with('message', 'Selected Records delete Successfully');
+        }
+        if ($action == 'status_on') {
+            foreach ($multi as $multis) {
+                Purchase::where('id', $multis)->update(['status' => 1]);
+            }
+            return redirect()->back()->with('message', 'Selected Rocords Status ON Successfully');
+        }
+        if ($action == 'status_off') {
+            foreach ($multi as $multis) {
+                Purchase::where('id', $multis)->update(['status' => 0]);
+            }
+            return redirect()->back()->with('message', 'Selected Rocords Status OFF Successfully');
+        }
+        if ($action == '') {
+            return redirect()->back();
+        }
     }
 }

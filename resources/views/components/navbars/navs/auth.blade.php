@@ -11,7 +11,7 @@
 </nav> --}}
 <div class="mt-2 mt-sm-0 me-md-0 me-sm-4 me-sm-4 d-contents" id="navbar">
     <div class="pe-md-3 d-flex align-items-center ms-md-auto">
-        <div class="input-group input-group-outline null"><label class="form-label text-black">Search</label><input id="search" type="text" class="form-control form-control-default" name="" placeholder="" isrequired="false"></div>
+        {{-- <div class="input-group input-group-outline null"><label class="form-label text-black">Search</label><input id="search" type="text" class="form-control form-control-default" name="" placeholder="" isrequired="false"></div> --}}
     </div>
     <ul class="navbar-nav justify-content-end">
         <li class="nav-item dropdown">

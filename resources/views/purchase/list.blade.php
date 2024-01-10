@@ -4,17 +4,27 @@
         <!-- Navbar -->
         <x-navbars.navs.auth titlePage="User Management"></x-navbars.navs.auth>
         <!-- End Navbar -->
-        <div class="container-fluid py-4">
+        <div class="container-fluid py-2 px-2">
             <div class="card-header p-0 my-3 mx-3">
                 <form method="GET" action="">
                     @csrf
                     <div class="row justify-content-end text-end">
-                        <div class="col-lg-3 col-md-6"></div>
-                        <div class="col-lg-4 col-md-6"></div>
+                        <div class="col-lg-2 col-md-6">
+                            <div class="input-group input-group-outline datepicker-container null @php if($date){echo "is-filled";} @endphp">
+                                <label for="datepicker" class="form-label">from date</label>
+                                <input type="text" class="form-control" id="datepicker" name="from_date">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6">
+                        <div class="input-group input-group-outline datepicker-container null @php if($date){echo "is-filled";} @endphp">
+                                <label for="datepicker" class="form-label">To date</label>
+                                <input type="text" class="form-control" id="datepicker" name="to_date">
+                            </div>
+                        </div>
                         <div class="col-lg-3 col-md-6">
                             <div class="input-group input-group-outline ">
                                 <label class="form-label">Search Name</label>
-                                <input type="text" class="form-control" name="title" value="">
+                                <input type="text" class="form-control" name="q" value="">
                             </div>
                         </div>
                         <div class="col-lg-1 col-md-3 m-0">
@@ -25,23 +35,24 @@
             </div>
             <div class="row">
                 <div class="col-12">
-
                     <div class="card my-4">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                                <h6 class="text-white mx-3">Manage Items</h6>
+                                <h6 class="text-white mx-3">Manage Purchase</h6>
                             </div>
                         </div>
-                        {{-- <div ng-show="successMessage" class="alert alert-success alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
-                            <strong>@{{ successMessage }}</strong>
+                        @if (session()->has('message'))
+                        <div class="alert alert-success alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
+                            <strong>{{ session()->get('message') }}</strong>
                             <button type="button" class="btn-close text-lg py-1 opacity-10" data-bs-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                        </div> --}}
+                        </div>
+                        @endif
                         <div class=" me-3 my-3 text-end">
                             <a class="btn bg-gradient-dark mb-0" href="{{ route('purchase.create')}}"><i class="material-icons text-sm">add</i></a>
                         </div>
-                        <form method="POST" action="" id="myForm">
+                        <form method="POST" action="{{route('purchase.bulkAction')}}" id="myForm">
                             @csrf
                             @method('POST')
                             <div class="card-body">
@@ -61,7 +72,7 @@
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Total Price</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Discount</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Net Price</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Action</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -99,15 +110,15 @@
                                                         <div class="ripple-container"></div>
                                                     </a>
                                                     @if($purchases->status == 0)
-                                                    <a href=" {{ route('item.status', [$purchases->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
+                                                    <a href=" {{ route('purchase.status', [$purchases->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
                                                         <i class="fa fa-eye-slash"></i>
                                                     </a>
                                                     @elseif($purchases->status == 1)
-                                                    <a href="{{ route('item.status', [$purchases->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
+                                                    <a href="{{ route('purchase.status', [$purchases->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
                                                     @endif
-                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('item.destroy', $purchases->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
+                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('purchase.delete', $purchases->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
                                                         <i class="fa fa-trash"></i>
                                                         <div class="ripple-container"></div>
                                                     </a>
@@ -144,7 +155,7 @@
                                             @endfor
                                     </select>
                                 </div>
-                                <form action="{{ route('item.index') }}" method="get">
+                                <form action="{{ route('purchase.index') }}" method="get">
                                     @csrf
                                     <div class="input-group input-group-outline is-filled form-select d-inline-flex w-50">
                                         <span class="my-2 mx-1">Show Page:</span>
