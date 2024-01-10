@@ -66,11 +66,11 @@
                                                         <input class="form-check-input" id="select-all" type="checkbox" name="" value="">
                                                     </div>
                                                 </th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">s.no</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Phone</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Address</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">balance</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">s.no</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Name</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Phone</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Address</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">balance</th>
                                                 <th class="text-secondary opacity-7"></th>
                                             </tr>
                                         </thead>
@@ -83,19 +83,19 @@
                                                     </div>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{$sn++}}</span>
+                                                    <span class="text-secondary text-sm">{{$sn++}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{ $suppliers->name}}</span>
+                                                    <span class="text-secondary text-sm">{{ $suppliers->name}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{ $suppliers->phone}}</span>
+                                                    <span class="text-secondary text-sm">{{ $suppliers->phone}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{ $suppliers->address}}</span>
+                                                    <span class="text-secondary text-sm">{{ $suppliers->address}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{ $suppliers->balance}}</span>
+                                                    <span class="text-secondary text-sm">{{ $suppliers->balance}}</span>
                                                 </td>
                                                 <td class="align-middle text-end px-4">
                                                     <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('supplier.edit', $suppliers->id)}}"  title="Edit">

@@ -47,51 +47,51 @@
                                                         <input class="form-check-input" id="select-all" type="checkbox" name="" value="">
                                                     </div>
                                                 </th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">s.no</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Config Type</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">title</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Notes</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Type</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Default Value</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Key</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Value</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">sortorder</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">s.no</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Config Type</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">title</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Notes</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Type</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Default Value</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Key</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Value</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">sortorder</th>
                                                 <th class="text-secondary opacity-7"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($config as $configs)
                                             <tr>
-                                                <td class="align-middle text-center">
+                                                <td class="align-middle text-center text-sm">
                                                     <div class="form-check check-tables">
                                                         <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$configs->id}}">
                                                     </div>
                                                 </td>
-                                                <td class="align-middle text-center">
+                                                <td class="align-middle text-center text-sm">
                                                     <span class="text-secondary text-xs font-weight-bold">{{$sn++}}</span>
                                                 </td>
-                                                <td class="align-middle text-center">
+                                                <td class="align-middle text-center text-sm">
                                                     <span class="text-secondary text-xs font-weight-bold">{{$configs->ConfigType->title}}</span>
                                                 </td>
-                                                <td class="align-middle text-center">
+                                                <td class="align-middle text-center text-sm">
                                                     <span class="text-secondary text-xs font-weight-bold">{{$configs->title}}</span>
                                                 </td>
-                                                <td class="align-middle text-center">
+                                                <td class="align-middle text-center text-sm">
                                                     <span class="text-secondary text-xs font-weight-bold">{{$configs->notes}}</span>
                                                 </td>
-                                                <td class="align-middle text-center">
+                                                <td class="align-middle text-center text-sm">
                                                     <span class="text-secondary text-xs font-weight-bold">{{$configs->type}}</span>
                                                 </td>
-                                                <td class="align-middle text-center">
+                                                <td class="align-middle text-center text-sm">
                                                     <span class="text-secondary text-xs font-weight-bold">{{$configs->default_values}}</span>
                                                 </td>
-                                                <td class="align-middle text-center">
+                                                <td class="align-middle text-center text-sm">
                                                     <span class="text-secondary text-xs font-weight-bold">{{$configs->key}}</span>
                                                 </td>
-                                                <td class="align-middle text-center">
+                                                <td class="align-middle text-center text-sm">
                                                     <span class="text-secondary text-xs font-weight-bold">{{$configs->value}}</span>
                                                 </td>
-                                                <td class="align-middle text-center">
+                                                <td class="align-middle text-center text-sm">
                                                     <span class="text-secondary text-xs font-weight-bold">{{$configs->sortorder}}</span>
                                                 </td>
                                                 <td class="align-middle text-end px-4">

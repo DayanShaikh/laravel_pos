@@ -16,7 +16,7 @@ class PurchaseController extends Controller
         
         $sn = 1;
         $rowsPerPage = $request->input('rowsPerPage', 10);
-        $purchase = Purchase::paginate($rowsPerPage);
+        $purchase = Purchase::with('supplier')->paginate($rowsPerPage);
         return view('purchase.list', compact('purchase', 'rowsPerPage', 'sn'));
     }
 

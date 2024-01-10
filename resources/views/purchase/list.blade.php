@@ -49,49 +49,49 @@
                                     <table class="table align-items-center mb-0">
                                         <thead>
                                             <tr>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">S.no</th>
                                                 <th width="2%" class="align-middle text-center">
                                                     <div class="form-check check-tables">
                                                         <input class="form-check-input" id="select-all" type="checkbox" name="" value="">
                                                     </div>
                                                 </th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">s.no</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Supplier</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Price</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Discount</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Net Price</th>
-                                                <th class="text-secondary opacity-7"></th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">ID</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Date</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Supplier</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Total Price</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Discount</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Net Price</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($purchase as $purchases)
                                             <tr>
                                                 <td class="align-middle text-center">
+                                                    <span class="text-secondary text-sm">{{$sn++}}</span>
+                                                </td>
+                                                <td class="align-middle text-center">
                                                     <div class="form-check check-tables">
                                                         <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$purchases->id}}">
                                                     </div>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{$sn++}}</span>
+                                                    <span class="text-secondary text-sm">{{$purchases->id}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{\Carbon\Carbon::parse($purchases->date)->format('d-m-Y')}}</span>
+                                                    <span class="text-secondary text-sm">{{\Carbon\Carbon::parse($purchases->date)->format('d-m-Y')}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold"></span>
+                                                    <span class="text-secondary text-sm">{{$purchases->supplier->name}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold"></span>
+                                                    <span class="text-secondary text-sm">{{$purchases->total_price}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold"></span>
+                                                    <span class="text-secondary text-sm">{{$purchases->discount}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold"></span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold"></span>
+                                                    <span class="text-secondary text-sm">{{$purchases->net_price}}</span>
                                                 </td>
                                                 <td class="align-middle text-end px-4">
                                                     <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('purchase.edit', $purchases->id)}}" title="Edit">

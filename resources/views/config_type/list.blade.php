@@ -47,13 +47,9 @@
                                                         <input class="form-check-input" id="select-all" type="checkbox" name="" value="">
                                                     </div>
                                                 </th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    s.no</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    title</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    sortorder
-                                                </th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">s.no</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">title</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">sortorder</th>
                                                 <th class="text-secondary opacity-7"></th>
                                             </tr>
                                         </thead>
@@ -66,13 +62,13 @@
                                                     </div>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{$sn++}}</span>
+                                                    <span class="text-secondary text-sm font-weight-bold">{{$sn++}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{$configs->title}}</span>
+                                                    <span class="text-secondary text-sm font-weight-bold">{{$configs->title}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{$configs->sortorder}}</span>
+                                                    <span class="text-secondary text-sm font-weight-bold">{{$configs->sortorder}}</span>
                                                 </td>
                                                 <td class="align-middle text-end px-4">
                                                     <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('config_type.edit', $configs->id)}}" data-original-title="" title="">

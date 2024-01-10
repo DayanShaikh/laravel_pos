@@ -20845,7 +20845,7 @@ fieldset:disabled .btn {
 
 .card .card-body {
   font-family: "Roboto", Helvetica, Arial, sans-serif;
-  /* padding: 1.5rem; */
+  padding: 1.5rem;
 }
 
 .card.card-plain {
@@ -27328,10 +27328,10 @@ pre[class*="language-"] {
   background-color: #999;
   width: 11px;
 }
-
+/* 
 .side-bar {
   margin: 0 15px;
-}
+} */
 
 .side-bar .menu .item {
   position: relative;

@@ -42,7 +42,7 @@
             <div class="side-bar">
                 <div class="menu">
                     <div class="item">
-                        <a class="sub-btn"><i class="fa-solid fa-warehouse"></i>Inventory<i class="fas fa-angle-right dropdown"></i></a>
+                        <a class="sub-btn"><i class="fa-solid fa-warehouse ms-2"></i>Inventory<i class="fas fa-angle-right dropdown"></i></a>
                         <div class="sub-menu">
                             <a href="{{ route('purchase.index') }}" class="sub-item"><i class="fa-solid fa-cart-shopping"></i>Purchase</a>
                             <a href="{{ route('supplier.index') }}" class="sub-item"><i class="fa-solid fa-cart-flatbed"></i>Supplier</a>

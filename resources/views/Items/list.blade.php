@@ -66,12 +66,12 @@
                                                         <input class="form-check-input" id="select-all" type="checkbox" name="" value="">
                                                     </div>
                                                 </th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">s.no</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder ">s.no</th>
                                                 {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Item Category</th> --}}
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">title</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Unit Price</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sale Price</th>
-                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Quantity</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder ">title</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder ">Unit Price</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder ">Sale Price</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder ">Quantity</th>
                                                 <th class="text-secondary opacity-7"></th>
                                             </tr>
                                         </thead>
@@ -84,22 +84,22 @@
                                                     </div>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{$sn++}}</span>
+                                                    <span class="text-secondary text-sm font-weight-bold">{{$sn++}}</span>
                                                 </td>
                                                 {{-- <td class="align-middle text-center">
                                                     <span class="text-secondary text-xs font-weight-bold">{{ $items->ItemCategory->title}}</span>
                                                 </td> --}}
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{ $items->title}}</span>
+                                                    <span class="text-secondary text-sm font-weight-bold">{{ $items->title}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{ $items->unit_price}}</span>
+                                                    <span class="text-secondary text-sm font-weight-bold">{{ $items->unit_price}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{ $items->sale_price}}</span>
+                                                    <span class="text-secondary text-sm font-weight-bold">{{ $items->sale_price}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{ $items->quantity}}</span>
+                                                    <span class="text-secondary text-sm font-weight-bold">{{ $items->quantity}}</span>
                                                 </td>
                                                 <td class="align-middle text-end px-4">
                                                     <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('item.edit', $items->id)}}"  title="Edit">
