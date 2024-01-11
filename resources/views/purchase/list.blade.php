@@ -10,13 +10,13 @@
                     @csrf
                     <div class="row justify-content-end text-end">
                         <div class="col-lg-2 col-md-6">
-                            <div class="input-group input-group-outline datepicker-container null @php if($date){echo "is-filled";} @endphp">
+                            <div class="input-group input-group-outline datepicker-container null @php if($date){echo " is-filled";} @endphp">
                                 <label for="datepicker" class="form-label">from date</label>
                                 <input type="text" class="form-control" id="datepicker" name="from_date">
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-6">
-                        <div class="input-group input-group-outline datepicker-container null @php if($date){echo "is-filled";} @endphp">
+                            <div class="input-group input-group-outline datepicker-container null @php if($date){echo " is-filled";} @endphp">
                                 <label for="datepicker" class="form-label">To date</label>
                                 <input type="text" class="form-control" id="datepicker" name="to_date">
                             </div>
