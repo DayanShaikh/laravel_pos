@@ -12,9 +12,9 @@
                         <div class="col-lg-3 col-md-6"></div>
                         <div class="col-lg-4 col-md-6"></div>
                         <div class="col-lg-3 col-md-6">
-                            <div class="input-group input-group-outline @if($name) null is-filled @endif">
+                            <div class="input-group input-group-outline ">
                                 <label class="form-label">Search Name</label>
-                                <input type="text" class="form-control" name="name" value="{{$name}}">
+                                <input type="text" class="form-control" name="name" value="">
                             </div>
                         </div>
                         <div class="col-lg-1 col-md-3 m-0">
@@ -66,12 +66,12 @@
                                                         <input class="form-check-input" id="select-all" type="checkbox" name="" value="">
                                                     </div>
                                                 </th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">s.no</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Name</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Phone</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Address</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">balance</th>
-                                                <th class="text-secondary opacity-7"></th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">S.no</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Date</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Details</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Debit</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Credit</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Balance</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -98,7 +98,7 @@
                                                     <span class="text-secondary text-sm">{{ $suppliers->balance}}</span>
                                                 </td>
                                                 <td class="align-middle text-end px-4">
-                                                    <a href="{{ route('supplier.ledger', $suppliers->id) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Ledger">
+                                                    <a href="{{ route('supplier.status', [$suppliers->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Ledger">
                                                         <i class="fa fa-print"></i>
                                                     </a>
                                                     <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('supplier.edit', $suppliers->id)}}" title="Edit">

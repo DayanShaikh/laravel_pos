@@ -81,9 +81,9 @@ class SupplierConroller extends Controller
         return redirect()->route('supplier.index')->with('message', 'Record Update Successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    public function ledger($id){
+        return view('supplier.ledger');
+    }
     public function destroy(string $id)
     {
         Supplier::find($id)->delete();

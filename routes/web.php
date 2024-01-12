@@ -64,6 +64,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('item-bulkaction', [ItemController::class, 'bulkAction'])->name('item.bulkAction');
 	//Supplier
 	Route::resource('supplier', SupplierConroller::class);
+	Route::get('supplier/ledger/{id}', [SupplierConroller::class, 'ledger'])->name('supplier.ledger');
 	Route::get('supplier-update-active-status/{item}/{status}', [SupplierConroller::class, 'status'])->name('supplier.status');
 	Route::post('supplier-bulkaction', [SupplierConroller::class, 'bulkAction'])->name('supplier.bulkAction');
 	//purchase

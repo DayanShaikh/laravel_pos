@@ -13,22 +13,29 @@ class PurchaseController extends Controller
 {
     public function index(Request $request)
     {
-
         $sn = 1;
         $rowsPerPage = $request->input('rowsPerPage', 10);
-        $date = $request->input('date') ?? "";
-        if (!empty($date)) {
-            $format_date = Carbon::parse($date)->format('Y-m-d');
-            $purchase = Purchase::where('date', 'like', '%' . $format_date . '%')->paginate($rowsPerPage);
-        }else{
+        $from_date = $request->input('from_date') ?? "";
+        $to_date = $request->input('to_date') ?? "";
+        $supplier_id = $request->input('supplier_id') ?? "";
+        
+        if (!empty($from_date) && !empty($to_date) && !empty($supplier_id)) {
+            $format_from_date = Carbon::createFromFormat('d/m/Y', $from_date)->format('Y-m-d');
+            $format_to_date = Carbon::createFromFormat('d/m/Y', $to_date)->format('Y-m-d');
+            $purchase = Purchase::where('date', '>=', $format_from_date)->where('date', '<=', $format_to_date)->where('supplier_id', $supplier_id)->paginate($rowsPerPage);
+        }elseif (empty($from_date) && empty($to_date) && !empty($supplier_id)) {
+            $purchase = Purchase::where('supplier_id', $supplier_id)->paginate($rowsPerPage);
+        } elseif (!empty($from_date) && !empty($to_date) && empty($supplier_id)) {
+            $format_from_date = Carbon::createFromFormat('d/m/Y', $from_date)->format('Y-m-d');
+            $format_to_date = Carbon::createFromFormat('d/m/Y', $to_date)->format('Y-m-d');
+            $purchase = Purchase::where('date', '>=', $format_from_date)->where('date', '<=', $format_to_date)->paginate($rowsPerPage);
+        } else {
             $purchase = Purchase::with('supplier')->paginate($rowsPerPage);
         }
-        return view('purchase.list', compact('purchase', 'rowsPerPage', 'sn', 'date'));
+        $suppliers = Supplier::all();
+        return view('purchase.list', compact('purchase', 'rowsPerPage', 'sn', 'from_date', 'to_date', 'suppliers', 'supplier_id'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(Request $request)
     {
         return view('purchase.create');

@@ -48,7 +48,7 @@
 
     {{ $slot }}
     <script src="{{ asset('assets') }}/js/jquery.min.js"></script>
-    {{-- <script src="{{ asset('assets') }}/js/bootstrap.js"></script> --}}
+    <script src="{{ asset('assets') }}/js/bootstrap.js"></script>
     <script src="{{ asset('assets') }}/js/core/popper.min.js"></script>
     <script src="{{ asset('assets') }}/js/core/bootstrap.min.js"></script>
     <script src="{{ asset('assets') }}/js/plugins/perfect-scrollbar.min.js"></script>
@@ -56,7 +56,7 @@
     <script src="{{ asset('assets') }}/js/header-header.js"></script>
     <script src="{{ asset('assets') }}/js/plugins/popper.min.js"></script>
     {{-- <script src="{{ asset('assets') }}/js/jquery-ui.js"></script> --}}
-    {{-- <script src="{{ asset('assets') }}/js/bootstrap-datepicker.min.js"></script> --}}
+    <script src="{{ asset('assets') }}/js/bootstrap-datepicker.min.js"></script>
     <script src="{{ asset('assets') }}/js/pikaday.min.js"></script>
     <script src="{{ asset('assets') }}/js/moment.min.js"></script>
     <script type="text/javascript" src="{{ asset('assets') }}/js/angular.min.js"></script>
@@ -134,6 +134,7 @@
                 document.getElementById('myForm').submit();
             }
         }
+        //datepicker
         document.addEventListener('DOMContentLoaded', function() {
             // Set the input value to the current date
             var currentDate = new Date();
@@ -160,22 +161,101 @@
             });
         });
 
-        //$(function() {
-        //    var currentDate = new Date();
-        //    var formattedDate = currentDate.getDate() + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
-        //    $("#datepicker").val(formattedDate);
-        //    $("#datepicker").datepicker();
+        //Range Datepicker
+        //$('#start-date').datepicker({
+        //    templates: {
+        //        leftArrow: '<i class="fa fa-chevron-left"></i>'
+        //        , rightArrow: '<i class="fa fa-chevron-right"></i>'
+        //    }
+        //    , format: "dd/mm/yyyy"
+        //    , keyboardNavigation: false
+        //    , autoclose: true
+        //    , todayHighlight: true
+        //    , disableTouchKeyboard: true
+        //    , orientation: "bottom auto"
+        //});
+        //
+        //$('#end-date').datepicker({
+        //    templates: {
+        //        leftArrow: '<i class="fa fa-chevron-left"></i>'
+        //        , rightArrow: '<i class="fa fa-chevron-right"></i>'
+        //    }
+        //    , format: "dd/mm/yyyy"
+        //    , keyboardNavigation: false
+        //    , autoclose: true
+        //    , todayHighlight: true
+        //    , disableTouchKeyboard: true
+        //    , orientation: "bottom auto"
+        //});
+        //
+        //$('#start-date').datepicker().on("changeDate", function() {
+        //    var startDate = $('.start-date').datepicker('getDate');
+        //    var oneDayFromStartDate = moment(startDate).add(1, 'days').toDate();
+        //    $('.end-date').datepicker('setStartDate', oneDayFromStartDate);
+        //    $('.end-date').datepicker('setDate', oneDayFromStartDate);
+        //});
+        //
+        //$('#end-date').datepicker().on("show", function() {
+        //    var startDate = $('.start-date').datepicker('getDate');
+        //    $('.day.disabled').filter(function(index) {
+        //        return $(this).text() === moment(startDate).format('D');
+        //    }).addClass('active');
         //});
 
+
+        $('#start-date').datepicker({
+            templates: {
+                leftArrow: '<i class="fa fa-chevron-left"></i>'
+                , rightArrow: '<i class="fa fa-chevron-right"></i>'
+            }
+            , format: "dd/mm/yyyy"
+            , keyboardNavigation: false
+            , autoclose: true
+            , todayHighlight: true
+            , disableTouchKeyboard: true
+            , orientation: "bottom auto"
+        });
+
+        $('#end-date').datepicker({
+            templates: {
+                leftArrow: '<i class="fa fa-chevron-left"></i>'
+                , rightArrow: '<i class="fa fa-chevron-right"></i>'
+            }
+            , format: "dd/mm/yyyy"
+            , keyboardNavigation: false
+            , autoclose: true
+            , todayHighlight: true
+            , disableTouchKeyboard: true
+            , orientation: "bottom auto"
+        });
+
+        $('#start-date').datepicker().on("changeDate", function() {
+            var startDate = $('.start-date').datepicker('getDate');
+            var oneDayFromStartDate = moment(startDate).add(1, 'days').toDate();
+            $('.end-date').datepicker('setStartDate', oneDayFromStartDate);
+            $('.end-date').datepicker('setDate', oneDayFromStartDate);
+        });
+
+        $('#end-date').datepicker().on("show", function() {
+            var startDate = $('.start-date').datepicker('getDate');
+            $('.day.disabled').filter(function(index) {
+                return $(this).text() === moment(startDate).format('D');
+            }).addClass('active');
+        });
+
+        $('#start-date').datepicker().on("changeDate", function() {
+            var startDate = $('.start-date').datepicker('getDate');
+            var endDate = $('.end-date').datepicker('getDate');
+
+            if (endDate && startDate > endDate) {
+                $('.end-date').datepicker('setDate', startDate);
+            }
+        });
+
     </script>
-    <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('assets') }}/js/material-dashboard.min.js?v=3.0.0"></script>
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script> --}}
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-mask/1.8.7/mask.js"></script> --}}
     <script src="{{ asset('assets') }}/js/angular.min.js"></script>
-    {{-- <script src="{{ asset('assets') }}/js/angular-route.js"></script> --}}
     <script src="{{ asset('assets') }}/js/angular-moment.min.js"></script>
     <script src="{{ asset('assets') }}/js/angular-locale_de-de.js"></script>
     <script src="{{ asset('assets') }}/js/angular-animate.js"></script>

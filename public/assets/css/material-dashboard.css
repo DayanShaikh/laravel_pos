@@ -5715,7 +5715,7 @@ fieldset:disabled .btn {
 
 .card-body {
   flex: 1 1 auto;
-  /* padding: 1rem 1rem; */
+  padding: 1rem 1rem;
 }
 
 .card-title {
@@ -26703,20 +26703,23 @@ span.flatpickr-weekday {
 .flatpickr-calendar .flatpickr-day.selected,
 .flatpickr-calendar .flatpickr-day.startRange,
 .flatpickr-calendar .flatpickr-day.endRange {
-  background: #e91e63 !important;
+  /* background: #e91e63 !important; */
+  background-image: linear-gradient(195deg, #EC407A 0%, #D81B60 100%);
   color: #fff;
   border: none;
 }
 
 .flatpickr-calendar .flatpickr-day.inRange {
-  background: rgba(94, 114, 228, 0.28);
+  /* background: rgba(94, 114, 228, 0.28); */
+  background-image: linear-gradient(195deg, #EC407A 0%, #D81B60 100%);
   border: none;
   box-shadow: -5px 0 0 #D7DCF8, 5px 0 0 #D7DCF8;
 }
 
 .flatpickr-calendar .flatpickr-day:not(.selected):hover,
 .flatpickr-calendar .flatpickr-day:not(.selected):focus {
-  background: rgba(94, 114, 228, 0.28);
+  /* background: rgba(94, 114, 228, 0.28); */
+  background-image: linear-gradient(195deg, #EC407A 0%, #D81B60 100%);
   border: none;
 }
 
@@ -26724,7 +26727,8 @@ span.flatpickr-weekday {
 .flatpickr-calendar .flatpickr-time .flatpickr-am-pm:hover,
 .flatpickr-calendar .flatpickr-time input:focus,
 .flatpickr-calendar .flatpickr-time .flatpickr-am-pm:focus {
-  background: rgba(94, 114, 228, 0.28);
+  /* background: rgba(94, 114, 228, 0.28); */
+  background-image: linear-gradient(195deg, #EC407A 0%, #D81B60 100%);
 }
 
 .flatpickr.form-control {
@@ -27328,10 +27332,10 @@ pre[class*="language-"] {
   background-color: #999;
   width: 11px;
 }
-/* 
+
 .side-bar {
   margin: 0 15px;
-} */
+}
 
 .side-bar .menu .item {
   position: relative;
@@ -27398,6 +27402,7 @@ span.relative.z-0.inline-flex.shadow-sm.rounded-md {
 .ml-260 {
   margin-left: 260px;
 }
+
 
 
 /* End Menu */

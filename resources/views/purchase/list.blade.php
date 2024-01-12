@@ -10,25 +10,37 @@
                     @csrf
                     <div class="row justify-content-end text-end">
                         <div class="col-lg-2 col-md-6">
-                            <div class="input-group input-group-outline datepicker-container null @php if($date){echo " is-filled";} @endphp">
-                                <label for="datepicker" class="form-label">from date</label>
-                                <input type="text" class="form-control" id="datepicker" name="from_date">
+                            <div class="input-group input-group-outline datepicker-container">
+                                {{-- <label for="datepicker" class="form-label">from date</label> --}}
+                                <input type="text" class="form-control" id="start-date" name="from_date" placeholder="From date" value="{{$from_date}}" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-6">
-                            <div class="input-group input-group-outline datepicker-container null @php if($date){echo " is-filled";} @endphp">
-                                <label for="datepicker" class="form-label">To date</label>
-                                <input type="text" class="form-control" id="datepicker" name="to_date">
+                            <div class="input-group input-group-outline datepicker-container">
+                                {{-- <label for="datepicker" class="form-label">To date</label> --}}
+                                <input type="text" class="form-control" id="end-date" name="to_date" placeholder="To date" value="{{$to_date}}" autocomplete="off">
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-6">
+                        {{-- <div class="col-lg-2 col-md-6">
                             <div class="input-group input-group-outline ">
                                 <label class="form-label">Search Name</label>
                                 <input type="text" class="form-control" name="q" value="">
                             </div>
+                        </div> --}}
+                        <div class="col-lg-2 col-md-6">
+                            <div class="input-group input-group-outline is-filled form-select w-100 h-100">
+                                <select name="supplier_id" id="action" class="form-control">
+                                    <option value="0">Select Suppliers</option>
+                                    @foreach($suppliers as $supplier)
+                                    <option value="{{$supplier->id}}" @if($supplier_id == $supplier->id) selected @endif>{{$supplier->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-lg-1 col-md-3 m-0">
-                            <button type="submit" class="btn btn-primary m-0">Search</button>
+                        {{-- <div class="col-lg-2 col-md-6"></div>
+                        <div class="col-lg-1 col-md-6"></div> --}}
+                        <div class="col-lg-1 col-md-3 ">
+                            <button type="submit" class="btn btn-primary m-0 p-2 w-100">Search</button>
                         </div>
                     </div>
                 </form>
