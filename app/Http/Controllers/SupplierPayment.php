@@ -11,9 +11,18 @@ class SupplierPayment extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $sn =1;
+        $supplier =Supplier::all();
+        $rowsPerPage = $request->input('rowsPerPage', 10);
+        $name = $request->input('name') ?? "";
+        if (!empty($name)) {
+            $supplier_payment = SupplierPayments::where('name', 'like', '%' . $name . '%')->paginate($rowsPerPage);
+        } else {
+            $supplier_payment = SupplierPayments::paginate($rowsPerPage);
+        }
+        return view('supplier_payment.list', compact('supplier','supplier_payment','sn','name','rowsPerPage'));
     }
 
     /**

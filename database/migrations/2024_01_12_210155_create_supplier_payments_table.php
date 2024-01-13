@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('supplier_id');
             $table->date('date');
+            $table->unsignedBigInteger('payment');
             $table->string('details');
             $table->boolean('status')->default(1);
             $table->timestamps();

@@ -68,25 +68,27 @@
                                                 </th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">s.no</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Name</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Phone</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Address</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">balance</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Date</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Payment</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Details</th>
                                                 <th class="text-secondary opacity-7"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($supplier as $suppliers)
+                                            @foreach($supplier_payment as $supplier_payments)
                                             <tr>
                                                 <td class="align-middle text-center">
                                                     <div class="form-check check-tables">
-                                                        <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$suppliers->id}}">
+                                                        <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$supplier_payments->id}}">
                                                     </div>
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     <span class="text-secondary text-sm">{{$sn++}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $suppliers->name}}</span>
+                                                    <span class="text-secondary text-sm">@if ($supplier_payments->supplier_id == $supplier->id)
+                                                        {{$supplier->name}}
+                                                    @endif</span>
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     <span class="text-secondary text-sm">{{ $suppliers->phone}}</span>
@@ -144,8 +146,8 @@
                                 <div class="input-group input-group-outline is-filled form-select d-inline-flex w-40 float-start">
                                     <span class="my-2 mx-1">Show Page:</span>
                                     <select onchange="window.location.href=this.value" class="form-control">
-                                        @for ($i = 1; $i <= $supplier->lastPage(); $i++)
-                                            <option value="{{ $supplier->url($i) }}" {{ $supplier->currentPage() == $i ? 'selected' : '' }}>
+                                        @for ($i = 1; $i <= $supplier_payment->lastPage(); $i++)
+                                            <option value="{{ $supplier_payment->url($i) }}" {{ $supplier_payment->currentPage() == $i ? 'selected' : '' }}>
                                                 {{ $i }}
                                             </option>
                                             @endfor
@@ -163,7 +165,7 @@
                                         </select>
                                     </div>
                                 </form>
-                                {{$supplier->links()}}
+                                {{$supplier_payment->links()}}
                             </div>
                         </div>
                     </div>

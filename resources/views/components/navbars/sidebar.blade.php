@@ -46,6 +46,7 @@
                         <div class="sub-menu">
                             <a href="{{ route('purchase.index') }}" class="sub-item"><i class="fa-solid fa-cart-shopping"></i>Purchase</a>
                             <a href="{{ route('supplier.index') }}" class="sub-item"><i class="fa-solid fa-cart-flatbed"></i>Supplier</a>
+                            <a href="{{ route('supplier_payment.index') }}" class="sub-item"><i class="fa-solid fa-cart-flatbed"></i>Supplier Payments</a>
                         </div>
                     </div>
                 </div>
