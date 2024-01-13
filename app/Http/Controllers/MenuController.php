@@ -44,6 +44,7 @@ class MenuController extends Controller
             'small_icon' => $request->small_icon,
             'icon' => $request->icon,
         ]);
+        return redirect()->route('menu.index')->with('message', 'Record Create Successfully');
     }
 
     /**
@@ -57,24 +58,60 @@ class MenuController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $menu = Menu::find($id);
+        return view('menu.edit',compact('menu'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Menu $menu)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required',
+            'url' => 'required',
+            'small_icon' => 'required',
+            // 'icon' => 'required',
+        ]);
+        $menu->update([
+            'title' => $request->title,
+            'url' => $request->url,
+            'parent_id' => $request->parent_id,
+            'small_icon' => $request->small_icon,
+            'icon' => $request->icon,
+        ]);
+        return redirect()->route('menu.index')->with('success','Record Successfully Updated');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Menu $menu)
+
     {
-        //
+        $menu->delete();
+        return to_route('menu.index')->with('delete','Record successfully Deleted');
+      
+    }
+    public function bulkAction(Request $request)
+    {
+        $action = $request->action;
+        $multi = $request->input('multidelete', []);
+        // dd($multi);
+        if (empty($multi)) {
+            return redirect()->back()->with('error', 'No Records Selected');
+        }
+        if ($action == 'delete') {
+            foreach ($multi as $multis) {
+                Menu::where('id', $multis)->delete();
+            }
+            return redirect()->back()->with('message', 'Selected Records delete Successfully');
+        }
+        
+        if ($action == '') {
+            return redirect()->back();
+        }
     }
 }

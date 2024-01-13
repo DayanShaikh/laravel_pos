@@ -59,6 +59,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('config/store/{id}', [ConfigController::class, 'store'])->name('config.store');
 	//Menu
 	Route::resource('menu', MenuController::class);
+	Route::post('menu-bulkaction', [MenuController::class, 'bulkAction'])->name('menu.bulkAction');
 	//item_Category
 	Route::resource('item_category', ItemCategoryController::class);
 	Route::get('item_category-update-active-status/{item}/{status}', [ItemCategoryController::class, 'status'])->name('item_category.status');

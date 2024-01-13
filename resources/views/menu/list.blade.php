@@ -53,7 +53,7 @@
                         <div class=" me-3 my-3 text-end">
                             <a class="btn bg-gradient-dark mb-0" href="{{ route('menu.create')}}"><i class="material-icons text-sm">add</i></a>
                         </div>
-                        <form method="POST" action="{{ route('supplier.bulkAction') }}" id="myForm">
+                        <form method="POST" action="{{ route('menu.bulkAction') }}" id="myForm">
                             @csrf
                             @method('POST')
                             <div class="card-body px-0 pb-2">
@@ -70,11 +70,14 @@
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Title</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Url</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Parent</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Depth</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Action</th>
                                                 <th class="text-secondary opacity-7"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php
+                                                $sn=1;
+                                            @endphp
                                             @foreach($menu as $menus)
                                             <tr>
                                                 <td class="align-middle text-center">
@@ -94,27 +97,15 @@
                                                 <td class="align-middle text-center">
                                                     <span class="text-secondary text-sm">{{ $menus->parent_id}}</span>
                                                 </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $suppliers->depth}}</span>
-                                                </td>
+                                              
                                                 <td class="align-middle text-end px-4">
-                                                    <a href="{{ route('supplier.ledger', $menus->id) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Ledger">
-                                                        <i class="fa fa-print"></i>
-                                                    </a>
-                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('supplier.edit', $menus->id)}}" title="Edit">
+                                                   
+                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('menu.edit',$menus->id)}}" title="Edit">
                                                         <i class="material-icons">edit</i>
                                                         <div class="ripple-container"></div>
                                                     </a>
-                                                    @if($suppliers->status == 0)
-                                                    <a href=" {{ route('supplier.status', [$menus->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
-                                                        <i class="fa fa-eye-slash"></i>
-                                                    </a>
-                                                    @elseif($suppliers->status == 1)
-                                                    <a href="{{ route('supplier.status', [$menus->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
-                                                        <i class="fa fa-eye"></i>
-                                                    </a>
-                                                    @endif
-                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('supplier.destroy', $menus->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
+                                                    
+                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('menu.destroy', $menus->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
                                                         <i class="fa fa-trash"></i>
                                                         <div class="ripple-container"></div>
                                                     </a>
@@ -131,8 +122,8 @@
                                         <select name="action" id="action" class="form-control" onchange="confirmAndSubmit()">
                                             <option value="">Bulk Action</option>
                                             <option value="delete">Delete</option>
-                                            <option value="status_on">Status ON</option>
-                                            <option value="status_off">Status OFF</option>
+                                            {{-- <option value="status_on">Status ON</option>
+                                            <option value="status_off">Status OFF</option> --}}
                                         </select>
                                     </div>
                                     {{-- <button type="submit" class="btn btn-primary bulk_btn my-1">Apply</button> --}}

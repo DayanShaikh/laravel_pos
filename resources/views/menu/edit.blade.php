@@ -10,28 +10,28 @@
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-3">
                                 <div class="row">
                                     <div class="col my-xl-2">
-                                        <h6 class="text-white text-capitalize ps-3">Add Item</h6>
+                                        <h6 class="text-white text-capitalize ps-3">Add Menu</h6>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class=" mx-3 mt-3 text-end">
-                            <a href="{{route('supplier.index')}}" class="btn bg-gradient-dark"><i class="fa fa-arrow-right"></i></a>
+                            <a href="{{route('menu.index')}}" class="btn bg-gradient-dark"><i class="fa fa-arrow-right"></i></a>
                         </div>
                         <div class="card-body p-0 px-3">
-                            <form role="form" method="POST" action="{{  route('supplier.update', $supplier->id) }}" class="text-start">
+                            <form role="form" method="POST" action="{{  route('menu.update',$menu) }}" class="text-start"enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="input-group input-group-outline mt-3 @if(old('title')) null is-filled @endif">
                                     <label class="form-label">Title <span class="login-danger"> *</span></label>
-                                    <input type="text" class="form-control" name="title" value="">
+                                    <input type="text" class="form-control" name="title" value="{{ $menu->title }}">
                                 </div>
                                 @error('title')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
                                 <div class="input-group input-group-outline mt-3 @if(old('url')) null is-filled @endif">
                                     <label class="form-label">Url <span class="login-danger"> *</span></label>
-                                    <input type="text" class="form-control" name="url" value="">
+                                    <input type="text" class="form-control" name="url" value="{{ $menu->url }}">
                                 </div>
                                 @error('url')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
@@ -39,18 +39,20 @@
                                 <div class="input-group input-group-outline is-filled form-select mt-3">
                                     <select class="form-control ps-3 py-0" name="parent_id">
                                         <option value="">No Parent</option>
-                                        @foreach($menu as $menus)
+                                        <option value="1" selected>admin </option>
+                                        {{-- @foreach($menu as $menus)
                                         <option value="{{ $menus->id }}">{{ $menus->name }}</option>
-                                        @endforeach
+                                        @endforeach --}}
+
                                     </select>
                                 </div>
                                 <div class="input-group input-group-outline mt-3 @if(old('small_icon')) null is-filled @endif">
                                     <label class="form-label">Small Icon url</label>
-                                    <input type="text" class="form-control" name="small_icon">
+                                    <input type="text" class="form-control" name="small_icon" value="{{$menu->small_icon}}}">
                                 </div>
                                 <div class="input-group input-group-outline mt-3 null is-filled">
                                     <label class="form-label">Icon</label>
-                                    <input type="file" class="form-control" name="icon">
+                                    <input type="file" class="form-control" name="icon" value="{{$menu->icon}}">
                                 </div>
                                 <div class="col-lg-1 col-sm-6 col-12">
                                     <button class="btn bg-gradient-primary w-100 my-4 mb-2" type="submit" data-target="successToast">Submit</button>

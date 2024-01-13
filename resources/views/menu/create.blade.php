@@ -19,7 +19,7 @@
                             <a href="{{route('menu.index')}}" class="btn bg-gradient-dark"><i class="fa fa-arrow-right"></i></a>
                         </div>
                         <div class="card-body p-0 px-3">
-                            <form role="form" method="POST" action="{{  route('menu.store') }}" class="text-start">
+                            <form role="form" method="POST" action="{{  route('menu.store') }}" class="text-start"enctype="multipart/form-data">
                                 @csrf
                                 <div class="input-group input-group-outline mt-3 @if(old('title')) null is-filled @endif">
                                     <label class="form-label">Title <span class="login-danger"> *</span></label>
@@ -38,9 +38,11 @@
                                 <div class="input-group input-group-outline is-filled form-select mt-3">
                                     <select class="form-control ps-3 py-0" name="parent_id">
                                         <option value="">No Parent</option>
-                                        @foreach($menu as $menus)
+                                        <option value="1">admin </option>
+                                        {{-- @foreach($menu as $menus)
                                         <option value="{{ $menus->id }}">{{ $menus->name }}</option>
-                                        @endforeach
+                                        @endforeach --}}
+
                                     </select>
                                 </div>
                                 <div class="input-group input-group-outline mt-3 @if(old('small_icon')) null is-filled @endif">
