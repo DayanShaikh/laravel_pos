@@ -32,7 +32,6 @@
                         <div class="input-group input-group-outline is-filled form-select mt-3">
                             <select class="form-control ps-3 py-0" ng-model="purchase.supplier_id" ng-options="supplier.id as supplier.name for supplier in suppliers">
                                 <option value="">Select Supplier </option>
-
                                 <option ng-repeat="supplier in suppliers" value="@{{ supplier.id }}">@{{ supplier.name }}</option>
                             </select>
                         </div>

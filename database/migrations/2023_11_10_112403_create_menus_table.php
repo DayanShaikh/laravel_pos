@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('url');
-            $table->integer('parent_id');
-            $table->integer('depth');
+            $table->integer('parent_id')->nullable();
             $table->integer('sortorder');
             $table->string('icon');
             $table->string('small_icon');

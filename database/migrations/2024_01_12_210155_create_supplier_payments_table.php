@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('supplier_payments', function (Blueprint $table) {
             $table->id();
+            $table->integer('supplier_id');
+            $table->date('date');
+            $table->string('details');
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

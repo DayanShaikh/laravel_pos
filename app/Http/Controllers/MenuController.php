@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\SupplierPayments;
-use App\Models\Supplier;
+use App\Models\menu;
 
-class SupplierPayment extends Controller
+class MenuController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $rowsPerPage = $request->input('rowsPerPage', 10);
+        $menu = Menu::paginate($rowsPerPage);
+        return view('menu.list', compact('menu', 'rowsPerPage'));
     }
 
     /**
@@ -21,8 +22,8 @@ class SupplierPayment extends Controller
      */
     public function create()
     {
-        $supplier = Supplier::all();
-        return view('supplier_payment.create', compact('supplier'));
+        $menu = Menu::all();
+        return view('menu.create', compact('menu'));
     }
 
     /**
@@ -30,7 +31,19 @@ class SupplierPayment extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required',
+            'url' => 'required',
+            'small_icon' => 'required',
+            'icon' => 'required',
+        ]);
+        Menu::create([
+            'title' => $request->title,
+            'url' => $request->url,
+            'parent_id' => $request->parent_id,
+            'small_icon' => $request->small_icon,
+            'icon' => $request->icon,
+        ]);
     }
 
     /**

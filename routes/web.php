@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
@@ -15,6 +16,8 @@ use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\SupplierConroller;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SupplierPayment;
+use App\Http\Controllers\MenuController;
 
 Route::get('/', function () {return redirect('sign-in');})->middleware('guest');
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
@@ -54,6 +57,8 @@ Route::group(['middleware' => 'auth'], function () {
 	//config
 	Route::get('config/{id}', [ConfigController::class, 'index'])->name('config.index');
 	Route::post('config/store/{id}', [ConfigController::class, 'store'])->name('config.store');
+	//Menu
+	Route::resource('menu', MenuController::class);
 	//item_Category
 	Route::resource('item_category', ItemCategoryController::class);
 	Route::get('item_category-update-active-status/{item}/{status}', [ItemCategoryController::class, 'status'])->name('item_category.status');
@@ -74,4 +79,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('purchase-update-active-status/{item}/{status}', [PurchaseController::class, 'status'])->name('purchase.status');
 	Route::delete('purchase/delete/{id}', [PurchaseController::class, 'delete'])->name('purchase.delete');
 	Route::post('purchase-bulkaction', [PurchaseController::class, 'bulkAction'])->name('purchase.bulkAction');
+	//supplier payment
+	Route::resource('supplier_payment', SupplierPayment::class);
 });
