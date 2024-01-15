@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\menu;
+use App\Models\Menu;
+use Spatie\Permission\Models\Role;
 
 class MenuController extends Controller
 {
@@ -23,7 +24,8 @@ class MenuController extends Controller
     public function create()
     {
         $menu = Menu::all();
-        return view('menu.create', compact('menu'));
+        $role = Role::all();
+        return view('menu.create', compact('menu', 'role'));
     }
 
     /**
@@ -35,7 +37,7 @@ class MenuController extends Controller
             'title' => 'required',
             'url' => 'required',
             'small_icon' => 'required',
-            'icon' => 'required',
+            // 'icon' => 'required',
         ]);
         Menu::create([
             'title' => $request->title,
@@ -60,8 +62,9 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
+        $sub_menu = Menu::all();
         $menu = Menu::find($id);
-        return view('menu.edit',compact('menu'));
+        return view('menu.edit',compact('menu', 'sub_menu'));
     }
 
     /**
@@ -69,12 +72,6 @@ class MenuController extends Controller
      */
     public function update(Request $request, Menu $menu)
     {
-        $data = $request->validate([
-            'title' => 'required',
-            'url' => 'required',
-            'small_icon' => 'required',
-            // 'icon' => 'required',
-        ]);
         $menu->update([
             'title' => $request->title,
             'url' => $request->url,
@@ -82,7 +79,7 @@ class MenuController extends Controller
             'small_icon' => $request->small_icon,
             'icon' => $request->icon,
         ]);
-        return redirect()->route('menu.index')->with('success','Record Successfully Updated');
+        return redirect()->route('menu.index')->with('message','Record Successfully Updated');
     }
 
     /**
@@ -92,7 +89,7 @@ class MenuController extends Controller
 
     {
         $menu->delete();
-        return to_route('menu.index')->with('delete','Record successfully Deleted');
+        return to_route('menu.index')->with('message','Record successfully Deleted');
       
     }
     public function bulkAction(Request $request)

@@ -19,8 +19,16 @@
                             <a href="{{route('menu.index')}}" class="btn bg-gradient-dark"><i class="fa fa-arrow-right"></i></a>
                         </div>
                         <div class="card-body p-0 px-3">
-                            <form role="form" method="POST" action="{{  route('menu.store') }}" class="text-start"enctype="multipart/form-data">
+                            <form role="form" method="POST" action="{{  route('menu.store') }}" class="text-start" enctype="multipart/form-data">
                                 @csrf
+                                <div class="input-group input-group-outline mt-3">
+                                    <select class="form-control ps-3 py-0 select_multiple" name="" multiple="multiple" style="display:none">
+                                        <option value="">Select Role</option>
+                                        @foreach($role as $roles)
+                                        <option value="{{ $roles->id }}">{{ $roles->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <div class="input-group input-group-outline mt-3 @if(old('title')) null is-filled @endif">
                                     <label class="form-label">Title <span class="login-danger"> *</span></label>
                                     <input type="text" class="form-control" name="title" value="{{ old('title') }}">
@@ -38,11 +46,9 @@
                                 <div class="input-group input-group-outline is-filled form-select mt-3">
                                     <select class="form-control ps-3 py-0" name="parent_id">
                                         <option value="">No Parent</option>
-                                        <option value="1">admin </option>
-                                        {{-- @foreach($menu as $menus)
-                                        <option value="{{ $menus->id }}">{{ $menus->name }}</option>
-                                        @endforeach --}}
-
+                                        @foreach($menu as $menus)
+                                        <option value="{{ $menus->id }}">{{ $menus->title }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="input-group input-group-outline mt-3 @if(old('small_icon')) null is-filled @endif">

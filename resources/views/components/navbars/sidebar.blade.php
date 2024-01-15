@@ -28,29 +28,7 @@
                 </div>
             </div>
             @endif
-            <div class="side-bar">
-                <div class="menu">
-                    <div class="item">
-                        <a class="sub-btn"><i class="fa fa-store ms-2"></i>Items<i class="fas fa-angle-right dropdown"></i></a>
-                        <div class="sub-menu">
-                            <a href="{{ route('item_category.index') }}" class="sub-item"><i class="fa-solid fa-sitemap"></i>Items Category</a>
-                            <a href="{{ route('item.index') }}" class="sub-item"><i class="fa-solid fa-tag"></i>Items</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="side-bar">
-                <div class="menu">
-                    <div class="item">
-                        <a class="sub-btn"><i class="fa-solid fa-warehouse ms-2"></i>Inventory<i class="fas fa-angle-right dropdown"></i></a>
-                        <div class="sub-menu">
-                            <a href="{{ route('purchase.index') }}" class="sub-item"><i class="fa-solid fa-cart-shopping"></i>Purchase</a>
-                            <a href="{{ route('supplier.index') }}" class="sub-item"><i class="fa-solid fa-cart-flatbed"></i>Supplier</a>
-                            <a href="{{ route('supplier_payment.index') }}" class="sub-item"><i class="fa-solid fa-cart-flatbed"></i>Supplier Payments</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+             {!! \App\Utility::getMenu() !!}
             <li class="nav-item">
                 <form method="POST" action="{{ route('logout') }}" class="d-none" id="logout-form">
                     @csrf

@@ -6,22 +6,6 @@
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <div class="card-header p-0 my-3 mx-3">
-                {{-- <form method="GET" action="{{ route('supplier.index') }}">
-                @csrf
-                <div class="row justify-content-end text-end">
-                    <div class="col-lg-3 col-md-6"></div>
-                    <div class="col-lg-4 col-md-6"></div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="input-group input-group-outline @if($name) null is-filled @endif">
-                            <label class="form-label">Search Name</label>
-                            <input type="text" class="form-control" name="name" value="{{$name}}">
-                        </div>
-                    </div>
-                    <div class="col-lg-1 col-md-3 m-0">
-                        <button type="submit" class="btn btn-primary m-0">Search</button>
-                    </div>
-                </div>
-                </form> --}}
             </div>
             <div class="row">
                 <div class="col-12">
@@ -35,7 +19,6 @@
                         @if (session()->has('message'))
                         <div class="alert alert-success alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
                             <strong>{{ session()->get('message') }}</strong>
-                            {{-- <strong>This Is testing</strong> --}}
                             <button type="button" class="btn-close text-lg py-1 opacity-10" data-bs-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -44,7 +27,6 @@
                         @if (session()->has('error'))
                         <div class="alert alert-danger alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
                             <strong>{{ session()->get('error') }}</strong>
-                            {{-- <strong>This Is testing</strong> --}}
                             <button type="button" class="btn-close text-lg py-1 opacity-10" data-bs-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>

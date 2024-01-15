@@ -19,17 +19,17 @@
                             <a href="{{route('menu.index')}}" class="btn bg-gradient-dark"><i class="fa fa-arrow-right"></i></a>
                         </div>
                         <div class="card-body p-0 px-3">
-                            <form role="form" method="POST" action="{{  route('menu.update',$menu) }}" class="text-start"enctype="multipart/form-data">
+                            <form role="form" method="POST" action="{{  route('menu.update', $menu->id) }}" class="text-start" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
-                                <div class="input-group input-group-outline mt-3 @if(old('title')) null is-filled @endif">
+                                <div class="input-group input-group-outline mt-3 null is-filled">
                                     <label class="form-label">Title <span class="login-danger"> *</span></label>
                                     <input type="text" class="form-control" name="title" value="{{ $menu->title }}">
                                 </div>
                                 @error('title')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
-                                <div class="input-group input-group-outline mt-3 @if(old('url')) null is-filled @endif">
+                                <div class="input-group input-group-outline mt-3 null is-filled ">
                                     <label class="form-label">Url <span class="login-danger"> *</span></label>
                                     <input type="text" class="form-control" name="url" value="{{ $menu->url }}">
                                 </div>
@@ -39,16 +39,14 @@
                                 <div class="input-group input-group-outline is-filled form-select mt-3">
                                     <select class="form-control ps-3 py-0" name="parent_id">
                                         <option value="">No Parent</option>
-                                        <option value="1" selected>admin </option>
-                                        {{-- @foreach($menu as $menus)
-                                        <option value="{{ $menus->id }}">{{ $menus->name }}</option>
-                                        @endforeach --}}
-
+                                        @foreach($sub_menu as $sub_menus)
+                                        <option value="{{ $sub_menus->id }}" @if($sub_menus->id == $menu->parent_id) selected @endif>{{ $sub_menus->title }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
-                                <div class="input-group input-group-outline mt-3 @if(old('small_icon')) null is-filled @endif">
+                                <div class="input-group input-group-outline mt-3 null is-filled">
                                     <label class="form-label">Small Icon url</label>
-                                    <input type="text" class="form-control" name="small_icon" value="{{$menu->small_icon}}}">
+                                    <input type="text" class="form-control" name="small_icon" value="{{$menu->small_icon}}">
                                 </div>
                                 <div class="input-group input-group-outline mt-3 null is-filled">
                                     <label class="form-label">Icon</label>
