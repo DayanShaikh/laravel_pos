@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('url');
             $table->integer('parent_id')->nullable();
             $table->integer('sortorder')->nullable();
-            $table->string('icon');
+            $table->string('icon')->nullable();
             $table->string('small_icon');
             $table->timestamps();
         });
