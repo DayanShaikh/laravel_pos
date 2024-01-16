@@ -13,7 +13,7 @@ class MenuSeeder extends Seeder
      */
     public function run(): void
     {
-        Menu::create([
+        $Items1 = Menu::create([
             'title' => 'Items',
             'url' =>'#',
             'parent_id' => null,
@@ -23,11 +23,11 @@ class MenuSeeder extends Seeder
         Menu::create([
             'title' => 'Items',
             'url' =>'/item',
-            'parent_id' => null,
+            'parent_id' => $Items1->id,
             'small_icon' =>'<i class="fa-solid fa-tag"></i>',
             'icon' =>'',
         ]);
-        Menu::create([
+        $invetory = Menu::create([
             'title' => 'Inventory',
             'url' =>'#',
             'parent_id' => null,
@@ -37,21 +37,21 @@ class MenuSeeder extends Seeder
         Menu::create([
             'title' => 'Purchase',
             'url' =>'/purchase',
-            'parent_id' => null,
+            'parent_id' => $invetory->id,
             'small_icon' =>'<i class="fa-solid fa-cart-shopping"></i>',
             'icon' =>'',
         ]);
         Menu::create([
             'title' => 'Supplier',
             'url' =>'/supplier',
-            'parent_id' => null,
+            'parent_id' => $invetory->id,
             'small_icon' =>'<i class="fa-solid fa-cart-flatbed"></i>',
             'icon' =>'',
         ]);
         Menu::create([
             'title' => 'Supplier Payments',
             'url' =>'/supplier_payment',
-            'parent_id' => null,
+            'parent_id' => $invetory->id,
             'small_icon' =>'<i class="fa-solid fa-cart-flatbed"></i>',
             'icon' =>'',
         ]);
