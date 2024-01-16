@@ -50,9 +50,10 @@ class PurchaseController extends Controller
     public function store(Request $request)
     {
         $data = json_decode($request->input('purchase'), true);
-        $format_date = Carbon::parse($data['date'])->format('Y-m-d');
+        $format_date = Carbon::createFromFormat('d/m/Y', $data['date']);
+        
         $purchase = Purchase::create([
-            'date' => $format_date,
+            'date' => $format_date->format('Y-m-d'),
             'supplier_id' => $data['supplier_id'],
             'total_items' => $data['quantity'],
             'total_price' => $data['total'],
@@ -61,7 +62,7 @@ class PurchaseController extends Controller
             'note' => $data['notes'],
         ]);
         foreach ($data['items'] as $items) {
-            PurchaseItems::create([
+            $pur_items =PurchaseItems::create([
                 'purchase_id' => $purchase->id,
                 'item_id' => $items['item_id'],
                 'purchase_price' => $items['purchase_price'],
@@ -69,6 +70,14 @@ class PurchaseController extends Controller
                 'quantity' => $items['quantity'],
                 'total' => $items['total'],
             ]);
+            $pur_items =Item::where('id',$items['item_id'])->first();
+            $pur_items->quantity=$items['quantity'];
+            $pur_items->save();
+            // $items->update([
+            //     "quantity" =>$items['quantity'],
+                
+            // ]);
+
         }
         return response()->json(['status' => 1, 'message' => 'Purchase created Successfully']);
     }
@@ -86,9 +95,9 @@ class PurchaseController extends Controller
     {
 
         $data = json_decode($request->input('purchase'), true);
-        $format_date = Carbon::parse($data['date'])->format('Y-m-d');
+        $format_date = Carbon::createFromFormat('d/m/Y', $data['date']);
         $purchase = Purchase::find($id);
-        $purchase->date = $format_date;
+        $purchase->date = $format_date->format('Y-m-d');
         $purchase->supplier_id = $data['supplier_id'];
         $purchase->total_items = $data['quantity'];
         $purchase->total_price = $data['total'];
@@ -116,9 +125,13 @@ class PurchaseController extends Controller
                     'total' => $items['total'],
                 ]);
             }
+            $pur_items =Item::where('id',$items['item_id'])->first();
+            $pur_items->quantity=$items['quantity'];
+            $pur_items->save();
 
         }
-        return response()->json(['status' => 1, 'message' => 'Purchase Update Successfully']);
+        $route =route('purchase.index');
+        return response()->json(['status' => 1, 'message' => 'Purchase Update Successfully','file_path'=>$route]);
     }
 
     public function status($id, $status)

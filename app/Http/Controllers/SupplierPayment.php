@@ -53,9 +53,6 @@ class SupplierPayment extends Controller
             'payment'=>$request->payment,
             'details'=>$request->detail,
         ]);
-        $supplier = Supplier::find($request->supplier_id);
-        $balance =$supplier->balance -$request->payment;
-        $supplier->update(['balance'=>$balance]);
         return redirect()->route('supplier_payment.index')->with('sucess','Record Successfully Stored');
     }
 
@@ -82,7 +79,15 @@ class SupplierPayment extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $date_format =Carbon::createFromFormat('d/m/Y', $request->date);
+
+        $supplier_payment =SupplierPayments::find($id);
+        $supplier_payment->supplier_id = $request->supplier_id;
+        $supplier_payment->date =  $date_format;
+        $supplier_payment->payment = $request->payment;
+        $supplier_payment->details = $request->detail;
+        $supplier_payment->update();
+        return to_route('supplier_payment.index')->with('success','Record Successfully Update');
     }
 
     /**
@@ -90,11 +95,46 @@ class SupplierPayment extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $supplier_payment =SupplierPayments::find($id);
+        $supplier_payment->delete();
     }
-    public function status(string $id)
+    public function status($id,$status)
     {
-        //
+        $supp_payment = SupplierPayments::find($id);
+        $supp_payment->status = $status;
+        $supp_payment->save();
+        return to_route('supplier_payment.index')->with('success','Status Successfully Update');
+        
+    }
+    public function bulkAction(Request $request)
+    {
+        $action = $request->action;
+        $multi = $request->input('multidelete', []);
+        // dd($multi);
+        if (empty($multi)) {
+            return redirect()->back()->with('error', 'No Records Selected');
+        }
+        if ($action == 'delete') {
+            foreach ($multi as $multis) {
+                SupplierPayments::where('id', $multis)->delete();
+            }
+            return redirect()->back()->with('message', 'Selected Records delete Successfully');
+        }
+        if ($action == 'status_on') {
+            foreach ($multi as $multis) {
+                SupplierPayments::where('id', $multis)->update(['status' => 1]);
+            }
+            return redirect()->back()->with('message', 'Selected Rocords Status ON Successfully');
+        }
+        if ($action == 'status_off') {
+            foreach ($multi as $multis) {
+                SupplierPayments::where('id', $multis)->update(['status' => 0]);
+            }
+            return redirect()->back()->with('message', 'Selected Rocords Status OFF Successfully');
+        }
+        if ($action == '') {
+            return redirect()->back();
+        }
     }
     
 
