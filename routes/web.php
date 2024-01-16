@@ -82,4 +82,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('purchase-bulkaction', [PurchaseController::class, 'bulkAction'])->name('purchase.bulkAction');
 	//supplier payment
 	Route::resource('supplier_payment', SupplierPayment::class);
+	Route::get('/status/{id}/{status}', [SupplierPayment::class, 'status'])->name('supplier_payment_status');
+	
 });

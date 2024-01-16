@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SupplierPayments;
 use App\Models\Supplier;
+use Carbon\Carbon;
 
 class SupplierPayment extends Controller
 {
@@ -18,7 +19,7 @@ class SupplierPayment extends Controller
         $rowsPerPage = $request->input('rowsPerPage', 10);
         $name = $request->input('name') ?? "";
         if (!empty($name)) {
-            $supplier_payment = SupplierPayments::where('name', 'like', '%' . $name . '%')->paginate($rowsPerPage);
+            $supplier_payment = SupplierPayments::where('name','id', 'like', '%' . $name . '%')->paginate($rowsPerPage);
         } else {
             $supplier_payment = SupplierPayments::paginate($rowsPerPage);
         }
@@ -39,7 +40,23 @@ class SupplierPayment extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validete = $request->validate([
+            'supplier_id'=>'required',
+            'date'=>'required',
+            'payment'=>'required',
+        ]);
+        $date_format =Carbon::createFromFormat('d/m/Y', $request->date);
+
+        SupplierPayments::create([
+            'supplier_id'=>$request->supplier_id,
+            'date'=>$date_format,
+            'payment'=>$request->payment,
+            'details'=>$request->detail,
+        ]);
+        $supplier = Supplier::find($request->supplier_id);
+        $balance =$supplier->balance -$request->payment;
+        $supplier->update(['balance'=>$balance]);
+        return redirect()->route('supplier_payment.index')->with('sucess','Record Successfully Stored');
     }
 
     /**
@@ -53,9 +70,11 @@ class SupplierPayment extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $detail = SupplierPayments::find($id);
+        $supplier = Supplier::all();
+        return view('supplier_payment.edit', compact('detail','supplier'));
     }
 
     /**
@@ -73,4 +92,10 @@ class SupplierPayment extends Controller
     {
         //
     }
+    public function status(string $id)
+    {
+        //
+    }
+    
+
 }

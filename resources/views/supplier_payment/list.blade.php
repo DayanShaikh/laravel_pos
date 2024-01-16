@@ -29,7 +29,7 @@
                     <div class="card my-4">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                                <h6 class="text-white mx-3">Manage Supplier</h6>
+                                <h6 class="text-white mx-3">Manage Supplier Payment</h6>
                             </div>
                         </div>
                         @if (session()->has('message'))
@@ -51,7 +51,7 @@
                         </div>
                         @endif
                         <div class=" me-3 my-3 text-end">
-                            <a class="btn bg-gradient-dark mb-0" href="{{ route('supplier.create')}}"><i class="material-icons text-sm">add</i></a>
+                            <a class="btn bg-gradient-dark mb-0" href="{{ route('supplier_payment.create')}}"><i class="material-icons text-sm">add</i></a>
                         </div>
                         <form method="POST" action="{{ route('supplier.bulkAction') }}" id="myForm">
                             @csrf
@@ -86,37 +86,38 @@
                                                     <span class="text-secondary text-sm">{{$sn++}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">@if ($supplier_payments->supplier_id == $supplier->id)
-                                                        {{$supplier->name}}
-                                                    @endif</span>
+                                                    <span class="text-secondary text-sm">{{--@if ($supplier_payments->supplier_id == $supplier->id)--}}
+                                                        {{$supplier_payments->supplier_id}}
+                                                    {{-- @endif --}}
+                                                </span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $suppliers->phone}}</span>
+                                                    <span class="text-secondary text-sm">{{ $supplier_payments->date}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $suppliers->address}}</span>
+                                                    <span class="text-secondary text-sm">{{ $supplier_payments->payment}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $suppliers->balance}}</span>
+                                                    <span class="text-secondary text-sm">{{ $supplier_payments->details}}</span>
                                                 </td>
                                                 <td class="align-middle text-end px-4">
-                                                    <a href="{{ route('supplier.ledger', $suppliers->id) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Ledger">
+                                                    {{-- <a href="{{ route('supplier.ledger', $suppliers->id) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Ledger">
                                                         <i class="fa fa-print"></i>
-                                                    </a>
-                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('supplier.edit', $suppliers->id)}}" title="Edit">
+                                                    </a> --}}
+                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('supplier_payment.edit', $supplier_payments->id)}}" title="Edit">
                                                         <i class="material-icons">edit</i>
                                                         <div class="ripple-container"></div>
                                                     </a>
-                                                    @if($suppliers->status == 0)
-                                                    <a href=" {{ route('supplier.status', [$suppliers->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
+                                                    @if($supplier_payments->status == 0)
+                                                    <a href=" {{ route('supplier_payment_status', [$supplier_payments->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
                                                         <i class="fa fa-eye-slash"></i>
                                                     </a>
-                                                    @elseif($suppliers->status == 1)
-                                                    <a href="{{ route('supplier.status', [$suppliers->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
+                                                    @elseif($supplier_payments->status == 1)
+                                                    <a href="{{ route('supplier_payment_status', [$supplier_payments->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
                                                     @endif
-                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('supplier.destroy', $suppliers->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
+                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('supplier.destroy', $supplier_payments->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
                                                         <i class="fa fa-trash"></i>
                                                         <div class="ripple-container"></div>
                                                     </a>

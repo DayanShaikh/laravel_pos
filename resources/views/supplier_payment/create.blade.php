@@ -24,24 +24,31 @@
                                 <div class="input-group input-group-outline mt-3 form-select">
                                     <select name="supplier_id" id="action" class="form-control">
                                         <option value="0">Select Suppliers</option>
-                                        @foreach($suppliers as $supplier)
-                                        <option value="{{$supplier->id}}" @if($supplier_id==$supplier->id) selected @endif>{{$supplier->name}}</option>
+                                        @foreach($supplier as $suppliers)
+                                        <option value="{{$suppliers->id}}">{{$suppliers->name}}</option>
                                         @endforeach
                                     </select>
-                                    @error('name')
+                                    @error('supplier_id')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
-                                    <div class="input-group input-group-outline mt-3 @if(old('phone')) null is-filled @endif">
-                                        <label class="form-label">Phone </label>
-                                        <input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
+                                    <div class="input-group input-group-outline mt-3 null is-filled ">
+                                        <label  for="datepicker" class="form-label">Date </label>
+                                        <input type="text" id="datepicker" class="form-control" name="date" value="{{ old('date') }}">
                                     </div>
-                                    <div class="input-group input-group-outline mt-3 @if(old('address')) null is-filled @endif">
-                                        <label class="form-label">Address </label>
-                                        <input type="text" class="form-control" name="address" value="{{ old('address') }}">
+                                        @error('date')
+                                        <p class='text-danger inputerror'>{{ $message }} </p>
+                                        @enderror
+                                    <div class="input-group input-group-outline mt-3 null is-filled">
+                                        <label  class="form-label">Payment </label>
+                                        <input type="number" class="form-control" name="payment" value="{{ old('payment') }}">
+                                        <br>
                                     </div>
-                                    <div class="input-group input-group-outline mt-3 @if(old('balance')) null is-filled @endif">
-                                        <label class="form-label">Balance </label>
-                                        <input type="text" class="form-control" name="balance" value="{{ old('balance')}} 0">
+                                        @error('payment')
+                                        <p class='text-danger inputerror'>{{ $message }} </p>
+                                        @enderror
+                                    <div class="input-group input-group-outline mt-3 @if(old('detail')) null is-filled @endif">
+                                        <label class="form-label">Detail </label> 
+                                        <input type="text" class="form-control" name="detail" value="{{ old('detail') }}">
                                     </div>
                                     <div class="col-lg-1 col-sm-6 col-12">
                                         <button class="btn bg-gradient-primary w-100 my-4 mb-2" type="submit" data-target="successToast">Submit</button>
