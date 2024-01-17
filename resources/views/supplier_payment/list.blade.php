@@ -53,9 +53,9 @@
                         <div class=" me-3 my-3 text-end">
                             <a class="btn bg-gradient-dark mb-0" href="{{ route('supplier_payment.create')}}"><i class="material-icons text-sm">add</i></a>
                         </div>
-                        <form method="POST" action="{{ route('supplier.bulkAction') }}" id="myForm">
+                        <form method="POST" action="{{ route('supplier_payment.bulkAction') }}" id="myForm">
                             @csrf
-                            @method('POST')
+                            @method('GET')
                             <div class="card-body px-0 pb-2">
                                 <div class="table-responsive p-0">
                                     <table class="table align-items-center mb-0">
@@ -88,7 +88,7 @@
                                                 <td class="align-middle text-center">
                                                     <span class="text-secondary text-sm">
                                                         {{--@if ($supplier->id == $supplier_payments->supplier_id)--}}
-                                                        {{$supplier_payments->supplier_id}}
+                                                        {{$supplier_payments->supplier->name}}
                                                      {{--@endif--}}
                                                 </span>
                                                 </td>

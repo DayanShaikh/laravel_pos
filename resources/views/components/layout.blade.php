@@ -59,6 +59,7 @@
     <script src="{{ asset('assets') }}/js/bootstrap-datepicker.min.js"></script>
     <script src="{{ asset('assets') }}/js/pikaday.min.js"></script>
     <script src="{{ asset('assets') }}/js/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="{{ asset('assets') }}/js/angular.min.js"></script>
     <script type="text/javascript" src="{{ asset('assets') }}/js/angular-animate.js"></script>
     @stack('js')

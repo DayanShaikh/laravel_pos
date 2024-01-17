@@ -12,12 +12,14 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ConfigController;
+use App\Http\Controllers\Customer;
 use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\SupplierConroller;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierPayment;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\CustomerController;
 
 Route::get('/', function () {return redirect('sign-in');})->middleware('guest');
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
@@ -83,5 +85,8 @@ Route::group(['middleware' => 'auth'], function () {
 	//supplier payment
 	Route::resource('supplier_payment', SupplierPayment::class);
 	Route::get('/status/{id}/{status}', [SupplierPayment::class, 'status'])->name('supplier_payment_status');
+	Route::get('/supplier_payment_bulkaction', [SupplierPayment::class, 'bulkAction'])->name('supplier_payment.bulkAction');
+	Route::resource('/customer', CustomerController::class);
+	Route::get('/customer_status/{id}/{status}',[ CustomerController::class, 'status'])->name('customer.status');
 	
 });

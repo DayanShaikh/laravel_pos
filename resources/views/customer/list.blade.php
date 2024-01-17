@@ -4,135 +4,115 @@
         <!-- Navbar -->
         <x-navbars.navs.auth titlePage="User Management"></x-navbars.navs.auth>
         <!-- End Navbar -->
-        <div class="container-fluid py-2 px-2">
+        <div class="container-fluid py-4">
             <div class="card-header p-0 my-3 mx-3">
-                <form method="GET" action="">
+                <form method="GET" action="{{ route('customer.index') }}">
                     @csrf
                     <div class="row justify-content-end text-end">
-                        <div class="col-lg-2 col-md-6">
-                            <div class="input-group input-group-outline datepicker-container">
-                                {{-- <label for="datepicker" class="form-label">from date</label> --}}
-                                <input type="text" class="form-control" id="start-date" name="from_date" placeholder="From date" value="{{$from_date}}" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6">
-                            <div class="input-group input-group-outline datepicker-container">
-                                {{-- <label for="datepicker" class="form-label">To date</label> --}}
-                                <input type="text" class="form-control" id="end-date" name="to_date" placeholder="To date" value="{{$to_date}}" autocomplete="off">
-                            </div>
-                        </div>
-                        {{-- <div class="col-lg-2 col-md-6">
-                            <div class="input-group input-group-outline ">
+                        <div class="col-lg-3 col-md-6"></div>
+                        <div class="col-lg-4 col-md-6"></div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="input-group input-group-outline @if($name) null is-filled @endif">
                                 <label class="form-label">Search Name</label>
-                                <input type="text" class="form-control" name="q" value="">
-                            </div>
-                        </div> --}}
-                        <div class="col-lg-2 col-md-6">
-                            <div class="input-group input-group-outline is-filled form-select w-100 h-100">
-                                <select name="supplier_id" id="action" class="form-control">
-                                    <option value="0">Select Suppliers</option>
-                                    @foreach($suppliers as $supplier)
-                                    <option value="{{$supplier->id}}" @if($supplier_id == $supplier->id) selected @endif>{{$supplier->name}}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control" name="name" value="{{$name}}">
                             </div>
                         </div>
-                        {{-- <div class="col-lg-2 col-md-6"></div>
-                        <div class="col-lg-1 col-md-6"></div> --}}
-                        <div class="col-lg-1 col-md-3 ">
-                            <button type="submit" class="btn btn-primary m-0 p-2 w-100">Search</button>
+                        <div class="col-lg-1 col-md-3 m-0">
+                            <button type="submit" class="btn btn-primary m-0">Search</button>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="row">
                 <div class="col-12">
+
                     <div class="card my-4">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                                <h6 class="text-white mx-3">Manage Purchase</h6>
+                                <h6 class="text-white mx-3">Manage customer</h6>
                             </div>
                         </div>
-                        @if (session()->has('message'))
+                        @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
-                            <strong>{{ session()->get('message') }}</strong>
+                            <strong>{{ session()->get('success') }}</strong>
+                            {{-- <strong>This Is testing</strong> --}}
+                            <button type="button" class="btn-close text-lg py-1 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        @endif
+                        @if (session()->has('error'))
+                        <div class="alert alert-danger alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
+                            <strong>{{ session()->get('error') }}</strong>
+                            {{-- <strong>This Is testing</strong> --}}
                             <button type="button" class="btn-close text-lg py-1 opacity-10" data-bs-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         @endif
                         <div class=" me-3 my-3 text-end">
-                            <a class="btn bg-gradient-dark mb-0" href="{{ route('purchase.create')}}"><i class="material-icons text-sm">add</i></a>
+                            <a class="btn bg-gradient-dark mb-0" href="{{ route('customer.create')}}"><i class="material-icons text-sm">add</i></a>
                         </div>
-                        <form method="POST" action="{{route('purchase.bulkAction')}}" id="myForm">
+                        <form method="POST" action="{{ route('supplier.bulkAction') }}" id="myForm">
                             @csrf
                             @method('POST')
-                            <div class="card-body">
+                            <div class="card-body px-0 pb-2">
                                 <div class="table-responsive p-0">
                                     <table class="table align-items-center mb-0">
                                         <thead>
                                             <tr>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">S.no</th>
                                                 <th width="2%" class="align-middle text-center">
                                                     <div class="form-check check-tables">
                                                         <input class="form-check-input" id="select-all" type="checkbox" name="" value="">
                                                     </div>
                                                 </th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">ID</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Date</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Supplier</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Total Price</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Discount</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Net Price</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1"></th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">s.no</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Name</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Phone</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Address</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">balance</th>
+                                                <th class="text-secondary opacity-7"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($purchase as $purchases)
+                                            @foreach($customer as $customers)
                                             <tr>
+                                                <td class="align-middle text-center">
+                                                    <div class="form-check check-tables">
+                                                        <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$customers->id}}">
+                                                    </div>
+                                                </td>
                                                 <td class="align-middle text-center">
                                                     <span class="text-secondary text-sm">{{$sn++}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <div class="form-check check-tables">
-                                                        <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$purchases->id}}">
-                                                    </div>
+                                                    <span class="text-secondary text-sm">{{ $customers->name}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{$purchases->id}}</span>
+                                                    <span class="text-secondary text-sm">0{{$customers->phone}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{\Carbon\Carbon::parse($purchases->date)->format('d-m-Y')}}</span>
+                                                    <span class="text-secondary text-sm">{{ $customers->address}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">
-                                                        {{$purchases->supplier->name}}
-                                                    </span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{$purchases->total_price}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{$purchases->discount}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{$purchases->net_price}}</span>
+                                                    <span class="text-secondary text-sm">{{ $customers->balance}}</span>
                                                 </td>
                                                 <td class="align-middle text-end px-4">
-                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('purchase.edit', $purchases->id)}}" title="Edit">
+                                                   
+                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('customer.edit', $customers->id)}}" title="Edit">
                                                         <i class="material-icons">edit</i>
                                                         <div class="ripple-container"></div>
                                                     </a>
-                                                    @if($purchases->status == 0)
-                                                    <a href=" {{ route('purchase.status', [$purchases->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
+                                                    @if($customers->status == 0)
+                                                    <a href=" {{ route('customer.status', [$customers->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
                                                         <i class="fa fa-eye-slash"></i>
                                                     </a>
-                                                    @elseif($purchases->status == 1)
-                                                    <a href="{{ route('purchase.status', [$purchases->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
+                                                    @elseif($customers->status == 1)
+                                                    <a href="{{ route('customer.status', [$customers->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
                                                     @endif
-                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('purchase.delete', $purchases->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
+                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('customer.destroy', $customers->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
                                                         <i class="fa fa-trash"></i>
                                                         <div class="ripple-container"></div>
                                                     </a>
@@ -162,14 +142,14 @@
                                 <div class="input-group input-group-outline is-filled form-select d-inline-flex w-40 float-start">
                                     <span class="my-2 mx-1">Show Page:</span>
                                     <select onchange="window.location.href=this.value" class="form-control">
-                                        @for ($i = 1; $i <= $purchase->lastPage(); $i++)
-                                            <option value="{{ $purchase->url($i) }}" {{ $purchase->currentPage() == $i ? 'selected' : '' }}>
+                                        @for ($i = 1; $i <= $customer->lastPage(); $i++)
+                                            <option value="{{ $customer->url($i) }}" {{ $customer->currentPage() == $i ? 'selected' : '' }}>
                                                 {{ $i }}
                                             </option>
                                             @endfor
                                     </select>
                                 </div>
-                                <form action="{{ route('purchase.index') }}" method="get">
+                                <form action="{{ route('customer.index') }}" method="get">
                                     @csrf
                                     <div class="input-group input-group-outline is-filled form-select d-inline-flex w-50">
                                         <span class="my-2 mx-1">Show Page:</span>
@@ -181,7 +161,7 @@
                                         </select>
                                     </div>
                                 </form>
-                                {{$purchase->links()}}
+                                {{$customer->links()}}
                             </div>
                         </div>
                     </div>

@@ -55,5 +55,19 @@ class MenuSeeder extends Seeder
             'small_icon' =>'<i class="fa-solid fa-cart-flatbed"></i>',
             'icon' =>'',
         ]);
+        $Sales = Menu::create([
+            'title' => 'Sales',
+            'url' =>'#',
+            'parent_id' => null,
+            'small_icon' =>'<i class="fa-solid fa-sack-dollar"></i>',
+            'icon' =>'',
+        ]);
+        Menu::create([
+            'title' => 'Customer',
+            'url' =>'/customer',
+            'parent_id' => $Sales->id,
+            'small_icon' =>'<i class="fa-solid fa-cart-flatbed"></i>',
+            'icon' =>'',
+        ]);
     }
 }

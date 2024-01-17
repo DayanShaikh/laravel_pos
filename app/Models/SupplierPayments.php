@@ -14,4 +14,8 @@ class SupplierPayments extends Model
         'payment',
         'details'
     ];
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class, 'supplier_id');
+    }
 }

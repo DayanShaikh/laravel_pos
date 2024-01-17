@@ -21,8 +21,9 @@ class SupplierPayment extends Controller
         if (!empty($name)) {
             $supplier_payment = SupplierPayments::where('name','id', 'like', '%' . $name . '%')->paginate($rowsPerPage);
         } else {
-            $supplier_payment = SupplierPayments::paginate($rowsPerPage);
+            $supplier_payment = SupplierPayments::with('supplier')->paginate($rowsPerPage);
         }
+        // return $supplier_payment;
         return view('supplier_payment.list', compact('supplier','supplier_payment','sn','name','rowsPerPage'));
     }
 
