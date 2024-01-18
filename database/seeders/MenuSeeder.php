@@ -69,5 +69,19 @@ class MenuSeeder extends Seeder
             'small_icon' =>'<i class="fa-solid fa-cart-flatbed"></i>',
             'icon' =>'',
         ]);
+        $Accounts = Menu::create([
+            'title' => 'Accounts',
+            'url' =>'#',
+            'parent_id' => null,
+            'small_icon' =>'<i class="fa-solid fa-chart-line"></i>',
+            'icon' =>'',
+        ]);
+        Menu::create([
+            'title' => 'Expense',
+            'url' =>'/expense_category',
+            'parent_id' => $Accounts->id,
+            'small_icon' =>'<i class="fa-solid fa-hand-holding-dollar"></i>',
+            'icon' =>'',
+        ]);
     }
 }

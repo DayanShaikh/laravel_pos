@@ -101,4 +101,34 @@ class CustomerController extends Controller
         $customer->save();
         return to_route('customer.index')->with('success',"Record Successfully Updated");
     }
+    public function bulkAction(Request $request)
+    {
+        $action = $request->action;
+        $multi = $request->input('multidelete', []);
+        // dd($multi);
+        if (empty($multi)) {
+            return redirect()->back()->with('error', 'No Records Selected');
+        }
+        if ($action == 'delete') {
+            foreach ($multi as $multis) {
+                Customer::where('id', $multis)->delete();
+            }
+            return redirect()->back()->with('message', 'Selected Records delete Successfully');
+        }
+        if ($action == 'status_on') {
+            foreach ($multi as $multis) {
+                Customer::where('id', $multis)->update(['status' => 1]);
+            }
+            return redirect()->back()->with('message', 'Selected Rocords Status ON Successfully');
+        }
+        if ($action == 'status_off') {
+            foreach ($multi as $multis) {
+                Customer::where('id', $multis)->update(['status' => 0]);
+            }
+            return redirect()->back()->with('message', 'Selected Rocords Status OFF Successfully');
+        }
+        if ($action == '') {
+            return redirect()->back();
+        }
+    }
 }

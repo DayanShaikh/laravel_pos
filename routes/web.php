@@ -20,6 +20,9 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierPayment;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\Customer_PaymentController;
+use App\Http\Controllers\Expense_CategoryController;
+
 
 Route::get('/', function () {return redirect('sign-in');})->middleware('guest');
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
@@ -59,6 +62,19 @@ Route::group(['middleware' => 'auth'], function () {
 	//config
 	Route::get('config/{id}', [ConfigController::class, 'index'])->name('config.index');
 	Route::post('config/store/{id}', [ConfigController::class, 'store'])->name('config.store');
+	//cusotmer
+	Route::resource('/customer', CustomerController::class);
+	Route::get('/customer_status/{id}/{status}',[ CustomerController::class, 'status'])->name('customer.status');
+	Route::post('/customer_bulkAction',[ CustomerController::class, 'bulkAction'])->name('customer_bulkAction');
+	//customer_payment
+
+	Route::resource('/customer_payment',Customer_PaymentController::class);
+	Route::get('/customer_payment_status/{id}/{status}',[ Customer_PaymentController::class, 'status'])->name('customer_payment_status');
+	Route::post('/customer_payment_bulkAction',[ Customer_PaymentController::class, 'bulkAction'])->name('customer_payment.bulkAction');
+	//expense category
+	Route::resource('/expense_category',Expense_CategoryController::class);
+	Route::get('/expense_category_status/{id}/{status}',[ Expense_CategoryController::class, 'status'])->name('expense_category_status');
+	Route::post('/expense_category_bulkAction',[ Expense_CategoryController::class, 'bulkAction'])->name('expense_category.bulkAction');
 	//Menu
 	Route::resource('menu', MenuController::class);
 	Route::post('menu-bulkaction', [MenuController::class, 'bulkAction'])->name('menu.bulkAction');
@@ -86,7 +102,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('supplier_payment', SupplierPayment::class);
 	Route::get('/status/{id}/{status}', [SupplierPayment::class, 'status'])->name('supplier_payment_status');
 	Route::get('/supplier_payment_bulkaction', [SupplierPayment::class, 'bulkAction'])->name('supplier_payment.bulkAction');
-	Route::resource('/customer', CustomerController::class);
-	Route::get('/customer_status/{id}/{status}',[ CustomerController::class, 'status'])->name('customer.status');
+	
 	
 });
