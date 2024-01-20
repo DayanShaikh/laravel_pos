@@ -22,7 +22,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Customer_PaymentController;
 use App\Http\Controllers\Expense_CategoryController;
-
+use App\Http\Controllers\Manage_ExpenseController;
 
 Route::get('/', function () {return redirect('sign-in');})->middleware('guest');
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
@@ -102,6 +102,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('supplier_payment', SupplierPayment::class);
 	Route::get('/status/{id}/{status}', [SupplierPayment::class, 'status'])->name('supplier_payment_status');
 	Route::get('/supplier_payment_bulkaction', [SupplierPayment::class, 'bulkAction'])->name('supplier_payment.bulkAction');
-	
+	//manage Expense
+	Route::resource('/manage_expense', Manage_ExpenseController::class);
+	Route::get('/manage_expense/{id}/{status}', [Manage_ExpenseController::class, 'status'])->name('manage_expense.status');
+	Route::get('/manage_expense_bulkaction', [Manage_ExpenseController::class, 'bulkAction'])->name('manage_expense.bulkAction');
 	
 });

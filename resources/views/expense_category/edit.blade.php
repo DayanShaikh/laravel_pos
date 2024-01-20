@@ -19,45 +19,36 @@
                             <a href="{{route('item.index')}}" class="btn bg-gradient-dark"><i class="fa fa-arrow-right"></i></a>
                         </div>
                         <div class="card-body p-0 px-3">
-                            <form role="form" method="POST" action="{{  route('item.update', $item->id) }}" class="text-start">
+                            <form role="form" method="POST" action="{{  route('expense_category.update',$detail->id) }}" class="text-start">
                                 @csrf
-                                @method('PUT')
-                                <div class="input-group input-group-outline is-filled form-select mt-3">
-                                    {{-- <label class="form-label">Configuration Type</label> --}}
+                                @method("PUT")
+                                {{-- <div class="input-group input-group-outline is-filled form-select mt-3">
                                     <select class="form-control ps-3 py-0" name="item_category_id">
                                         <option value="">Select Item Category </option>
                                         @foreach($item_category as $item_c_id)
-                                        <option value="{{$item_c_id->id}}" @if($item->item_category_id==$item_c_id->id) selected @endif>{{$item_c_id->title}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="input-group input-group-outline mt-3 @if($item->title) null is-filled @endif">
-                                    <label class="form-label">Title <span class="login-danger"> *</span></label>
-                                    <input type="text" class="form-control" name="title" value="{{ $item->title }}">
-                                </div>
-                                @error('title')
-                                <p class='text-danger inputerror'>{{ $message }} </p>
-                                @enderror
-                                <div class="input-group input-group-outline mt-3 @if($item->unit_price) null is-filled @endif">
-                                    <label class="form-label">Unit Price </label>
-                                    <input type="text" class="form-control" name="unit_price" value="{{ $item->unit_price }}">
-                                </div>
-                                <div class="input-group input-group-outline mt-3 @if($item->sale_price) null is-filled @endif">
-                                    <label class="form-label">Sale Price </label>
-                                    <input type="text" class="form-control" name="sale_price" value="{{ $item->sale_price }}">
-                                </div>
-                                <div class="input-group input-group-outline mt-3 @if($item->quantity) null is-filled @endif">
-                                    <label class="form-label">Quantity</label>
-                                    <input type="text" class="form-control" name="quantity" value="{{ $item->quantity }}">
-                                </div>
-                                <div class="col-lg-1 col-sm-6 col-12">
-                                    <button class="btn bg-gradient-primary w-100 my-4 mb-2" type="submit" data-target="successToast">Submit</button>
-                                </div>
-                            </form>
+                                        <option value="{{$item_c_id->id}}" @if(old('config_type_id')==$item_c_id->id) selected @endif>{{$item_c_id->title}}</option>
+                                @endforeach
+                                </select>
+                        </div> --}}
+                        <div class="input-group input-group-outline mt-3 @if($detail->title) null is-filled @endif">
+                            <label class="form-label">Title <span class="login-danger">*</span></label>
+                            <input type="text" class="form-control" name="title" value="{{ $detail->title }}">
                         </div>
+                        @error('title')
+                        <p class='text-danger inputerror'>{{ $message }} </p>
+                        @enderror
+                        
+                        <div class="col-lg-1 col-sm-6 col-12">
+                            <button class="btn bg-gradient-primary w-100 my-4 mb-2 p-3" type="submit" data-target="successToast">Submit</button>
+                        </div>
+                        {{-- <div class="text-center">
+                                    <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Sign in</button>
+                                </div> --}}
+                        </form>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </main>
 </x-layout>

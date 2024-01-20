@@ -53,7 +53,7 @@
                                     <input type="file" class="form-control" name="icon" value="{{$menu->icon}}">
                                 </div>
                                 <div class="col-lg-1 col-sm-6 col-12">
-                                    <button class="btn bg-gradient-primary w-100 my-4 mb-2" type="submit" data-target="successToast">Submit</button>
+                                    <button class="btn bg-gradient-primary w-100 my-4 mb-2 p-3" type="submit" data-target="successToast">Submit</button>
                                 </div>
                             </form>
                         </div>

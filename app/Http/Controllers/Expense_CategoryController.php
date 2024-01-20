@@ -36,7 +36,12 @@ class Expense_CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate =$request->validate([
+            'title'=>'required',
+
+        ]);
+        Expense_Category::create($validate);
+        return to_route('expense_category.index')->with('message','Record Successfully Submited');
     }
 
     /**
@@ -52,7 +57,8 @@ class Expense_CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $detail = Expense_Category::find($id);
+        return view('expense_category.edit',compact('detail'));
     }
 
     /**
@@ -60,7 +66,12 @@ class Expense_CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate(['title'=>'required']);
+        $expense_categroy  = Expense_Category::find($id);
+        $expense_categroy->title=$request->title;
+        $expense_categroy->save();
+        return to_route('expense_category.index')->with('message','Record Successfully Updated');
+
     }
 
     /**
@@ -68,6 +79,45 @@ class Expense_CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $detail = Expense_Category::find($id);
+        $detail->delete();
+        return to_route('expense_category.index')->with('message','Record Successfully Deleted ');
+    }
+    public function status($id, $status)
+    {
+        $item = Expense_Category::find($id);
+        $item->status = $status;
+        $item->save();
+        return redirect()->back()->with('message', 'Status Update Successfully');
+    }
+    public function bulkAction(Request $request)
+    {
+        $action = $request->action;
+        $multi = $request->input('multidelete', []);
+        // dd($multi);
+        if (empty($multi)) {
+            return redirect()->back()->with('error', 'No Records Selected');
+        }
+        if ($action == 'delete') {
+            foreach ($multi as $multis) {
+                Expense_Category::where('id', $multis)->delete();
+            }
+            return redirect()->back()->with('message', 'Selected Records delete Successfully');
+        }
+        if ($action == 'status_on') {
+            foreach ($multi as $multis) {
+                Expense_Category::where('id', $multis)->update(['status' => 1]);
+            }
+            return redirect()->back()->with('message', 'Selected Rocords Status ON Successfully');
+        }
+        if ($action == 'status_off') {
+            foreach ($multi as $multis) {
+                Expense_Category::where('id', $multis)->update(['status' => 0]);
+            }
+            return redirect()->back()->with('message', 'Selected Rocords Status OFF Successfully');
+        }
+        if ($action == '') {
+            return redirect()->back();
+        }
     }
 }

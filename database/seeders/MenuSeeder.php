@@ -83,5 +83,19 @@ class MenuSeeder extends Seeder
             'small_icon' =>'<i class="fa-solid fa-hand-holding-dollar"></i>',
             'icon' =>'',
         ]);
+        Menu::create([
+            'title' => 'Manage Expense',
+            'url' =>'/manage_expense',
+            'parent_id' => $Accounts->id,
+            'small_icon' =>'<i class="fa-solid fa-hand-holding-dollar"></i>',
+            'icon' =>'',
+        ]);
+        Menu::create([
+            'title' => 'Manage Account',
+            'url' =>'/account',
+            'parent_id' => $Accounts->id,
+            'small_icon' =>'<i class="fa-solid fa-hand-holding-dollar"></i>',
+            'icon' =>'',
+        ]);
     }
 }
