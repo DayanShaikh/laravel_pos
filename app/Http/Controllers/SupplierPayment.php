@@ -15,16 +15,14 @@ class SupplierPayment extends Controller
     public function index(Request $request)
     {
         $sn =1;
-        $supplier =Supplier::all();
         $rowsPerPage = $request->input('rowsPerPage', 10);
         $name = $request->input('name') ?? "";
-        if (!empty($name)) {
-            $supplier_payment = SupplierPayments::where('name','id', 'like', '%' . $name . '%')->paginate($rowsPerPage);
-        } else {
-            $supplier_payment = SupplierPayments::with('supplier')->paginate($rowsPerPage);
-        }
-        // return $supplier_payment;
-        return view('supplier_payment.list', compact('supplier','supplier_payment','sn','name','rowsPerPage'));
+        // if (!empty($name)) {
+        //     $supplier_payment = SupplierPayments::where('name','id', 'like', '%' . $name . '%')->paginate($rowsPerPage);
+        // } else {
+        // }
+        $supplier_payment = SupplierPayments::with('supplier')->paginate($rowsPerPage);
+        return view('supplier_payment.list', compact('supplier_payment','sn','name','rowsPerPage'));
     }
 
     /**
@@ -42,9 +40,9 @@ class SupplierPayment extends Controller
     public function store(Request $request)
     {
         $validete = $request->validate([
-            'supplier_id'=>'required',
-            'date'=>'required',
-            'payment'=>'required',
+            'supplier_id' => ['required'],
+            'date' => 'required',
+            'payment' => 'required',
         ]);
         $date_format =Carbon::createFromFormat('d/m/Y', $request->date);
 

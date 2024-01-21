@@ -29,12 +29,10 @@
     <!-- Nucleo Icons -->
     <link href="{{ asset('assets') }}/css/nucleo-icons.css" rel="stylesheet" />
     <link href="{{ asset('assets') }}/css/nucleo-svg.css" rel="stylesheet" />
-    <!-- Font Awesome Icons -->
-    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
-    {{-- <link id="pagestyle" href="{{ asset('assets') }}/css/bootstrap.css" rel="stylesheet" /> --}}
+
     <link id="pagestyle" href="{{ asset('assets') }}/css/material-dashboard.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/jquery-ui.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/docs.css" rel="stylesheet" />
@@ -47,6 +45,7 @@
 <body class="{{ $bodyClass }}">
 
     {{ $slot }}
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <script src="{{ asset('assets') }}/js/jquery.min.js"></script>
     <script src="{{ asset('assets') }}/js/bootstrap.js"></script>
     <script src="{{ asset('assets') }}/js/core/popper.min.js"></script>
@@ -55,12 +54,10 @@
     <script src="{{ asset('assets') }}/js/plugins/smooth-scrollbar.min.js"></script>
     <script src="{{ asset('assets') }}/js/header-header.js"></script>
     <script src="{{ asset('assets') }}/js/plugins/popper.min.js"></script>
-    {{-- <script src="{{ asset('assets') }}/js/jquery-ui.js"></script> --}}
     <script src="{{ asset('assets') }}/js/bootstrap-datepicker.min.js"></script>
     <script src="{{ asset('assets') }}/js/pikaday.min.js"></script>
     <script src="{{ asset('assets') }}/js/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script type="text/javascript" src="{{ asset('assets') }}/js/angular.min.js"></script>
     <script type="text/javascript" src="{{ asset('assets') }}/js/angular-animate.js"></script>
     @stack('js')
     <script>
@@ -94,7 +91,6 @@
                 }
             });
         });
-
         var selectAllItems = "#select-all";
         var checkboxItem = ":checkbox";
         $(selectAllItems).click(function() {
@@ -108,26 +104,20 @@
                 });
             }
         });
-
         $(document).ready(function() {
-            //jquery for toggle sub menus
             $('.sub-btn').click(function() {
                 $(this).next('.sub-menu').slideToggle();
                 $(this).find('.dropdown').toggleClass('rotate');
             });
-
-            //jquery for expand and collapse the sidebar
             $('.menu-btn').click(function() {
                 $('.side-bar').addClass('active');
                 $('.menu-btn').css("visibility", "hidden");
             });
-
             $('.close-btn').click(function() {
                 $('.side-bar').removeClass('active');
                 $('.menu-btn').css("visibility", "visible");
             });
         });
-
         function confirmAndSubmit() {
             var selectedAction = document.getElementById('action').value;
             var confirmation = confirm('Are you sure you want to perform this action?');
@@ -135,14 +125,10 @@
                 document.getElementById('myForm').submit();
             }
         }
-        //datepicker
         document.addEventListener('DOMContentLoaded', function() {
-            // Set the input value to the current date
             var currentDate = new Date();
             var formattedDate = currentDate.getDate() + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
             document.getElementById('datepicker').value = formattedDate;
-
-            // Initialize Pikaday
             var picker = new Pikaday({
                 field: document.getElementById('datepicker')
                 , format: 'D/M/YYYY'
@@ -161,49 +147,6 @@
                 }
             });
         });
-
-        //Range Datepicker
-        //$('#start-date').datepicker({
-        //    templates: {
-        //        leftArrow: '<i class="fa fa-chevron-left"></i>'
-        //        , rightArrow: '<i class="fa fa-chevron-right"></i>'
-        //    }
-        //    , format: "dd/mm/yyyy"
-        //    , keyboardNavigation: false
-        //    , autoclose: true
-        //    , todayHighlight: true
-        //    , disableTouchKeyboard: true
-        //    , orientation: "bottom auto"
-        //});
-        //
-        //$('#end-date').datepicker({
-        //    templates: {
-        //        leftArrow: '<i class="fa fa-chevron-left"></i>'
-        //        , rightArrow: '<i class="fa fa-chevron-right"></i>'
-        //    }
-        //    , format: "dd/mm/yyyy"
-        //    , keyboardNavigation: false
-        //    , autoclose: true
-        //    , todayHighlight: true
-        //    , disableTouchKeyboard: true
-        //    , orientation: "bottom auto"
-        //});
-        //
-        //$('#start-date').datepicker().on("changeDate", function() {
-        //    var startDate = $('.start-date').datepicker('getDate');
-        //    var oneDayFromStartDate = moment(startDate).add(1, 'days').toDate();
-        //    $('.end-date').datepicker('setStartDate', oneDayFromStartDate);
-        //    $('.end-date').datepicker('setDate', oneDayFromStartDate);
-        //});
-        //
-        //$('#end-date').datepicker().on("show", function() {
-        //    var startDate = $('.start-date').datepicker('getDate');
-        //    $('.day.disabled').filter(function(index) {
-        //        return $(this).text() === moment(startDate).format('D');
-        //    }).addClass('active');
-        //});
-
-
         $('#start-date').datepicker({
             templates: {
                 leftArrow: '<i class="fa fa-chevron-left"></i>'
@@ -216,7 +159,6 @@
             , disableTouchKeyboard: true
             , orientation: "bottom auto"
         });
-
         $('#end-date').datepicker({
             templates: {
                 leftArrow: '<i class="fa fa-chevron-left"></i>'
@@ -229,7 +171,6 @@
             , disableTouchKeyboard: true
             , orientation: "bottom auto"
         });
-
         $('#start-date').datepicker().on("changeDate", function() {
             var startDate = $('.start-date').datepicker('getDate');
             var oneDayFromStartDate = moment(startDate).add(1, 'days').toDate();
@@ -254,9 +195,9 @@
         });
 
     </script>
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <script src="{{ asset('assets') }}/js/material-dashboard.min.js?v=3.0.0"></script>
     <script src="{{ asset('assets') }}/js/angular.min.js"></script>
+    {{-- <script async defer src="https://buttons.github.io/buttons.js"></script> --}}
+    <script src="{{ asset('assets') }}/js/material-dashboard.min.js?v=3.0.0"></script>
     <script src="{{ asset('assets') }}/js/angular-moment.min.js"></script>
     <script src="{{ asset('assets') }}/js/angular-locale_de-de.js"></script>
     <script src="{{ asset('assets') }}/js/angular-animate.js"></script>

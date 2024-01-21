@@ -32,7 +32,7 @@
                                 <select name="supplier_id" id="action" class="form-control">
                                     <option value="0">Select Suppliers</option>
                                     @foreach($suppliers as $supplier)
-                                    <option value="{{$supplier->id}}" @if($supplier_id == $supplier->id) selected @endif>{{$supplier->name}}</option>
+                                    <option value="{{$supplier->id}}" @if($supplier_id==$supplier->id) selected @endif>{{$supplier->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -106,7 +106,7 @@
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     <span class="text-secondary text-sm">
-                                                        {{$purchases->supplier->name}}
+                                                        {{!empty($purchases->supplier)? $purchases->supplier->name:'Select Supplier'}}
                                                     </span>
                                                 </td>
                                                 <td class="align-middle text-center">

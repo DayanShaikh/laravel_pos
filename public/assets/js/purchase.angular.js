@@ -159,8 +159,7 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 					$scope.wctAJAX(data, function (response) {
 						$scope.processing = false;
 						if (response.status == 1) {
-							window.location.reload(true);
-							$scope.successMessage = response.message;
+							window.location.href = '/purchase/edit/' + response.id + '/?message=' + encodeURIComponent(response.message);
 						}
 						else {
 							$scope.errors = response.error;

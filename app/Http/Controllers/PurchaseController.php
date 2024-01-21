@@ -90,7 +90,7 @@ class PurchaseController extends Controller
     
             }
         
-        return response()->json(['status' => 1, 'id' => $purchase->id, 'message' => 'Purchase created Successfully']);
+        return response()->json(['status' => 1, 'id' => $purchase->id, 'message' => 'Purchase save Successfully']);
     }
     public function edit($id)
     {
@@ -142,7 +142,7 @@ class PurchaseController extends Controller
 
         }
         $route =route('purchase.index');
-        return response()->json(['status' => 1, 'message' => 'Purchase Update Successfully','file_path'=>$route]);
+        return response()->json(['status' => 1, 'message' => 'Purchase save Successfully']);
     }
 
     public function status($id, $status)

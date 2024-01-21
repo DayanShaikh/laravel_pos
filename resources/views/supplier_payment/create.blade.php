@@ -16,7 +16,7 @@
                             </div>
                         </div>
                         <div class=" mx-3 mt-3 text-end">
-                            <a href="{{route('supplier.index')}}" class="btn bg-gradient-dark"><i class="fa fa-arrow-right"></i></a>
+                            <a href="{{route('supplier_payment.index')}}" class="btn bg-gradient-dark"><i class="fa fa-arrow-right"></i></a>
                         </div>
                         <div class="card-body p-0 px-3">
                             <form role="form" method="POST" action="{{  route('supplier_payment.store') }}" class="text-start">
@@ -28,31 +28,32 @@
                                         <option value="{{$suppliers->id}}">{{$suppliers->name}}</option>
                                         @endforeach
                                     </select>
-                                    @error('supplier_id')
-                                    <p class='text-danger inputerror'>{{ $message }} </p>
-                                    @enderror
-                                    <div class="input-group input-group-outline mt-3 null is-filled ">
-                                        <label  for="datepicker" class="form-label">Date </label>
-                                        <input type="text" id="datepicker" class="form-control" name="date" value="{{ old('date') }}">
-                                    </div>
-                                        @error('date')
-                                        <p class='text-danger inputerror'>{{ $message }} </p>
-                                        @enderror
-                                    <div class="input-group input-group-outline mt-3 null is-filled">
-                                        <label  class="form-label">Payment </label>
-                                        <input type="number" class="form-control" name="payment" value="{{ old('payment') }}">
-                                        <br>
-                                    </div>
-                                        @error('payment')
-                                        <p class='text-danger inputerror'>{{ $message }} </p>
-                                        @enderror
-                                    <div class="input-group input-group-outline mt-3 @if(old('detail')) null is-filled @endif">
-                                        <label class="form-label">Detail </label> 
-                                        <input type="text" class="form-control" name="detail" value="{{ old('detail') }}">
-                                    </div>
-                                    <div class="col-lg-1 col-sm-6 col-12">
-                                        <button class="btn bg-gradient-primary w-100 my-4 mb-2" type="submit" data-target="successToast">Submit</button>
-                                    </div>
+                                </div>
+                                @error('supplier_id')
+                                <p class='text-danger inputerror'>{{ $message }} </p>
+                                @enderror
+                                <div class="input-group input-group-outline mt-3 null is-filled ">
+                                    <label for="datepicker" class="form-label">Date </label>
+                                    <input type="text" id="datepicker" class="form-control" name="date" value="" autocomplete="off">
+                                </div>
+                                @error('date')
+                                <p class='text-danger inputerror'>{{ $message }} </p>
+                                @enderror
+                                <div class="input-group input-group-outline mt-3">
+                                    <label class="form-label">Payment </label>
+                                    <input type="text" class="form-control" name="payment" value="{{ old('payment') }}">
+                                    <br>
+                                </div>
+                                @error('payment')
+                                <p class='text-danger inputerror'>{{ $message }} </p>
+                                @enderror
+                                <div class="input-group input-group-outline mt-3 null is-filled">
+                                    <label class="form-label">Detail </label>
+                                    <textarea name="detail" class="form-control border px-2" cols="10" rows="5"></textarea>
+                                </div>
+                                <div class="col-lg-1 col-sm-6 col-12">
+                                    <button class="btn bg-gradient-primary w-100 my-4 mb-2" type="submit" data-target="successToast">Submit</button>
+                                </div>
                             </form>
                         </div>
                     </div>
