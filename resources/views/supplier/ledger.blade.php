@@ -29,7 +29,7 @@
                     <div class="card my-4">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                                <h6 class="text-white mx-3">Manage Supplier</h6>
+                                <h6 class="text-white mx-3">({{$supplier->name}}) Ledger</h6>
                             </div>
                         </div>
                         <div class=" me-3 my-3 text-end">
@@ -49,24 +49,35 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       
+                                    @php
+                                       $balance = $credit = $debit = 0;
+                                    @endphp
+                                       @foreach($ledger as $ledgers)
+                                       @php
+                                       $credit += $ledgers->credit;
+                                       $debit += $ledgers->debit;
+                                       @endphp
                                         <tr>
                                             <td class="align-middle text-center">
                                                 <span class="text-secondary text-sm">{{$sn++}}</span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm">{{ $supplier->name}}</span>
+                                                <span class="text-secondary text-sm">{{$ledgers->date}}</span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm">{{ $supplier->phone}}</span>
+                                                <span class="text-secondary text-sm">{{$ledgers->details}}</span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm">{{ $supplier->address}}</span>
+                                                <span class="text-secondary text-sm">{{$ledgers->debit}}</span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm">{{ $supplier->balance}}</span>
+                                                <span class="text-secondary text-sm">{{$ledgers->credit}}</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-sm">{{$credit-$debit}}</span>
                                             </td>
                                         </tr>
+                                       @endforeach
                                     </tbody>
                                 </table>
                             </div>

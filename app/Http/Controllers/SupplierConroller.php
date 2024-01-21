@@ -87,9 +87,9 @@ class SupplierConroller extends Controller
     public function ledger($id){
         $sn = 1;
         $supplier = Supplier::find($id);
-        $ledger = Purchase::select('date', DB::raw("0 as debit"), "net_price as credit")->where('supplier_id', $id)->union(SupplierPayments::select('date', "payment as debit", DB::raw("0 as credit"))->where('supplier_id', $id))->get();
-        return $ledger;
-        return view('supplier.ledger', compact('sn', 'supplier'));
+        $ledger = Purchase::select('date', 'note as details', DB::raw("0 as debit"), "net_price as credit")->where('supplier_id', $id)->union(SupplierPayments::select('date', 'details', 'payment as debit', DB::raw("0 as credit"))->where('supplier_id', $id))->get();
+        // return $ledger;
+        return view('supplier.ledger', compact('sn', 'supplier', 'ledger'));
     }
     public function destroy(string $id)
     {
