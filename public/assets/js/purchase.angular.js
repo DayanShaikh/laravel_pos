@@ -3,7 +3,7 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 		$scope.categories = [];
 		$scope.suppliers = [];
 		$scope.items = [];
-		$scope.errors = [];
+		// $scope.errors = [];
 		$scope.processing = false;
 		$scope.item_number = "";
 		$scope.accounts = [];
@@ -22,7 +22,7 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 		};
 		$scope.item = {
 			"item_id": undefined,
-			"item_category_id": 0,
+			// "item_category_id": 0,
 			"purchase_price": 0,
 			"sale_price": 0,
 			"purchase_quantity": 0,
@@ -30,7 +30,6 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 			"total": 0,
 
 		};
-
 		$scope.fetchData = function () {
 			$http.get('/api/get_data').then(function (response) {
 				$scope.suppliers = response.data.suppliers;
@@ -41,7 +40,6 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 			});
 		};
 		$scope.fetchData();
-
 		function getPurchaseIdFromUrl() {
 			var pathSegments = $location.absUrl().split('/');
 			var purchaseIndex = pathSegments.indexOf('edit');
@@ -51,7 +49,6 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 			return null;
 		}
 		$scope.purchase_id = getPurchaseIdFromUrl() || 0;
-
 		angular.element(document).ready(function () {
 			if ($scope.purchase_id > 0) {
 				$http.get('/api/purchase/show/' + $scope.purchase_id).then(function (response) {
@@ -81,7 +78,6 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 				return 'Add New';
 			}
 		}
-
 		$scope.add = function (position) {
 			$scope.purchase.items.splice(position + 1, 0, angular.copy($scope.item));
 			$scope.update_grand_total();
@@ -155,9 +151,8 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 					console.log("Error in fetching data");
 				});
 			}
-
 			$scope.save_purchase = function () {
-				$scope.errors = [];
+				// $scope.errors = [];
 				if (!$scope.processing) {
 					$scope.processing = true;
 					data = { action: '/api/purchase/update/'+ $scope.purchase_id, purchase: JSON.stringify($scope.purchase) };
@@ -195,21 +190,20 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 					console.log("Error in fetching data");
 				});
 			}
-
 			$scope.save_purchase = function () {
-				$scope.errors = [];
+				// $scope.errors = [];
 				if (!$scope.processing) {
 					$scope.processing = true;
 					data = { action: '/api/purchase/store', purchase: JSON.stringify($scope.purchase) };
 					$scope.wctAJAX(data, function (response) {
 						$scope.processing = false;
 						if (response.status == 1) {
-							window.history.back();
-							$scope.successMessage = response.message;
+							// window.location.href='/purchase/edit/'+response.id
+							// $scope.successMessage = response.message;
+							window.location.href = '/purchase/edit/' + response.id + '/?message=' + encodeURIComponent(response.message);
 						}
 						else {
 							$scope.errors = response.error;
-							// $scope.errorMessage = response.data.message;
 						}
 					});
 				}

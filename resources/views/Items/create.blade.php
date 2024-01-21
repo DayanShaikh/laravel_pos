@@ -33,9 +33,9 @@
                             <label class="form-label">Title <span class="login-danger"> *</span></label>
                             <input type="text" class="form-control" name="title" value="{{ old('title') }}">
                         </div>
-                        @error('title')
-                        <p class='text-danger inputerror'>{{ $message }} </p>
-                        @enderror
+                        @if (session()->has('error1'))
+                        <strong>{{ session()->get('error1') }}</strong>
+                        @endif
                         <div class="input-group input-group-outline mt-3 @if(old('unti_price')) null is-filled @endif">
                             <label class="form-label">Unit Price </label>
                             <input type="text" class="form-control" name="unit_price" value="{{ old('unit_price') }}">
@@ -52,7 +52,7 @@
                         @enderror
                         <div class="input-group input-group-outline mt-3 @if(old('quantity')) null is-filled @endif">
                             <label class="form-label">Quantity</label>
-                            <input type="text" class="form-control" name="quantity" value="{{ old('quantity') }}">
+                            <input type="text" class="form-control" name="quantity" value="{{ old('quantity') }} 0">
                         </div>
                         @error('quantity')
                         <p class='text-danger inputerror'>{{ $message }} </p>

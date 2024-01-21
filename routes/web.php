@@ -67,7 +67,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/customer_status/{id}/{status}',[ CustomerController::class, 'status'])->name('customer.status');
 	Route::post('/customer_bulkAction',[ CustomerController::class, 'bulkAction'])->name('customer_bulkAction');
 	//customer_payment
-
 	Route::resource('/customer_payment',Customer_PaymentController::class);
 	Route::get('/customer_payment_status/{id}/{status}',[ Customer_PaymentController::class, 'status'])->name('customer_payment_status');
 	Route::post('/customer_payment_bulkAction',[ Customer_PaymentController::class, 'bulkAction'])->name('customer_payment.bulkAction');
@@ -94,7 +93,7 @@ Route::group(['middleware' => 'auth'], function () {
 	//purchase
 	Route::get('purchase/', [PurchaseController::class, 'index'])->name('purchase.index');
 	Route::get('purchase/create', [PurchaseController::class, 'create'])->name('purchase.create');
-	Route::get('purchase/edit/{id}', [PurchaseController::class, 'edit'])->name('purchase.edit');
+	Route::get('purchase/edit/{id}/{message?}', [PurchaseController::class, 'edit'])->name('purchase.edit');
 	Route::get('purchase-update-active-status/{item}/{status}', [PurchaseController::class, 'status'])->name('purchase.status');
 	Route::delete('purchase/delete/{id}', [PurchaseController::class, 'delete'])->name('purchase.delete');
 	Route::post('purchase-bulkaction', [PurchaseController::class, 'bulkAction'])->name('purchase.bulkAction');

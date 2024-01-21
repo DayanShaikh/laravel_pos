@@ -36,7 +36,7 @@
                                     <label class="form-label">Address </label>
                                     <input type="text" class="form-control" name="address" value="{{ old('address') }}">
                                 </div>
-                                <div class="input-group input-group-outline mt-3 @if(old('balance')) null is-filled @endif">
+                                <div class="input-group input-group-outline mt-3 null is-filled">
                                     <label class="form-label">Balance </label>
                                     <input type="text" class="form-control" name="balance" value="{{ old('balance')}} 0">
                                 </div>

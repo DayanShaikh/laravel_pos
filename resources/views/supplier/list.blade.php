@@ -99,7 +99,7 @@
                                                 </td>
                                                 <td class="align-middle text-end px-4">
                                                     <a href="{{ route('supplier.ledger', $suppliers->id) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Ledger">
-                                                        <i class="fa fa-print"></i>
+                                                        <i class="fa-solid fa-list"></i>
                                                     </a>
                                                     <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('supplier.edit', $suppliers->id)}}" title="Edit">
                                                         <i class="material-icons">edit</i>

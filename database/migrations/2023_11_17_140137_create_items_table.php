@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->integer('item_category_id')->nullable();
             $table->string('title');
-            $table->integer('unit_price');
-            $table->integer('sale_price');
-            $table->integer('quantity');
+            $table->integer('unit_price')->nullable();
+            $table->integer('sale_price')->nullable();
+            $table->integer('quantity')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

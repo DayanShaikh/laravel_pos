@@ -32,143 +32,88 @@
                                 <h6 class="text-white mx-3">Manage Supplier</h6>
                             </div>
                         </div>
-                        @if (session()->has('message'))
-                        <div class="alert alert-success alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
-                            <strong>{{ session()->get('message') }}</strong>
-                            {{-- <strong>This Is testing</strong> --}}
-                            <button type="button" class="btn-close text-lg py-1 opacity-10" data-bs-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        @endif
-                        @if (session()->has('error'))
-                        <div class="alert alert-danger alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
-                            <strong>{{ session()->get('error') }}</strong>
-                            {{-- <strong>This Is testing</strong> --}}
-                            <button type="button" class="btn-close text-lg py-1 opacity-10" data-bs-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        @endif
                         <div class=" me-3 my-3 text-end">
-                            <a class="btn bg-gradient-dark mb-0" href="{{ route('supplier.create')}}"><i class="material-icons text-sm">add</i></a>
+                            {{-- <a class="btn bg-gradient-dark mb-0" href="{{ route('supplier.create')}}"><i class="material-icons text-sm">add</i></a> --}}
                         </div>
-                        <form method="POST" action="{{ route('supplier.bulkAction') }}" id="myForm">
-                            @csrf
-                            @method('POST')
-                            <div class="card-body px-0 pb-2">
-                                <div class="table-responsive p-0">
-                                    <table class="table align-items-center mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th width="2%" class="align-middle text-center">
-                                                    <div class="form-check check-tables">
-                                                        <input class="form-check-input" id="select-all" type="checkbox" name="" value="">
-                                                    </div>
-                                                </th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">S.no</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Date</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Details</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Debit</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Credit</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Balance</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($supplier as $suppliers)
-                                            <tr>
-                                                <td class="align-middle text-center">
-                                                    <div class="form-check check-tables">
-                                                        <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$suppliers->id}}">
-                                                    </div>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{$sn++}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $suppliers->name}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $suppliers->phone}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $suppliers->address}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $suppliers->balance}}</span>
-                                                </td>
-                                                <td class="align-middle text-end px-4">
-                                                    <a href="{{ route('supplier.status', [$suppliers->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Ledger">
-                                                        <i class="fa fa-print"></i>
-                                                    </a>
-                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('supplier.edit', $suppliers->id)}}" title="Edit">
-                                                        <i class="material-icons">edit</i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                    @if($suppliers->status == 0)
-                                                    <a href=" {{ route('supplier.status', [$suppliers->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
-                                                        <i class="fa fa-eye-slash"></i>
-                                                    </a>
-                                                    @elseif($suppliers->status == 1)
-                                                    <a href="{{ route('supplier.status', [$suppliers->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
-                                                        <i class="fa fa-eye"></i>
-                                                    </a>
-                                                    @endif
-                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('supplier.destroy', $suppliers->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
-                                                        <i class="fa fa-trash"></i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+                        <div class="card-body px-0 pb-2">
+                            <div class="table-responsive p-0">
+                                <table class="table align-items-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">S.no</th>
+                                            <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Date</th>
+                                            <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Details</th>
+                                            <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Debit</th>
+                                            <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Credit</th>
+                                            <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Balance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       
+                                        <tr>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-sm">{{$sn++}}</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-sm">{{ $supplier->name}}</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-sm">{{ $supplier->phone}}</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-sm">{{ $supplier->address}}</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-sm">{{ $supplier->balance}}</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="row text-end my-2">
-                                <div class="col-lg-4 col-md-6 d-flex h-25">
-                                    <div class="input-group input-group-outline is-filled form-select w-30 me-2 ms-5 h-100">
-                                        <select name="action" id="action" class="form-control" onchange="confirmAndSubmit()">
-                                            <option value="">Bulk Action</option>
-                                            <option value="delete">Delete</option>
-                                            <option value="status_on">Status ON</option>
-                                            <option value="status_off">Status OFF</option>
-                                        </select>
-                                    </div>
-                                    {{-- <button type="submit" class="btn btn-primary bulk_btn my-1">Apply</button> --}}
+                        </div>
+                        <div class="row text-end my-2">
+                            {{-- <div class="col-lg-4 col-md-6 d-flex h-25">
+                                <div class="input-group input-group-outline is-filled form-select w-30 me-2 ms-5 h-100">
+                                    <select name="action" id="action" class="form-control" onchange="confirmAndSubmit()">
+                                        <option value="">Bulk Action</option>
+                                        <option value="delete">Delete</option>
+                                        <option value="status_on">Status ON</option>
+                                        <option value="status_off">Status OFF</option>
+                                    </select>
                                 </div>
-                        </form>
-                        <div class="col-lg-2 col-md-6"></div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="me-5 text-start ml-260">
+                                <button type="submit" class="btn btn-primary bulk_btn my-1">Apply</button>
+                            </div> --}}
+                            <div class="col-lg-2 col-md-6"></div>
+                            <div class="col-lg-6 col-md-6">
+                                {{-- <div class="me-5 text-start ml-260">
                                 <div class="input-group input-group-outline is-filled form-select d-inline-flex w-40 float-start">
                                     <span class="my-2 mx-1">Show Page:</span>
                                     <select onchange="window.location.href=this.value" class="form-control">
                                         @for ($i = 1; $i <= $supplier->lastPage(); $i++)
                                             <option value="{{ $supplier->url($i) }}" {{ $supplier->currentPage() == $i ? 'selected' : '' }}>
-                                                {{ $i }}
-                                            </option>
-                                            @endfor
+                                {{ $i }}
+                                </option>
+                                @endfor
+                                </select>
+                            </div>
+                            <form action="{{ route('supplier.index') }}" method="get">
+                                @csrf
+                                <div class="input-group input-group-outline is-filled form-select d-inline-flex w-50">
+                                    <span class="my-2 mx-1">Show Page:</span>
+                                    <select name="rowsPerPage" class="form-control" id="change-row" onchange="this.form.submit()">
+                                        <option value="10" {{ $rowsPerPage == 10 ? 'selected' : '' }}>10</option>
+                                        <option value="25" {{ $rowsPerPage == 25 ? 'selected' : '' }}>25</option>
+                                        <option value="100" {{ $rowsPerPage == 100 ? 'selected' : '' }}>100</option>
+                                        <option value="1000" {{ $rowsPerPage == 1000 ? 'selected' : '' }}>1000</option>
                                     </select>
                                 </div>
-                                <form action="{{ route('supplier.index') }}" method="get">
-                                    @csrf
-                                    <div class="input-group input-group-outline is-filled form-select d-inline-flex w-50">
-                                        <span class="my-2 mx-1">Show Page:</span>
-                                        <select name="rowsPerPage" class="form-control" id="change-row" onchange="this.form.submit()">
-                                            <option value="10" {{ $rowsPerPage == 10 ? 'selected' : '' }}>10</option>
-                                            <option value="25" {{ $rowsPerPage == 25 ? 'selected' : '' }}>25</option>
-                                            <option value="100" {{ $rowsPerPage == 100 ? 'selected' : '' }}>100</option>
-                                            <option value="1000" {{ $rowsPerPage == 1000 ? 'selected' : '' }}>1000</option>
-                                        </select>
-                                    </div>
-                                </form>
-                                {{$supplier->links()}}
-                            </div>
-                        </div>
+                            </form>
+                            {{$supplier->links()}}
+                        </div> --}}
                     </div>
                 </div>
             </div>
+        </div>
         </div>
         </div>
     </main>

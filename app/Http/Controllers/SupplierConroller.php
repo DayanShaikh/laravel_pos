@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Purchase;
 use Illuminate\Http\Request;
 use App\Models\Supplier;
+use App\Models\SupplierPayments;
+use DB;
 
 class SupplierConroller extends Controller
 {
@@ -82,7 +85,11 @@ class SupplierConroller extends Controller
     }
 
     public function ledger($id){
-        return view('supplier.ledger');
+        $sn = 1;
+        $supplier = Supplier::find($id);
+        $ledger = Purchase::select('date', DB::raw("0 as debit"), "net_price as credit")->where('supplier_id', $id)->union(SupplierPayments::select('date', "payment as debit", DB::raw("0 as credit"))->where('supplier_id', $id))->get();
+        return $ledger;
+        return view('supplier.ledger', compact('sn', 'supplier'));
     }
     public function destroy(string $id)
     {

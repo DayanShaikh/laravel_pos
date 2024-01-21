@@ -40,9 +40,6 @@ class ItemController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'unit_price' => 'required',
-            'sale_price' => 'required',
-            'quantity' => 'required',
         ]);
         Item::create([
             'item_category_id' => $request->item_category_id,

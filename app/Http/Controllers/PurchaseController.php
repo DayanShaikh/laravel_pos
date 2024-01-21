@@ -50,36 +50,47 @@ class PurchaseController extends Controller
     public function store(Request $request)
     {
         $data = json_decode($request->input('purchase'), true);
-        $format_date = Carbon::createFromFormat('d/m/Y', $data['date']);
-        
-        $purchase = Purchase::create([
-            'date' => $format_date->format('Y-m-d'),
-            'supplier_id' => $data['supplier_id'],
-            'total_items' => $data['quantity'],
-            'total_price' => $data['total'],
-            'discount' => $data['discount'],
-            'net_price' => $data['net_total'],
-            'note' => $data['notes'],
-        ]);
-        foreach ($data['items'] as $items) {
-            $pur_items =PurchaseItems::create([
-                'purchase_id' => $purchase->id,
-                'item_id' => $items['item_id'],
-                'purchase_price' => $items['purchase_price'],
-                'sale_price' => $items['sale_price'],
-                'quantity' => $items['quantity'],
-                'total' => $items['total'],
-            ]);
-            $pur_items =Item::where('id',$items['item_id'])->first();
-            $pur_items->quantity=$items['quantity'];
-            $pur_items->save();
-            // $items->update([
-            //     "quantity" =>$items['quantity'],
-                
-            // ]);
+        if (empty($data['date'])) {
+            return response()->json(['status' => 0, 'error' => '"Fields with * are mandatory"']);
 
         }
-        return response()->json(['status' => 1, 'message' => 'Purchase created Successfully']);
+        foreach ($data['items'] as $items) {
+            if ($items['purchase_price'] == 0 && $items['sale_price'] == 0 && $items['quantity'] == 0) {
+                return response()->json(['status' => 0, 'error' => '"Fields with * are mandatory"']);
+            }
+        }
+            $format_date = Carbon::createFromFormat('d/m/Y', $data['date']);
+            $purchase = Purchase::create([
+                'date' => $format_date->format('Y-m-d'),
+                'supplier_id' => $data['supplier_id'],
+                'total_items' => $data['quantity'],
+                'total_price' => $data['total'],
+                'discount' => $data['discount'],
+                'net_price' => $data['net_total'],
+                'note' => $data['notes'],
+            ]);
+            foreach ($data['items'] as $items) {
+                $pur_items =PurchaseItems::create([
+                    'purchase_id' => $purchase->id,
+                    'item_id' => $items['item_id'],
+                    'purchase_price' => $items['purchase_price'],
+                    'sale_price' => $items['sale_price'],
+                    'quantity' => $items['quantity'],
+                    'total' => $items['total'],
+                ]);
+                $pur_items =Item::where('id',$items['item_id'])->first();
+                $pur_items->quantity+=$items['quantity'];
+                $pur_items->unit_price=$items['purchase_price'];
+                $pur_items->sale_price=$items['sale_price'];
+                $pur_items->save();
+                // $items->update([
+                //     "quantity" =>$items['quantity'],
+                    
+                // ]);
+    
+            }
+        
+        return response()->json(['status' => 1, 'id' => $purchase->id, 'message' => 'Purchase created Successfully']);
     }
     public function edit($id)
     {
