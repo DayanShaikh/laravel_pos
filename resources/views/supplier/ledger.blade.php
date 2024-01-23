@@ -66,7 +66,7 @@
                                                 <span class="text-secondary text-sm">{{$sn++}}</span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm">{{$ledgers->date}}</span>
+                                                <span class="text-secondary text-sm">{{\Carbon\Carbon::parse($ledgers->date)->format('d-m-Y')}}</span>
                                             </td>
                                             <td class="align-middle text-center">
                                                 <span class="text-secondary text-sm">{{$ledgers->details}}</span>
@@ -83,7 +83,7 @@
                                         </tr>
                                         @endforeach
                                         <tr>
-                                            <td class="align-middle text-end" colspan="5" style="padding: 0 90px;">Total</td>
+                                            <td class="align-middle text-end" colspan="5" style="padding: 0 90px;">Closing Balance</td>
                                             <td class="text-center">{{$balance}}</td>
                                         </tr>
                                     </tbody>

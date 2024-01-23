@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Menu;
+use App\Models\ConfigVariable;
 
 class Utility
 {
@@ -17,8 +18,8 @@ class Utility
 				$html .= '<a ' . (empty($menu->parent_id) ? 'href="' . $menu->url . '"' : '') . ' class="sub-btn">' . $menu->small_icon . $menu->title . (empty($menu->parent_id) ? '<i class="fas fa-angle-right dropdown"></i>' : '') . '</a>';
 			}
 			if ($menu->parent_id) {
-			$sub_menu = Menu::where('parent_id', $menu->parent_id)->get();
-			$html .= '<div class="sub-menu">';
+				$sub_menu = Menu::where('parent_id', $menu->parent_id)->get();
+				$html .= '<div class="sub-menu">';
 				foreach ($sub_menu as $parent) {
 					$html .= '<a href="' . $parent->url . '" class="sub-item"> ' . $parent->small_icon . ' ' . $parent->title . ' </a>';
 				}
@@ -29,5 +30,13 @@ class Utility
 				</div>
 			</div>';
 		return $html;
+	}
+
+	public static function setting($var)
+	{
+		$config = ConfigVariable::where('key', $var)->get();
+		foreach ($config as $configs) {
+			return $configs->value;
+		}
 	}
 }

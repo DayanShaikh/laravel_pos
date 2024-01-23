@@ -30,12 +30,12 @@
                     <div class="card-body p-0 px-3">
                         @foreach($config_type as $config_types)
                         <h4 class="mt-3">{{$config_types->title}}</h4>
-                        <form role="form" method="POST" action="{{ route('config.store' , $config_types->id) }}" class="text-start">
+                        <form role="form" method="POST" action="{{ route('config.store' , $config_types->id) }}" class="text-start" enctype="multipart/form-data">
                             @csrf
                             @foreach($config as $configs)
                             @if($configs->type == 'file')
-                            <div class="input-group input-group-outline mt-3 null ">
-                                {{-- <label class="form-label">{{$configs->title}}</label> --}}
+                            <div class="input-group input-group-outline mt-3 null is-filled">
+                                <label class="form-label">{{$configs->title}}</label>
                                 <input type="{{$configs->type}}" class="form-control" name="{{$configs->type."_".$configs->id}}" value="{{ $configs->value }}">
                             </div>
                             @error($configs->type)
