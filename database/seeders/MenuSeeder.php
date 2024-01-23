@@ -95,7 +95,14 @@ class MenuSeeder extends Seeder
             'title' => 'Manage Account',
             'url' =>'/account',
             'parent_id' => $Accounts->id,
-            'small_icon' =>'<i class="fa-solid fa-hand-holding-dollar"></i>',
+            'small_icon' =>'<i class="fa-solid fa-file-invoice"></i>',
+            'icon' =>'',
+        ]);
+        Menu::create([
+            'title' => 'Manage Transaction',
+            'url' =>'/transaction',
+            'parent_id' => $Accounts->id,
+            'small_icon' =>'<i class="fa-solid fa-file-invoice"></i>',
             'icon' =>'',
         ]);
     }
