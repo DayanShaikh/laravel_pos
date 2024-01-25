@@ -43,6 +43,13 @@ class MenuSeeder extends Seeder
             'icon' =>'',
         ]);
         Menu::create([
+            'title' => 'Purchase Return',
+            'url' =>'/purchase_return',
+            'parent_id' => $invetory->id,
+            'small_icon' =>'<i class="fa fa-arrow-rotate-left"></i>',
+            'icon' =>'',
+        ]);
+        Menu::create([
             'title' => 'Supplier',
             'url' =>'/supplier',
             'parent_id' => $invetory->id,
@@ -95,14 +102,7 @@ class MenuSeeder extends Seeder
             'title' => 'Manage Account',
             'url' =>'/account',
             'parent_id' => $Accounts->id,
-            'small_icon' =>'<i class="fa-solid fa-file-invoice"></i>',
-            'icon' =>'',
-        ]);
-        Menu::create([
-            'title' => 'Manage Transaction',
-            'url' =>'/transaction',
-            'parent_id' => $Accounts->id,
-            'small_icon' =>'<i class="fa-solid fa-file-invoice"></i>',
+            'small_icon' =>'<i class="fa-solid fa-hand-holding-dollar"></i>',
             'icon' =>'',
         ]);
     }
