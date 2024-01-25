@@ -97,6 +97,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('purchase-update-active-status/{item}/{status}', [PurchaseController::class, 'status'])->name('purchase.status');
 	Route::delete('purchase/delete/{id}', [PurchaseController::class, 'delete'])->name('purchase.delete');
 	Route::post('purchase-bulkaction', [PurchaseController::class, 'bulkAction'])->name('purchase.bulkAction');
+
 	//supplier payment
 	Route::resource('supplier_payment', SupplierPayment::class);
 	Route::get('/status/{id}/{status}', [SupplierPayment::class, 'status'])->name('supplier_payment_status');

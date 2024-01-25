@@ -27402,11 +27402,13 @@ span.relative.z-0.inline-flex.shadow-sm.rounded-md {
 .ml-260 {
   margin-left: 260px;
 }
+
 .custom_image{
   width: 55%;
   padding: 0 11px !important;
   margin: 0 45px;
 }
+
 .custom_image img{
   width: 100%;
   object-fit: cover;
