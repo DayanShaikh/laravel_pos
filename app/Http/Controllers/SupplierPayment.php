@@ -17,12 +17,12 @@ class SupplierPayment extends Controller
         $sn =1;
         $rowsPerPage = $request->input('rowsPerPage', 10);
         $name = $request->input('name') ?? "";
-        // if (!empty($name)) {
-        //     $supplier_payment = SupplierPayments::where('name','id', 'like', '%' . $name . '%')->paginate($rowsPerPage);
-        // } else {
-        // }
+        if (!empty($name)) {
+            $supplier_payment = SupplierPayments::where('name','id', 'like', '%' . $name . '%')->paginate($rowsPerPage);
+        } else {
+        }
         $supplier_payment = SupplierPayments::with('supplier')->paginate($rowsPerPage);
-        return view('supplier_payment.list', compact('supplier_payment','sn','name','rowsPerPage'));
+        return view('supplier_payment.list', compact('supplier_payment','supplier','sn','name','rowsPerPage'));
     }
 
     /**

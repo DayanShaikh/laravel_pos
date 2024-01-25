@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
@@ -23,6 +24,8 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Customer_PaymentController;
 use App\Http\Controllers\Expense_CategoryController;
 use App\Http\Controllers\Manage_ExpenseController;
+use App\Http\Controllers\TransactionController;
+
 
 Route::get('/', function () {return redirect('sign-in');})->middleware('guest');
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
@@ -106,5 +109,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('/manage_expense', Manage_ExpenseController::class);
 	Route::get('/manage_expense/{id}/{status}', [Manage_ExpenseController::class, 'status'])->name('manage_expense.status');
 	Route::get('/manage_expense_bulkaction', [Manage_ExpenseController::class, 'bulkAction'])->name('manage_expense.bulkAction');
+	//account
+	Route::resource('/account',AccountController::class);
+	Route::get('/account/{id}/{status}', [AccountController::class, 'status'])->name('account_status');
+	Route::get('/account_bulkaction', [AccountController::class, 'bulkAction'])->name('account_bulkAction');
+	//transaction
+	Route::resource('/transaction',TransactionController::class);
+	Route::get('/transaction/{id}/{status}', [TransactionController::class, 'status'])->name('transaction_status');
+	Route::get('/transaction_bulkaction', [TransactionController::class, 'bulkAction'])->name('transaction_bulkAction');
 	
 });
