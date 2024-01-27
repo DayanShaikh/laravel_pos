@@ -63,7 +63,7 @@
                         @endif
                         <div class=" me-3 my-3 text-end">
                             <a class="btn bg-gradient-dark mb-0" href="{{ route('purchase.create')}}"><i class="material-icons text-sm">add</i></a>
-                            <a class="btn bg-gradient-dark mb-0" href="{{ route('purchase.return')}}">Purchase Return</a>
+                            <a class="btn bg-gradient-dark mb-0" href="{{ route('purchase.index')}}">Purchase</a>
                         </div>
                         <form method="POST" action="{{route('purchase.bulkAction')}}" id="myForm">
                             @csrf

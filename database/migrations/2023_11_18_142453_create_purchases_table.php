@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('discount')->nullable();
             $table->integer('net_price');
             $table->string('note')->nullable();
+            $table->boolean('is_return')->default(false);
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

@@ -18,7 +18,8 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 			sale_price: 0,
 			discount: 0,
 			net_total: 0,
-			notes: ''
+			notes: '',
+			is_return: 0,
 		};
 		$scope.item = {
 			"item_id": undefined,
@@ -159,7 +160,7 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 					$scope.wctAJAX(data, function (response) {
 						$scope.processing = false;
 						if (response.status == 1) {
-							window.location.href = '/purchase/edit/' + response.id + '/?message=' + encodeURIComponent(response.message);
+							window.location.reload() + encodeURIComponent(response.message);
 						}
 						else {
 							$scope.errors = response.error;

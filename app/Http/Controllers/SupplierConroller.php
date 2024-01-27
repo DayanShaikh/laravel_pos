@@ -84,11 +84,10 @@ class SupplierConroller extends Controller
         return redirect()->route('supplier.index')->with('message', 'Record Update Successfully');
     }
 
-    public function ledger($id){
+    public function ledger(Request $request, $id){
         $sn = 1;
         $supplier = Supplier::find($id);
-        $ledger = Purchase::select('date', 'note as details', DB::raw("0 as debit"), "net_price as credit")->where('supplier_id', $id)->union(SupplierPayments::select('date', 'details', 'payment as debit', DB::raw("0 as credit"))->where('supplier_id', $id))->get();
-        // return $ledger;
+        $ledger = Purchase::select('date', DB::raw("CONCAT('Purchase:', note) as details") , DB::raw("0 as debit"), "net_price as credit")->where('supplier_id', $id)->where('is_return', false)->union(Purchase::select('date', DB::raw("CONCAT('Purchase Return:', note) as details") , "net_price as debit", Db::raw("0 as credit"))->where('supplier_id', $id)->where('is_return', true))->union(SupplierPayments::select('date', DB::raw("CONCAT('Payment:', details) as details"), 'payment as debit', DB::raw("0 as credit"))->where('supplier_id', $id))->get();
         return view('supplier.ledger', compact('sn', 'supplier', 'ledger'));
     }
     public function destroy(string $id)

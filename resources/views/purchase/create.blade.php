@@ -37,9 +37,12 @@
                                     <option value="">Select Supplier </option>
                                     <option ng-repeat="supplier in suppliers" value="@{{ supplier.id }}">@{{ supplier.name }}</option>
                                 </select>
-                                @error('title')
-                                <p class='text-danger inputerror'>{{ $message }} </p>
-                                @enderror
+                            </div>
+                            <div class="input-group input-group-outline is-filled form-select mt-3">
+                                <select class="form-control ps-3 py-0" ng-model="purchase.is_return" convert-to-number>
+                                    <option value="0">Purchase</option>
+                                    <option value="1">Purchase Return</option>
+                                </select>
                             </div>
                             <div class="form-group mt-5">
                                 <div class="row">
