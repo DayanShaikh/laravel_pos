@@ -147,52 +147,7 @@
                 }
             });
         });
-        $('#start-date').datepicker({
-            templates: {
-                leftArrow: '<i class="fa fa-chevron-left"></i>'
-                , rightArrow: '<i class="fa fa-chevron-right"></i>'
-            }
-            , format: "dd/mm/yyyy"
-            , keyboardNavigation: false
-            , autoclose: true
-            , todayHighlight: true
-            , disableTouchKeyboard: true
-            , orientation: "bottom auto"
-        });
-        $('#end-date').datepicker({
-            templates: {
-                leftArrow: '<i class="fa fa-chevron-left"></i>'
-                , rightArrow: '<i class="fa fa-chevron-right"></i>'
-            }
-            , format: "dd/mm/yyyy"
-            , keyboardNavigation: false
-            , autoclose: true
-            , todayHighlight: true
-            , disableTouchKeyboard: true
-            , orientation: "bottom auto"
-        });
-        $('#start-date').datepicker().on("changeDate", function() {
-            var startDate = $('.start-date').datepicker('getDate');
-            var oneDayFromStartDate = moment(startDate).add(1, 'days').toDate();
-            $('.end-date').datepicker('setStartDate', oneDayFromStartDate);
-            $('.end-date').datepicker('setDate', oneDayFromStartDate);
-        });
-
-        $('#end-date').datepicker().on("show", function() {
-            var startDate = $('.start-date').datepicker('getDate');
-            $('.day.disabled').filter(function(index) {
-                return $(this).text() === moment(startDate).format('D');
-            }).addClass('active');
-        });
-
-        $('#start-date').datepicker().on("changeDate", function() {
-            var startDate = $('.start-date').datepicker('getDate');
-            var endDate = $('.end-date').datepicker('getDate');
-
-            if (endDate && startDate > endDate) {
-                $('.end-date').datepicker('setDate', startDate);
-            }
-        });
+        
 
     </script>
     <script src="{{ asset('assets') }}/js/angular.min.js"></script>

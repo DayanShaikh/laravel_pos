@@ -6,7 +6,9 @@ use App\Models\Purchase;
 use Illuminate\Http\Request;
 use App\Models\Supplier;
 use App\Models\SupplierPayments;
+use Carbon\Carbon;
 use DB;
+use Session;
 
 class SupplierConroller extends Controller
 {
@@ -84,11 +86,34 @@ class SupplierConroller extends Controller
         return redirect()->route('supplier.index')->with('message', 'Record Update Successfully');
     }
 
-    public function ledger(Request $request, $id){
+    public function ledger(Request $request, $id)
+    {
+        $from_date = $request->input('from_date') ?? "";
+        $to_date = $request->input('to_date') ?? "";
+        $rowsPerPage = $request->input('rowsPerPage', 10);
         $sn = 1;
+        if (!empty($from_date) && !empty($to_date)) {
+            $format_from_date = Carbon::createFromFormat('d/m/Y', $from_date)->format('Y-m-d');
+            $format_to_date = Carbon::createFromFormat('d/m/Y', $to_date)->format('Y-m-d');
+            $ledger = Purchase::select('date', DB::raw("CONCAT('Purchase:', note) as details"), DB::raw("0 as debit"), "net_price as credit")
+                ->where('is_return', false)->whereBetween('date', [$format_from_date, $format_to_date])->where('supplier_id', $id)
+                ->union(Purchase::select('date', DB::raw("CONCAT('Purchase Return:', note) as details"), "net_price as debit", DB::raw("0 as credit"))
+                    ->where('is_return', true)->whereBetween('date', [$format_from_date, $format_to_date])->where('supplier_id', $id))
+                ->union(SupplierPayments::select('date', DB::raw("CONCAT(details) as details"), 'payment as debit', DB::raw("0 as credit"))
+                    ->whereBetween('date', [$format_from_date, $format_to_date])->where('supplier_id', $id))
+                ->get();
+        } else {
+            $ledger = Purchase::select('id', 'date', DB::raw("CONCAT('Purchase:', note) as details"), DB::raw("0 as debit"), "net_price as credit")
+                ->where('supplier_id', $id)->where('is_return', false)
+                ->union(Purchase::select('id', 'date', DB::raw("CONCAT('Purchase Return:', note) as details"), "net_price as debit", Db::raw("0 as credit"))
+                    ->where('supplier_id', $id)->where('is_return', true))
+                ->union(SupplierPayments::select('id', 'date', DB::raw("CONCAT('Payment:', details) as details"), 'payment as debit', DB::raw("0 as credit"))
+                    ->where('supplier_id', $id))->get();
+        }
         $supplier = Supplier::find($id);
-        $ledger = Purchase::select('date', DB::raw("CONCAT('Purchase:', note) as details") , DB::raw("0 as debit"), "net_price as credit")->where('supplier_id', $id)->where('is_return', false)->union(Purchase::select('date', DB::raw("CONCAT('Purchase Return:', note) as details") , "net_price as debit", Db::raw("0 as credit"))->where('supplier_id', $id)->where('is_return', true))->union(SupplierPayments::select('date', DB::raw("CONCAT('Payment:', details) as details"), 'payment as debit', DB::raw("0 as credit"))->where('supplier_id', $id))->get();
-        return view('supplier.ledger', compact('sn', 'supplier', 'ledger'));
+        
+           return view('supplier.ledger', compact('sn', 'supplier', 'ledger', 'from_date', 'to_date'));
+        
     }
     public function destroy(string $id)
     {

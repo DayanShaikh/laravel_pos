@@ -22,7 +22,7 @@ class SupplierPayment extends Controller
         } else {
         }
         $supplier_payment = SupplierPayments::with('supplier')->paginate($rowsPerPage);
-        return view('supplier_payment.list', compact('supplier_payment','supplier','sn','name','rowsPerPage'));
+        return view('supplier_payment.list', compact('supplier_payment','sn','name','rowsPerPage'));
     }
 
     /**
