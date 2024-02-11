@@ -12,12 +12,12 @@
                         <div class="row justify-content-end text-end">
                             <div class="col-lg-2 col-md-6">
                                 <div class="input-group input-group-outline datepicker-container">
-                                    <input type="text" class="form-control" id="start-date" name="from_date" placeholder="From date" value="{{$from_date}}" autocomplete="off">
+                                    <input type="text" class="form-control" id="dateRangePicker" name="from_date" placeholder="From date" value="{{$from_date}}" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-6">
                                 <div class="input-group input-group-outline datepicker-container">
-                                    <input type="text" class="form-control" id="end-date" name="to_date" placeholder="To date" value="{{$to_date}}" autocomplete="off">
+                                    <input type="text" class="form-control" id="dateRangePicker" name="to_date" placeholder="To date" value="{{$to_date}}" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-lg-1 col-md-3 ">

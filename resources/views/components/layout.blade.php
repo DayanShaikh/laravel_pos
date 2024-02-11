@@ -147,6 +147,32 @@
                 }
             });
         });
+
+        //range datepicker
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var currentDate = new Date();
+            var formattedDate = moment(currentDate).format('D/M/YYYY');
+            document.getElementById('dateRangePicker').value = formattedDate;
+
+            var picker = new Pikaday({
+                field: document.getElementById('dateRangePicker'),
+                format: 'D/M/YYYY',
+                toString(date, format) {
+                    const day = date.getDate();
+                    const month = date.getMonth() + 1;
+                    const year = date.getFullYear();
+                    return `${day}/${month}/${year}`;
+                },
+                parse(dateString, format) {
+                    const parts = dateString.split('/');
+                    const day = parseInt(parts[0], 10);
+                    const month = parseInt(parts[1], 10) - 1;
+                    const year = parseInt(parts[2], 10);
+                    return new Date(year, month, day);
+                }
+            });
+        });
         
 
     </script>
