@@ -71,7 +71,7 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,Customer $customer)
+    public function update(Request $request, Customer $customer)
     {
         $validate = $request->validate([
             'name'=>'required',
