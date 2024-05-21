@@ -45,12 +45,17 @@
                                 @enderror
                                 <div class="input-group input-group-outline is-filled form-select mt-3">
                                     {{-- <label class="form-label">Configuration Type</label> --}}
-                                    <select class="form-control ps-3 py-0" name="role_id">
+                                    <select name="role[]" id="choices-multiple-remove-button" placeholder="Select Roles" multiple>
+                                        @foreach($roles as $role)
+                                        <option value="{{$role->name}}" @if(isset($role->id) && in_array($role->id, $userrole->toArray())) selected @endif>{{$role->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    {{-- <select class="form-control ps-3 py-0" name="role_id">
                                         <option value="">Select Admin Role</option>
                                         @foreach($roles as $role)
                                         <option value="{{$role->id}}" @if($role->id == $userrole) selected @endif>{{$role->name}}</option>
-                                        @endforeach
-                                    </select>
+                                    @endforeach
+                                    </select> --}}
                                 </div>
                                 @error('role_id')
                                 <p class='text-danger inputerror'>{{ $message }} </p>

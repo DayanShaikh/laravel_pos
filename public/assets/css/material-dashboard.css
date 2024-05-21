@@ -577,7 +577,17 @@ progress {
     font-size: 5rem;
   }
 }
+.choices {
+  width: 100%;
+}
 
+.choices__list--multiple .choices__item {
+  border: #e12b6b !important;
+  background:#e12b6b !important;
+}
+.choices[data-type*=select-multiple] .choices__button, .choices[data-type*=text] .choices__button{
+  border-left: 1px solid #050505 !important;
+}
 .display-2 {
   font-size: calc(1.575rem + 3.9vw);
   font-weight: 300;
@@ -23975,7 +23985,7 @@ hr.horizontal.gray-light {
 }
 
 .sidenav .navbar-brand {
-  padding: 1.5rem 2rem;
+  padding: 1.5rem 0rem !important;
 }
 
 .sidenav .collapse .nav-item .nav-link.active {

@@ -47,38 +47,45 @@
                                                         <input class="form-check-input" id="select-all" type="checkbox" name="" value="">
                                                     </div>
                                                 </th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">s.no</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Name</th>
+                                                <th width="10%"class="text-center text-uppercase text-secondary text-xs font-weight-bolder">s.no</th>
+                                                <th width="20%" class="text-uppercase text-secondary text-xs font-weight-bolder">Name</th>
                                                 <th class="text-secondary opacity-7"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($permission as $permissions)
-                                            <tr>
-                                                <td class="align-middle text-center">
-                                                    <div class="form-check check-tables">
-                                                        <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$permissions->id}}">
-                                                    </div>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm font-weight-bold">{{$sn++}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm font-weight-bold">{{$permissions->name}}</span>
-                                                </td>
-                                                <td class="align-middle text-end px-4">
-                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('permission.edit', $permissions->id)}}" data-original-title="" title="">
-                                                        <i class="material-icons">edit</i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('permission.destroy', $permissions->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
-                                                        {{-- <i class="material-icons">close</i> --}}
-                                                        <i class="fa fa-trash"></i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </td>
+                                            @if($permission->count()>0)
+                                                
+                                                @foreach($permission as $permissions)
+                                                <tr>
+                                                    <td class="align-middle text-center">
+                                                        <div class="form-check check-tables">
+                                                            <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$permissions->id}}">
+                                                        </div>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        <span class="text-secondary text-sm font-weight-bold">{{$sn++}}</span>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        <span class="text-secondary text-sm font-weight-bold">{{$permissions->name}}</span>
+                                                    </td>
+                                                    <td class="align-middle text-end px-4">
+                                                        <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('permission.edit', $permissions->id)}}" data-original-title="" title="">
+                                                            <i class="material-icons">edit</i>
+                                                            <div class="ripple-container"></div>
+                                                        </a>
+                                                        <a href="javascript:void(0)" id="delete-user" data-url="{{ route('permission.destroy', $permissions->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
+                                                            {{-- <i class="material-icons">close</i> --}}
+                                                            <i class="fa fa-trash"></i>
+                                                            <div class="ripple-container"></div>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            @else
+                                            <tr class="text-center">
+                                                <td colspan="4">Record Not Found</td>
                                             </tr>
-                                            @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>

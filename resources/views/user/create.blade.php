@@ -39,14 +39,19 @@
                                     <label class="form-label">Password</label>
                                     <input type="text" class="form-control" name="password" value="{{ old('password') }}">
                                 </div>
-                                <div class="input-group input-group-outline is-filled form-select mt-3">
+                                <div class="input-group input-group-outline is-filled mt-3">
                                     {{-- <label class="form-label">Configuration Type</label> --}}
-                                    <select class="form-control ps-3 py-0" name="role">
-                                        <option value="">Select Admin Role</option>
+                                    <select name="role[]" id="choices-multiple-remove-button" placeholder="Select Roles" multiple>
                                         @foreach($roles as $role)
                                         <option value="{{$role->name}}" @if(old('role_id')==$role->id) selected @endif>{{$role->name}}</option>
                                         @endforeach
                                     </select>
+                                    {{-- <select class="form-control ps-3 py-0" name="role">
+                                        <option value="">Select Admin Role</option>
+                                        @foreach($roles as $role)
+                                        <option value="{{$role->name}}" @if(old('role_id')==$role->id) selected @endif>{{$role->name}}</option>
+                                    @endforeach
+                                    </select> --}}
                                 </div>
                                 @error('role')
                                 <p class='text-danger inputerror'>{{ $message }} </p>

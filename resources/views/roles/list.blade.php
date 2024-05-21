@@ -53,32 +53,39 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($role as $roles)
-                                            <tr>
-                                                <td class="align-middle text-center">
-                                                    <div class="form-check check-tables">
-                                                        <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$roles->id}}">
-                                                    </div>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{$sn++}}</span>
-                                                </td>
-                                                <td class="align-middle text-left">
-                                                    <span class="text-secondary text-sm">{{$roles->name}}</span>
-                                                </td>
-                                                <td class="align-middle text-end px-4">
-                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('role.edit', $roles->id)}}" data-original-title="" title="">
-                                                        <i class="material-icons">edit</i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('role.destroy', $roles->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
-                                                        {{-- <i class="material-icons">close</i> --}}
-                                                        <i class="fa fa-trash"></i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
+                                            @if($role->count()>0)
+                                                
+                                                @foreach($role as $roles)
+                                                <tr>
+                                                    <td class="align-middle text-center">
+                                                        <div class="form-check check-tables">
+                                                            <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$roles->id}}">
+                                                        </div>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        <span class="text-secondary text-sm">{{$sn++}}</span>
+                                                    </td>
+                                                    <td class="align-middle text-left">
+                                                        <span class="text-secondary text-sm">{{$roles->name}}</span>
+                                                    </td>
+                                                    <td class="align-middle text-end px-4">
+                                                        <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('role.edit', $roles->id)}}" data-original-title="" title="">
+                                                            <i class="material-icons">edit</i>
+                                                            <div class="ripple-container"></div>
+                                                        </a>
+                                                        <a href="javascript:void(0)" id="delete-user" data-url="{{ route('role.destroy', $roles->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
+                                                            {{-- <i class="material-icons">close</i> --}}
+                                                            <i class="fa fa-trash"></i>
+                                                            <div class="ripple-container"></div>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            @else
+                                                <tr class="text-center">
+                                                    <td colspan="4">Record Not Found</td>
+                                                </tr>
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>

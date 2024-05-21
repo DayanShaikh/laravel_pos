@@ -46,48 +46,55 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($user as $users)
-                                            <tr>
-                                                <td class="align-middle text-center">
-                                                    <div class="form-check check-tables">
-                                                        <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$users->id}}">
-                                                    </div>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{$sn++}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{$users->name}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{$users->email}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    {{-- @foreach ($users->roles as $role) --}}
-                                                    <span class="text-secondary text-xs font-weight-bold">{{ implode(',', $users->roles()->pluck('name')->toArray()) }}</span>
-                                                    {{-- @endforeach --}}
-                                                </td>
-                                                <td class="align-middle text-end px-4">
-                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('user.edit', $users->id)}}" data-original-title="" title="Edit">
-                                                        <i class="material-icons">edit</i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                    @if($users->status == 0)
-                                                    <a href=" {{ route('users.status', [$users->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
-                                                        <i class="fa fa-eye-slash"></i>
-                                                    </a>
-                                                    @elseif($users->status == 1)
-                                                    <a href="{{ route('users.status', [$users->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
-                                                        <i class="fa fa-eye"></i>
-                                                    </a>
-                                                    @endif
-                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('user.destroy', $users->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
-                                                        <i class="fa fa-trash"></i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
+                                            @if($user->count()>0)
+                                                
+                                                @foreach($user as $users)
+                                                <tr>
+                                                    <td class="align-middle text-center">
+                                                        <div class="form-check check-tables">
+                                                            <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$users->id}}">
+                                                        </div>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        <span class="text-secondary text-xs font-weight-bold">{{$sn++}}</span>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        <span class="text-secondary text-xs font-weight-bold">{{$users->name}}</span>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        <span class="text-secondary text-xs font-weight-bold">{{$users->email}}</span>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        {{-- @foreach ($users->roles as $role) --}}
+                                                        <span class="text-secondary text-xs font-weight-bold">{{ implode(',', $users->roles()->pluck('name')->toArray()) }}</span>
+                                                        {{-- @endforeach --}}
+                                                    </td>
+                                                    <td class="align-middle text-end px-4">
+                                                        <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('user.edit', $users->id)}}" data-original-title="" title="Edit">
+                                                            <i class="material-icons">edit</i>
+                                                            <div class="ripple-container"></div>
+                                                        </a>
+                                                        @if($users->status == 0)
+                                                        <a href=" {{ route('users.status', [$users->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
+                                                            <i class="fa fa-eye-slash"></i>
+                                                        </a>
+                                                        @elseif($users->status == 1)
+                                                        <a href="{{ route('users.status', [$users->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
+                                                            <i class="fa fa-eye"></i>
+                                                        </a>
+                                                        @endif
+                                                        <a href="javascript:void(0)" id="delete-user" data-url="{{ route('user.destroy', $users->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
+                                                            <i class="fa fa-trash"></i>
+                                                            <div class="ripple-container"></div>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            @else
+                                                <tr class="text-center">
+                                                    <td colspan="4">Record Not Found</td>
+                                                </tr>
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>

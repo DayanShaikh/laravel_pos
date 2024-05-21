@@ -41,6 +41,7 @@
     <link id="pagestyle" href="{{ asset('assets') }}/fontcss/fontawesome.min.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/bootstrap-datepicker.min.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/pikaday.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
 </head>
 <body class="{{ $bodyClass }}">
 
@@ -59,6 +60,7 @@
     <script src="{{ asset('assets') }}/js/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="{{ asset('assets') }}/js/angular-animate.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
     @stack('js')
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
@@ -118,6 +120,7 @@
                 $('.menu-btn').css("visibility", "visible");
             });
         });
+
         function confirmAndSubmit() {
             var selectedAction = document.getElementById('action').value;
             var confirmation = confirm('Are you sure you want to perform this action?');
@@ -156,15 +159,15 @@
             document.getElementById('dateRangePicker').value = formattedDate;
 
             var picker = new Pikaday({
-                field: document.getElementById('dateRangePicker'),
-                format: 'D/M/YYYY',
-                toString(date, format) {
+                field: document.getElementById('dateRangePicker')
+                , format: 'D/M/YYYY'
+                , toString(date, format) {
                     const day = date.getDate();
                     const month = date.getMonth() + 1;
                     const year = date.getFullYear();
                     return `${day}/${month}/${year}`;
-                },
-                parse(dateString, format) {
+                }
+                , parse(dateString, format) {
                     const parts = dateString.split('/');
                     const day = parseInt(parts[0], 10);
                     const month = parseInt(parts[1], 10) - 1;
@@ -173,7 +176,14 @@
                 }
             });
         });
-        
+        $(document).ready(function() {
+            var multipleCancelButton = new Choices('#choices-multiple-remove-button', {
+                removeItemButton: true
+                , maxItemCount: 5
+                , searchResultLimit: 5
+                , renderChoiceLimit: 5
+            });
+        });
 
     </script>
     <script src="{{ asset('assets') }}/js/angular.min.js"></script>
