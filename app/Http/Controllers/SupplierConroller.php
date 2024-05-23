@@ -99,7 +99,7 @@ class SupplierConroller extends Controller
                 ->where('is_return', false)->whereBetween('date', [$format_from_date, $format_to_date])->where('supplier_id', $id)
                 ->union(Purchase::select('date', DB::raw("CONCAT('Purchase Return:', note) as details"), "net_price as debit", DB::raw("0 as credit"))
                     ->where('is_return', true)->whereBetween('date', [$format_from_date, $format_to_date])->where('supplier_id', $id))
-                ->union(SupplierPayments::select('date', DB::raw("CONCAT(details) as details"), 'payment as debit', DB::raw("0 as credit"))
+                ->union(SupplierPayments::select('date', DB::raw("CONCAT('Payment:', details) as details"), 'payment as debit', DB::raw("0 as credit"))
                     ->whereBetween('date', [$format_from_date, $format_to_date])->where('supplier_id', $id))
                 ->get();
         } else {

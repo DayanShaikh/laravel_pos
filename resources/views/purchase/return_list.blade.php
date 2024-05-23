@@ -73,12 +73,12 @@
                                     <table class="table align-items-center mb-0">
                                         <thead>
                                             <tr>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">S.no</th>
                                                 <th width="2%" class="align-middle text-center">
                                                     <div class="form-check check-tables">
                                                         <input class="form-check-input" id="select-all" type="checkbox" name="" value="">
                                                     </div>
                                                 </th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">S.no</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">ID</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Date</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Supplier</th>

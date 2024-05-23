@@ -152,39 +152,49 @@
         });
 
         //range datepicker
-
         document.addEventListener('DOMContentLoaded', function() {
-            var currentDate = new Date();
-            var formattedDate = moment(currentDate).format('D/M/YYYY');
-            document.getElementById('dateRangePicker').value = formattedDate;
+            const initialDate1 = document.getElementById('dateRangePicker1').value;
+            const initialDate2 = document.getElementById('dateRangePicker2').value;
 
-            var picker = new Pikaday({
-                field: document.getElementById('dateRangePicker')
-                , format: 'D/M/YYYY'
-                , toString(date, format) {
+            function parseDate(dateString) {
+                const parts = dateString.split('/');
+                const day = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10) - 1; // months are 0-based in JavaScript
+                const year = parseInt(parts[2], 10);
+                return new Date(year, month, day);
+            }
+
+            var picker1 = new Pikaday({
+                field: document.getElementById('dateRangePicker1'),
+                format: 'D/M/YYYY',
+                toString(date, format) {
                     const day = date.getDate();
                     const month = date.getMonth() + 1;
                     const year = date.getFullYear();
                     return `${day}/${month}/${year}`;
-                }
-                , parse(dateString, format) {
-                    const parts = dateString.split('/');
-                    const day = parseInt(parts[0], 10);
-                    const month = parseInt(parts[1], 10) - 1;
-                    const year = parseInt(parts[2], 10);
-                    return new Date(year, month, day);
+                },
+                parse(dateString, format) {
+                    return parseDate(dateString);
                 }
             });
-        });
-        $(document).ready(function() {
-            var multipleCancelButton = new Choices('#choices-multiple-remove-button', {
-                removeItemButton: true
-                , maxItemCount: 5
-                , searchResultLimit: 5
-                , renderChoiceLimit: 5
-            });
-        });
 
+            var picker2 = new Pikaday({
+                field: document.getElementById('dateRangePicker2'),
+                format: 'D/M/YYYY',
+                toString(date, format) {
+                    const day = date.getDate();
+                    const month = date.getMonth() + 1;
+                    const year = date.getFullYear();
+                    return `${day}/${month}/${year}`;
+                },
+                parse(dateString, format) {
+                    return parseDate(dateString);
+                }
+            });
+
+            picker1.setDate(parseDate(initialDate1), true); // true to trigger onSelect
+            picker2.setDate(parseDate(initialDate2), true); // true to trigger onSelect
+        });
     </script>
     <script src="{{ asset('assets') }}/js/angular.min.js"></script>
     {{-- <script async defer src="https://buttons.github.io/buttons.js"></script> --}}

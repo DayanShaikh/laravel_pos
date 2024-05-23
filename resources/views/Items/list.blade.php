@@ -76,52 +76,59 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($item as $items)
-                                            <tr>
-                                                <td class="align-middle text-center">
-                                                    <div class="form-check check-tables">
-                                                        <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$items->id}}">
-                                                    </div>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{$sn++}}</span>
-                                                </td>
-                                                {{-- <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{ $items->ItemCategory->title}}</span>
-                                                </td> --}}
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $items->title}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $items->unit_price}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $items->sale_price}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $items->quantity}}</span>
-                                                </td>
-                                                <td class="align-middle text-end px-4">
-                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('item.edit', $items->id)}}"  title="Edit">
-                                                        <i class="material-icons">edit</i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                    @if($items->status == 0)
-                                                    <a href=" {{ route('item.status', [$items->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
-                                                        <i class="fa fa-eye-slash"></i>
-                                                    </a>
-                                                    @elseif($items->status == 1)
-                                                    <a href="{{ route('item.status', [$items->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
-                                                        <i class="fa fa-eye"></i>
-                                                    </a>
-                                                    @endif
-                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('item.destroy', $items->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
-                                                        <i class="fa fa-trash"></i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </td>
+                                            @if($item->count()>0)
+                                                
+                                                @foreach($item as $items)
+                                                <tr>
+                                                    <td class="align-middle text-center">
+                                                        <div class="form-check check-tables">
+                                                            <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$items->id}}">
+                                                        </div>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        <span class="text-secondary text-sm">{{$sn++}}</span>
+                                                    </td>
+                                                    {{-- <td class="align-middle text-center">
+                                                        <span class="text-secondary text-xs font-weight-bold">{{ $items->ItemCategory->title}}</span>
+                                                    </td> --}}
+                                                    <td class="align-middle text-center">
+                                                        <span class="text-secondary text-sm">{{ $items->title}}</span>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        <span class="text-secondary text-sm">{{ $items->unit_price}}</span>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        <span class="text-secondary text-sm">{{ $items->sale_price}}</span>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        <span class="text-secondary text-sm">{{ $items->quantity}}</span>
+                                                    </td>
+                                                    <td class="align-middle text-end px-4">
+                                                        <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('item.edit', $items->id)}}"  title="Edit">
+                                                            <i class="material-icons">edit</i>
+                                                            <div class="ripple-container"></div>
+                                                        </a>
+                                                        @if($items->status == 0)
+                                                        <a href=" {{ route('item.status', [$items->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
+                                                            <i class="fa fa-eye-slash"></i>
+                                                        </a>
+                                                        @elseif($items->status == 1)
+                                                        <a href="{{ route('item.status', [$items->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
+                                                            <i class="fa fa-eye"></i>
+                                                        </a>
+                                                        @endif
+                                                        <a href="javascript:void(0)" id="delete-user" data-url="{{ route('item.destroy', $items->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
+                                                            <i class="fa fa-trash"></i>
+                                                            <div class="ripple-container"></div>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            @else
+                                            <tr class="text-center">
+                                                <td colspan="6">Record Not Found</td>
                                             </tr>
-                                            @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>

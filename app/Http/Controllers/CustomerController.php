@@ -36,19 +36,13 @@ class CustomerController extends Controller
     public function store(Request $request, Customer $customer)
     {
         $validate = $request->validate([
-            'name'=>'required',
-            'phone'=>'required',
-            'balance'=>'required'
+            'name'=>['required'],
+            'phone'=>[''],
+            'address'=>[''],
+            'balance'=>['required']
         ]);
-        $customer->create([
-            'name'=>$request->name,
-            'phone'=>$request->phone,
-            'address'=>$request->address,
-            'balance'=>$request->balance,
-        ]);
+        $customer->create($validate);
         return redirect()->route('customer.index')->with('success','Record Successfully Submited');
-        
-
     }
 
     /**
@@ -76,7 +70,8 @@ class CustomerController extends Controller
         $validate = $request->validate([
             'name'=>'required',
             'phone'=>'required',
-            'balance'=>'required'
+            'balance'=>'required',
+            'address'=>['']
         ]);
         $customer->update([
             'name'=>$request->name,

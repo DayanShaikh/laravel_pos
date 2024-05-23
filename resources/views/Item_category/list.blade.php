@@ -65,46 +65,53 @@
                                                         <input class="form-check-input" id="select-all" type="checkbox" name="" value="">
                                                     </div>
                                                 </th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">S.no</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">title</th>
+                                                <th width="10%" class="text-center text-uppercase text-secondary text-xs font-weight-bolder">S.no</th>
+                                                <th width="20%" class="text-uppercase text-secondary text-xs font-weight-bolder">title</th>
                                                 <th class="text-secondary "></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($item as $items)
-                                            <tr>
-                                                <td class="align-middle text-center">
-                                                    <div class="form-check check-tables">
-                                                        <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$items->id}}">
-                                                    </div>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm font-weight-bold">{{$sn++}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm font-weight-bold">{{$items->title}}</span>
-                                                </td>
-                                                <td class="align-middle text-end px-4">
-                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('item_category.edit', $items->id)}}" data-original-title="" title="">
-                                                        <i class="material-icons">edit</i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                    @if($items->status == 0)
-                                                    <a href=" {{ route('item_category.status', [$items->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
-                                                        <i class="fa fa-eye-slash"></i>
-                                                    </a>
-                                                    @elseif($items->status == 1)
-                                                    <a href="{{ route('item_category.status', [$items->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
-                                                        <i class="fa fa-eye"></i>
-                                                    </a>
-                                                    @endif
-                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('item_category.destroy', $items->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
-                                                        <i class="fa fa-trash"></i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </td>
+                                            @if($item->count()>0)
+                                                
+                                                @foreach($item as $items)
+                                                <tr>
+                                                    <td class="align-middle text-center">
+                                                        <div class="form-check check-tables">
+                                                            <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$items->id}}">
+                                                        </div>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        <span class="text-secondary text-sm font-weight-bold">{{$sn++}}</span>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        <span class="text-secondary text-sm font-weight-bold">{{$items->title}}</span>
+                                                    </td>
+                                                    <td class="align-middle text-end px-4">
+                                                        <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('item_category.edit', $items->id)}}" data-original-title="" title="">
+                                                            <i class="material-icons">edit</i>
+                                                            <div class="ripple-container"></div>
+                                                        </a>
+                                                        @if($items->status == 0)
+                                                        <a href=" {{ route('item_category.status', [$items->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
+                                                            <i class="fa fa-eye-slash"></i>
+                                                        </a>
+                                                        @elseif($items->status == 1)
+                                                        <a href="{{ route('item_category.status', [$items->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
+                                                            <i class="fa fa-eye"></i>
+                                                        </a>
+                                                        @endif
+                                                        <a href="javascript:void(0)" id="delete-user" data-url="{{ route('item_category.destroy', $items->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
+                                                            <i class="fa fa-trash"></i>
+                                                            <div class="ripple-container"></div>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            @else
+                                            <tr class="text-center">
+                                                <td colspan="5">Record Not Found</td>
                                             </tr>
-                                            @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>

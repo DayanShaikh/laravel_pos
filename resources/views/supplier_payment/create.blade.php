@@ -34,7 +34,7 @@
                                 @enderror
                                 <div class="input-group input-group-outline mt-3 null is-filled ">
                                     <label for="datepicker" class="form-label">Date </label>
-                                    <input type="text"  class="form-control" name="date" value="" autocomplete="off">
+                                    <input type="date"  class="form-control" name="date" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}" autocomplete="off">
                                 </div>
                                 @error('date')
                                 <p class='text-danger inputerror'>{{ $message }} </p>

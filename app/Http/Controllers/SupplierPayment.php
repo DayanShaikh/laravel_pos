@@ -44,11 +44,12 @@ class SupplierPayment extends Controller
             'date' => 'required',
             'payment' => 'required',
         ]);
-        $date_format =Carbon::createFromFormat('d/m/Y', $request->date);
+        // $date_format =Carbon::createFromFormat('d/m/Y', $request->date);
 
         SupplierPayments::create([
             'supplier_id'=>$request->supplier_id,
-            'date'=>$date_format,
+            // 'date'=>$date_format,
+            'date'=>$request->date,
             'payment'=>$request->payment,
             'details'=>$request->detail,
         ]);

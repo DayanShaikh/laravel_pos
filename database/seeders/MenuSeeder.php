@@ -70,6 +70,13 @@ class MenuSeeder extends Seeder
             'small_icon' =>'<i class="fa fa-cart-flatbed"></i>',
             'icon' =>'',
         ]);
+        Menu::create([
+            'title' => 'Customer Payment',
+            'url' =>'/customer_payment',
+            'parent_id' => $Sales->id,
+            'small_icon' =>'<i class="fa fa-cart-flatbed"></i>',
+            'icon' =>'',
+        ]);
         $Accounts = Menu::create([
             'title' => 'Accounts',
             'url' =>'#',
