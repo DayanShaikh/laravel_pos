@@ -93,7 +93,7 @@
                                                 @foreach($purchase as $purchases)
                                                     <tr>
                                                         <td class="align-middle text-center">
-                                                            <span class="text-secondary text-sm">{{$loop->index ++}}</span>
+                                                            <span class="text-secondary text-sm">{{$sn++}}</span>
                                                         </td>
                                                         <td class="align-middle text-center">
                                                             <div class="form-check check-tables">

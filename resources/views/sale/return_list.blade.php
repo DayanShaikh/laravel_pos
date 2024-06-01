@@ -12,13 +12,13 @@
                         <div class="col-lg-2 col-md-6">
                             <div class="input-group input-group-outline datepicker-container">
                                 {{-- <label for="datepicker" class="form-label">from date</label> --}}
-                                <input type="text" class="form-control" id="dateRangePicker1" name="from_date" placeholder="From date" value="{{$from_date??''}}" autocomplete="off">
+                                <input type="text" class="form-control" id="start-date" name="from_date" placeholder="From date" value="{{$from_date}}" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-6">
                             <div class="input-group input-group-outline datepicker-container">
                                 {{-- <label for="datepicker" class="form-label">To date</label> --}}
-                                <input type="text" class="form-control" id="dateRangePicker2" name="to_date" placeholder="To date" value="{{$to_date??''}}" autocomplete="off">
+                                <input type="text" class="form-control" id="end-date" name="to_date" placeholder="To date" value="{{$to_date}}" autocomplete="off">
                             </div>
                         </div>
                         {{-- <div class="col-lg-2 col-md-6">
@@ -63,7 +63,7 @@
                         @endif
                         <div class=" me-3 my-3 text-end">
                             <a class="btn bg-gradient-dark mb-0" href="{{ route('purchase.create')}}"><i class="material-icons text-sm">add</i></a>
-                            <a class="btn bg-gradient-dark mb-0" href="{{ route('purchase.return')}}">Purchase Return</a>
+                            <a class="btn bg-gradient-dark mb-0" href="{{ route('purchase.index')}}">Purchase</a>
                         </div>
                         <form method="POST" action="{{route('purchase.bulkAction')}}" id="myForm">
                             @csrf
@@ -73,12 +73,12 @@
                                     <table class="table align-items-center mb-0">
                                         <thead>
                                             <tr>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">S.no</th>
                                                 <th width="2%" class="align-middle text-center">
                                                     <div class="form-check check-tables">
                                                         <input class="form-check-input" id="select-all" type="checkbox" name="" value="">
                                                     </div>
                                                 </th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">S.no</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">ID</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Date</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Supplier</th>
@@ -89,63 +89,57 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if($purchase->count()>0)
-                                                @foreach($purchase as $purchases)
-                                                    <tr>
-                                                        <td class="align-middle text-center">
-                                                            <span class="text-secondary text-sm">{{$loop->index ++}}</span>
-                                                        </td>
-                                                        <td class="align-middle text-center">
-                                                            <div class="form-check check-tables">
-                                                                <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$purchases->id}}">
-                                                            </div>
-                                                        </td>
-                                                        <td class="align-middle text-center">
-                                                            <span class="text-secondary text-sm">{{$purchases->id}}</span>
-                                                        </td>
-                                                        <td class="align-middle text-center">
-                                                            <span class="text-secondary text-sm">{{\Carbon\Carbon::parse($purchases->date)->format('d-m-Y')}}</span>
-                                                        </td>
-                                                        <td class="align-middle text-center">
-                                                            <span class="text-secondary text-sm">
-                                                                {{!empty($purchases->supplier)? $purchases->supplier->name:'Select Supplier'}}
-                                                            </span>
-                                                        </td>
-                                                        <td class="align-middle text-center">
-                                                            <span class="text-secondary text-sm">{{$purchases->total_price}}</span>
-                                                        </td>
-                                                        <td class="align-middle text-center">
-                                                            <span class="text-secondary text-sm">{{$purchases->discount}}</span>
-                                                        </td>
-                                                        <td class="align-middle text-center">
-                                                            <span class="text-secondary text-sm">{{$purchases->net_price}}</span>
-                                                        </td>
-                                                        <td class="align-middle text-end px-4">
-                                                            <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('purchase.edit', $purchases->id)}}" title="Edit">
-                                                                <i class="material-icons">edit</i>
-                                                                <div class="ripple-container"></div>
-                                                            </a>
-                                                            @if($purchases->status == 0)
-                                                            <a href=" {{ route('purchase.status', [$purchases->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
-                                                                <i class="fa fa-eye-slash"></i>
-                                                            </a>
-                                                            @elseif($purchases->status == 1)
-                                                            <a href="{{ route('purchase.status', [$purchases->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
-                                                                <i class="fa fa-eye"></i>
-                                                            </a>
-                                                            @endif
-                                                            <a href="javascript:void(0)" id="delete-user" data-url="{{ route('purchase.delete', $purchases->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
-                                                                <i class="fa fa-trash"></i>
-                                                                <div class="ripple-container"></div>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                                @else
-                                                <tr class="text-center">
-                                                    <td colspan="8">Record Not Found</td>
-                                                </tr>
-                                            @endif
+                                            @foreach($purchase as $purchases)
+                                            <tr>
+                                                <td class="align-middle text-center">
+                                                    <span class="text-secondary text-sm">{{$sn++}}</span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <div class="form-check check-tables">
+                                                        <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$purchases->id}}">
+                                                    </div>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <span class="text-secondary text-sm">{{$purchases->id}}</span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <span class="text-secondary text-sm">{{\Carbon\Carbon::parse($purchases->date)->format('d-m-Y')}}</span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <span class="text-secondary text-sm">
+                                                        {{!empty($purchases->supplier)? $purchases->supplier->name:'Select Supplier'}}
+                                                    </span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <span class="text-secondary text-sm">{{$purchases->total_price}}</span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <span class="text-secondary text-sm">{{$purchases->discount}}</span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <span class="text-secondary text-sm">{{$purchases->net_price}}</span>
+                                                </td>
+                                                <td class="align-middle text-end px-4">
+                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('purchase.edit', $purchases->id)}}" title="Edit">
+                                                        <i class="material-icons">edit</i>
+                                                        <div class="ripple-container"></div>
+                                                    </a>
+                                                    @if($purchases->status == 0)
+                                                    <a href=" {{ route('purchase.status', [$purchases->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
+                                                        <i class="fa fa-eye-slash"></i>
+                                                    </a>
+                                                    @elseif($purchases->status == 1)
+                                                    <a href="{{ route('purchase.status', [$purchases->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    @endif
+                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('purchase.delete', $purchases->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
+                                                        <i class="fa fa-trash"></i>
+                                                        <div class="ripple-container"></div>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>

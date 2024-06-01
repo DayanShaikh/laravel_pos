@@ -68,17 +68,12 @@ class CustomerController extends Controller
     public function update(Request $request, Customer $customer)
     {
         $validate = $request->validate([
-            'name'=>'required',
-            'phone'=>'required',
+            'name'=>['required'],
+            'phone'=>[''],
             'balance'=>'required',
             'address'=>['']
         ]);
-        $customer->update([
-            'name'=>$request->name,
-            'phone'=>$request->phone,
-            'balance'=>$request->balance,
-            'address'=>$request->address
-        ]);
+        $customer->update($validate);
         return to_route('customer.index')->with('success','Record Successfully Updated');
     }
 

@@ -13,27 +13,18 @@ class PurchaseController extends Controller
 {
     public function index(Request $request)
     {
-        $sn = 1;
-        $rowsPerPage = $request->input('rowsPerPage', 10);
-        $from_date = $request->input('from_date') ?? "";
-        $to_date = $request->input('to_date') ?? "";
-        $supplier_id = $request->input('supplier_id') ?? "";
-
-        if (!empty($from_date) && !empty($to_date) && !empty($supplier_id)) {
-            $format_from_date = Carbon::createFromFormat('d/m/Y', $from_date)->format('Y-m-d');
-            $format_to_date = Carbon::createFromFormat('d/m/Y', $to_date)->format('Y-m-d');
-            $purchase = Purchase::where('date', '>=', $format_from_date)->where('date', '<=', $format_to_date)->where('supplier_id', $supplier_id)->where('is_return', false)->paginate($rowsPerPage);
-        } elseif (empty($from_date) && empty($to_date) && !empty($supplier_id)) {
-            $purchase = Purchase::where('supplier_id', $supplier_id)->paginate($rowsPerPage);
-        } elseif (!empty($from_date) && !empty($to_date) && empty($supplier_id)) {
-            $format_from_date = Carbon::createFromFormat('d/m/Y', $from_date)->format('Y-m-d');
-            $format_to_date = Carbon::createFromFormat('d/m/Y', $to_date)->format('Y-m-d');
-            $purchase = Purchase::where('date', '>=', $format_from_date)->where('date', '<=', $format_to_date)->where('is_return', false)->paginate($rowsPerPage);
-        } else {
-            $purchase = Purchase::with('supplier')->where('is_return', false)->paginate($rowsPerPage);
-        }
         $suppliers = Supplier::all();
-        return view('purchase.list', compact('purchase', 'rowsPerPage', 'sn', 'from_date', 'to_date', 'suppliers', 'supplier_id'));
+        $rowsPerPage = $request->input('rowsPerPage', 10);
+        $from_date = $request->input('from_date')?Carbon::createFromFormat('d/m/Y', $request->input('from_date')??Carbon::now())->format('Y-m-d'):Carbon::now();
+        $to_date = $request->input('to_date')?Carbon::createFromFormat('d/m/Y', $request->input('to_date'))->format('Y-m-d'):Carbon::now();
+        $supplier_id = $request->input('supplier_id');
+
+        $purchase = Purchase::with('supplier')
+        ->when($from_date != Carbon::now() && $to_date != Carbon::now(), function ($query) use($from_date, $to_date, $supplier_id) {
+            $query->whereBetween('date', [$from_date, $to_date]);
+        })
+        ->where('is_return', false)->paginate($rowsPerPage);
+        return view('purchase.list', compact('purchase', 'rowsPerPage', 'from_date', 'to_date', 'suppliers', 'supplier_id',));
     }
 
     public function return(Request $request)
