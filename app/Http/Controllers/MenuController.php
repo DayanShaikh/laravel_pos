@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Menu;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
 {
@@ -33,19 +34,27 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        // return Storage::path('menu');
+        // return $request; 
+        $request->validate([
             'title' => 'required',
             'url' => 'required',
-            'small_icon' => 'required',
-            // 'icon' => 'required',
         ]);
-        Menu::create([
+        $menu = Menu::create([
             'title' => $request->title,
             'url' => $request->url,
             'parent_id' => $request->parent_id,
             'small_icon' => $request->small_icon,
-            'icon' => $request->icon,
+            // 'icon' => $request->icon,
         ]);
+
+        if ($request->hasFile('icon') && $request->file('icon')->isValid()) {
+            $fileName = $request->file('icon')->getClientOriginalName();
+            // return Storage::disk('public')->put('menu', $request->file('icon'));
+           $menu->icon = Storage::disk('public')->put('menu', $request->file('icon'));
+            $menu->save();
+        }
+        
         return redirect()->route('menu.index')->with('message', 'Record Create Successfully');
     }
 

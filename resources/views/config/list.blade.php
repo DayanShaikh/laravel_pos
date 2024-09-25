@@ -24,45 +24,42 @@
                             </button>
                         </div>
                         @endif
-                        {{-- <div class=" me-3 my-3 text-end">
-                            <a href="{{route('config_variable.index')}}" class="btn bg-gradient-dark"><i class="fa fa-arrow-right"></i></a>
-                    </div> --}}
                     <div class="card-body p-0 px-3">
                         @foreach($config_type as $config_types)
                         <h4 class="mt-3">{{$config_types->title}}</h4>
-                        <form role="form" method="POST" action="{{ route('config.store' , $config_types->id) }}" class="text-start" enctype="multipart/form-data">
-                            @csrf
-                            @foreach($config as $configs)
-                            @if($configs->type == 'file')
-                            <div class="input-group input-group-outline mt-3 null is-filled">
-                                <label class="form-label">{{$configs->title}}</label>
-                                <input type="{{$configs->type}}" class="form-control" name="{{$configs->type."_".$configs->id}}" value="{{ $configs->value }}">
-                            </div>
-                            @error($configs->type)
-                            <p class='text-danger inputerror'>{{ $message }} </p>
-                            @enderror
-                            @elseif($configs->type == 'textarea')
-                            <div class=" mt-3 null ">
-                                <label class="form-label">{{$configs->title}}</label>
-                                <textarea name="{{$configs->type."_".$configs->id}}" class="form-control border px-2" cols="10" rows="5">{{ $configs->value }}</textarea>
-                            </div>
-                            @error($configs->type)
-                            <p class='text-danger inputerror'>{{ $message }} </p>
-                            @enderror
-                            @elseif($configs->type != 'textarea' && $configs->type != 'file')
-                            <div class="input-group input-group-outline @if($configs->value) null is-filled @endif mt-3 null ">
-                                <label class="form-label">{{$configs->title}}</label>
-                                <input type="{{$configs->type}}" class="form-control" name="{{$configs->type."_".$configs->id}}" value="{{ $configs->value }}">
-                            </div>
-                            @error($configs->type)
-                            <p class='text-danger inputerror'>{{ $message }} </p>
-                            @enderror
-                            @endif
-                            @endforeach
-                            <div class="col-lg-1 col-sm-6 col-12">
-                                <button class="btn bg-gradient-primary w-100 my-4 mb-2" type="submit" data-target="successToast">Submit</button>
-                            </div>
-                        </form>
+                            <form method="POST" action="{{ route('config.store' , $config_types->id) }}" enctype="multipart/form-data">
+                                @csrf
+                                @foreach($config as $configs)
+                                    @if($configs->type == 'file')
+                                        <div class="input-group input-group-outline mt-3 null is-filled">
+                                            <label class="form-label">{{$configs->title}}</label>
+                                            <input type="{{$configs->type}}" name="{{$configs->type."_".$configs->id}}" class="form-control">
+                                        </div>
+                                        @error($configs->type)
+                                            <p class='text-danger inputerror'>{{ $message }} </p>
+                                        @enderror
+                                    @elseif($configs->type == 'textarea')
+                                        <div class=" mt-3 null ">
+                                            <label class="form-label">{{$configs->title}}</label>
+                                            <textarea name="{{$configs->type."_".$configs->id}}" class="form-control border px-2" cols="10" rows="5">{{ $configs->value }}</textarea>
+                                        </div>
+                                        @error($configs->type)
+                                            <p class='text-danger inputerror'>{{ $message }} </p>
+                                        @enderror
+                                    @elseif($configs->type != 'textarea' && $configs->type != 'file')
+                                        <div class="input-group input-group-outline @if($configs->value) null is-filled @endif mt-3 null ">
+                                            <label class="form-label">{{$configs->title}}</label>
+                                            <input type="{{$configs->type}}" class="form-control" name="{{$configs->type."_".$configs->id}}" value="{{ $configs->value }}">
+                                        </div>
+                                        @error($configs->type)
+                                            <p class='text-danger inputerror'>{{ $message }} </p>
+                                        @enderror
+                                    @endif
+                                @endforeach
+                                <div class="col-lg-1 col-sm-6 col-12">
+                                    <button class="btn bg-gradient-primary w-100 my-4 mb-2" type="submit" data-target="successToast">Submit</button>
+                                </div>
+                            </form>
                         @endforeach
                     </div>
                 </div>

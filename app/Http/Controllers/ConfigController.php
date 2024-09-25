@@ -20,15 +20,26 @@ class ConfigController extends Controller
 
     public function store(Request $request, $id)
     {
+        // return $request;
+
         $config = ConfigVariable::where('config_type_id', $id)->get();
         foreach ($config as $configs) {
-            $confg = ConfigVariable::find($configs->id);
-            $confg->value = $request[$configs->type . "_" . $configs->id];
-            if ($request->hasFile($configs->type . "_" . $configs->id)) {
-                Storage::delete($confg->value);
-                $confg->value = $request->file($configs->type . "_" . $configs->id)->storeAs('public/config/image', $request->file($configs->type . "_" . $configs->id)->getClientOriginalName());
+            $key = $configs->type . "_" . $configs->id;
+            
+            if ($request->hasFile($key)) {
+                $confg = ConfigVariable::find($configs->id);
+                // Delete the old file if it exists
+                if ($confg->value) {
+                    Storage::delete($confg->value);
+                }
+                // Store the new file
+                $confg->value = $request->file($key)->storeAs('public/config/image', $request->file($key)->getClientOriginalName());
+                $confg->save();
+            } else {
+                $confg = ConfigVariable::find($configs->id);
+                $confg->value = $request->input($key);
+                $confg->save();
             }
-            $confg->save();
         }
         return redirect()->back()->with('message', 'Record Update Successfully');
     }

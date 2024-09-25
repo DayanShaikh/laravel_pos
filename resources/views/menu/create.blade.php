@@ -19,7 +19,7 @@
                             <a href="{{route('menu.index')}}" class="btn bg-gradient-dark"><i class="fa fa-arrow-right"></i></a>
                         </div>
                         <div class="card-body p-0 px-3">
-                            <form role="form" method="POST" action="{{  route('menu.store') }}" class="text-start" enctype="multipart/form-data">
+                            <form method="POST" action="{{route('menu.store')}}" class="text-start" enctype="multipart/form-data">
                                 @csrf
                                 <div class="input-group input-group-outline mt-3">
                                     <select class="form-control ps-3 py-0 select_multiple" name="" multiple="multiple" style="display:none">
@@ -60,7 +60,7 @@
                                     <input type="file" class="form-control" name="icon">
                                 </div>
                                 <div class="col-lg-1 col-sm-6 col-12">
-                                    <button class="btn bg-gradient-primary w-100 my-4 mb-2 p-3" type="submit" data-target="successToast">Submit</button>
+                                    <button class="btn bg-gradient-primary w-100 my-4 mb-2 p-3" type="submit">Submit</button>
                                 </div>
                             </form>
                         </div>
