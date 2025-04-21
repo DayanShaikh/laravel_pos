@@ -14,7 +14,7 @@ class ItemController extends Controller
     public function index(Request $request)
     {
         $sn = 1;
-        $rowsPerPage = $request->input('rowsPerPage', 10);
+        $rowsPerPage = $request->input('rowsPerPage', 2);
         $title = $request->input('title') ?? "";
         if (!empty($title)) {
             $item = Item::where('title', 'like', '%' . $title . '%')->paginate($rowsPerPage);
@@ -100,7 +100,6 @@ class ItemController extends Controller
     {
         $action = $request->action;
         $multi = $request->input('multidelete', []);
-        // dd($multi);
         if (empty($multi)) {
             return redirect()->back()->with('error', 'No Records Selected');
         }
