@@ -32,6 +32,11 @@
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- For Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <link id="pagestyle" href="{{ asset('assets') }}/css/material-dashboard.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/jquery-ui.css" rel="stylesheet" />
@@ -165,29 +170,29 @@
             }
 
             var picker1 = new Pikaday({
-                field: document.getElementById('dateRangePicker1'),
-                format: 'D/M/YYYY',
-                toString(date, format) {
+                field: document.getElementById('dateRangePicker1')
+                , format: 'D/M/YYYY'
+                , toString(date, format) {
                     const day = date.getDate();
                     const month = date.getMonth() + 1;
                     const year = date.getFullYear();
                     return `${day}/${month}/${year}`;
-                },
-                parse(dateString, format) {
+                }
+                , parse(dateString, format) {
                     return parseDate(dateString);
                 }
             });
 
             var picker2 = new Pikaday({
-                field: document.getElementById('dateRangePicker2'),
-                format: 'D/M/YYYY',
-                toString(date, format) {
+                field: document.getElementById('dateRangePicker2')
+                , format: 'D/M/YYYY'
+                , toString(date, format) {
                     const day = date.getDate();
                     const month = date.getMonth() + 1;
                     const year = date.getFullYear();
                     return `${day}/${month}/${year}`;
-                },
-                parse(dateString, format) {
+                }
+                , parse(dateString, format) {
                     return parseDate(dateString);
                 }
             });
@@ -195,6 +200,7 @@
             picker1.setDate(parseDate(initialDate1), true); // true to trigger onSelect
             picker2.setDate(parseDate(initialDate2), true); // true to trigger onSelect
         });
+
     </script>
     <script src="{{ asset('assets') }}/js/angular.min.js"></script>
     {{-- <script async defer src="https://buttons.github.io/buttons.js"></script> --}}
