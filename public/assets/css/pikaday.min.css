@@ -172,13 +172,13 @@
 .is-selected .pika-button {
     color: #fff;
     font-weight: 700;
-    background: #e91e63;
+    background: #49a3f1;
     box-shadow: inset 0 1px 3px #696a6b;
     border-radius: 3px
 }
 
 .has-event .pika-button {
-    background: #e91e63;
+    background: #49a3f1;
     box-shadow: inset 0 1px 3px #3d3c3c
 }
 
@@ -196,7 +196,7 @@
 
 .is-endrange .pika-button {
     color: #fff;
-    background: #e91e63;
+    background: #49a3f1;
     box-shadow: none;
     border-radius: 3px
 }
@@ -221,7 +221,7 @@
 .pika-button:hover,
 .pika-row.pick-whole-week:hover .pika-button {
     color: #fff;
-    background: #e91e63;
+    background: #49a3f1;
     box-shadow: none;
     border-radius: 3px
 }
