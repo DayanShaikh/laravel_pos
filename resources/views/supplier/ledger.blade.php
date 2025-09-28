@@ -21,7 +21,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-1 col-md-3 ">
-                                <button type="submit" class="btn btn-primary m-0 p-2 w-100">Search</button>
+                                <button type="submit" class="btn btn-info m-0 p-2 w-100">Search</button>
                             </div>
                         </div>
                     </form>
@@ -31,7 +31,7 @@
 
                         <div class="card my-4">
                             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                                <div class="bg-gradient-info shadow-primary border-radius-lg pt-4 pb-3">
+                                <div class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
                                     <h6 class="text-white mx-3">({{$supplier->name}}) Ledger</h6>
                                 </div>
                             </div>
