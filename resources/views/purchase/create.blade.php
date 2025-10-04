@@ -48,7 +48,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="panel-body table-responsive">
-                                            <table class="table table-hover list">
+                                            <table class="table list">
                                                 <thead>
                                                     <tr>
                                                         <th width="2%" class="text-center">S.No</th>

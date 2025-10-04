@@ -2,39 +2,39 @@
     <x-navbars.sidebar activePage="tables"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <x-navbars.navs.auth titlePage="Dashboard"></x-navbars.navs.auth>
-        <div class="container-fluid py-4" ng-app="purchase" ng-controller="purchaseController" id="purchaseController">
+        <div class="container-fluid py-4" ng-app="sales" ng-controller="salesController" id="salesController">
             <div class="row">
-                <div class="col-12 ">
+                <div class="col-12">
                     <div class="card z-index-0 fadeIn3 fadeInBottom">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                             <div class="bg-gradient-info shadow-info border-radius-lg pt-3">
                                 <div class="row">
                                     <div class="col my-xl-2">
-                                        <h6 class="text-white text-capitalize ps-3">@{{get_action()}} Purchase</h6>
+                                        <h6 class="text-white text-capitalize ps-3">@{{get_action()}} Sale</h6>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class=" mx-3 mt-3 text-end">
-                            <a ng-if="purchase_id" class="btn bg-gradient-dark" href="{{ route("purchase.create")}}" title="Add Purchase"><i class="material-icons text-sm">add</i></a>
-                            <a href="{{route('purchase.index')}}" class="btn bg-gradient-dark" title="Back to Purchase list"><i class="fa fa-arrow-right"></i></a>
+                            <a ng-if="purchase_id" class="btn bg-gradient-dark" href="{{ route("sales.create")}}" title="Add Sale"><i class="material-icons text-sm">add</i></a>
+                            <a href="{{route('sales.index')}}" class="btn bg-gradient-dark" title="Back to Sales list"><i class="fa fa-arrow-right"></i></a>
                         </div>
-                        @if(isset($_GET['message']))
-                        <div class="alert alert-success alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
-                            <strong>@php echo $_GET['message'] @endphp</strong>
-                            <button type="button" class="btn-close text-lg py-1 opacity-10" data-bs-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+                        @if(session()->has('message'))
+                            <div class="alert alert-success alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
+                                <strong>{{ session()->get('message') }}</strong>
+                                <button type="button" class="btn-close text-lg py-1 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
                         @endif
                         <div class="card-body p-0 px-3">
                             <div class="input-group input-group-outline mt-3 datepicker-container null is-filled">
                                 <label for="datepicker" class="form-label">date <span class="login-danger"> *</span></label>
-                                <input type="text" ng-model="purchase.date" data-controllerid="purchaseController" class="form-control" id="datepicker">
+                                <input type="text" ng-model="sale.date" data-controllerid="purchaseController" class="form-control" id="datepicker">
                             </div>
                             <div class="input-group input-group-outline is-filled form-select mt-3">
                                 <select class="form-control ps-3 py-0" ng-model="purchase.supplier_id" ng-options="supplier.id as supplier.name for supplier in suppliers">
-                                    <option value="">Select Supplier </option>
+                                    <option value="">Select Customer </option>
                                     <option ng-repeat="supplier in suppliers" value="@{{ supplier.id }}">@{{ supplier.name }}</option>
                                 </select>
                             </div>
@@ -48,7 +48,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="panel-body table-responsive">
-                                            <table class="table table-hover list">
+                                            <table class="table list">
                                                 <thead>
                                                     <tr>
                                                         <th width="2%" class="text-center">S.No</th>

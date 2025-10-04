@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('total_amount', 10, 2);
             $table->decimal('discount', 10, 2);
             $table->decimal('net_amount', 10, 2);
+            $table->boolean('is_return')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

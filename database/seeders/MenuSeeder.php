@@ -64,6 +64,13 @@ class MenuSeeder extends Seeder
             'icon' =>'',
         ]);
         Menu::create([
+            'title' => 'Sales',
+            'url' =>'/sales',
+            'parent_id' => $Sales->id,
+            'small_icon' =>'<i class="fa fa-sack-dollar"></i>',
+            'icon' =>'',
+        ]);
+        Menu::create([
             'title' => 'Customer',
             'url' =>'/customer',
             'parent_id' => $Sales->id,

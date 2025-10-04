@@ -209,5 +209,6 @@
     <script src="{{ asset('assets') }}/js/angular-locale_de-de.js"></script>
     <script src="{{ asset('assets') }}/js/angular-animate.js"></script>
     <script src="{{ asset('assets') }}/js/purchase.angular.js"></script>
+    <script src="{{ asset('assets') }}/js/sales.angular.js"></script>
 </body>
 </html>

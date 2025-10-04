@@ -24,6 +24,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Customer_PaymentController;
 use App\Http\Controllers\Expense_CategoryController;
 use App\Http\Controllers\Manage_ExpenseController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\TransactionController;
 
 
@@ -109,6 +110,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::delete('purchase/delete/{id}', [PurchaseController::class, 'delete'])->name('purchase.delete');
 	Route::post('purchase-bulkaction', [PurchaseController::class, 'bulkAction'])->name('purchase.bulkAction');
 	Route::get('purchase_return', [PurchaseController::class, 'return'])->name('purchase.return');
+	
+	//Sales
+	Route::resource('sales', SaleController::class);
+	// Route::get('purchase-update-active-status/{item}/{status}', [PurchaseController::class, 'status'])->name('purchase.status');
+	// Route::post('purchase-bulkaction', [PurchaseController::class, 'bulkAction'])->name('purchase.bulkAction');
+	// Route::get('purchase_return', [PurchaseController::class, 'return'])->name('purchase.return');
 
 	//supplier payment
 	Route::resource('supplier_payment', SupplierPayment::class);
