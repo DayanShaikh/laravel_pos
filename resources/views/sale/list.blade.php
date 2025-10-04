@@ -10,12 +10,14 @@
                     @csrf
                     <div class="row justify-content-end text-end">
                         <div class="col-lg-2 col-md-6">
-                            <div class="input-group input-group-outline datepicker-container">
+                            <div class="input-group input-group-outline datepicker-container null is-filled">
+                                <label for="dateRangePicker1" class="form-label">From date</label>
                                 <input type="text" class="form-control" id="dateRangePicker1" name="from_date" placeholder="From date" value="{{$from_date??''}}" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-6">
-                            <div class="input-group input-group-outline datepicker-container">
+                            <div class="input-group input-group-outline datepicker-container null is-filled">
+                                <label for="dateRangePicker2" class="form-label">To date</label>
                                 <input type="text" class="form-control" id="dateRangePicker2" name="to_date" placeholder="To date" value="{{$to_date??''}}" autocomplete="off">
                             </div>
                         </div>
