@@ -64,7 +64,7 @@
                 "string" == typeof (i = e.extend(this.element.data(), i)).template ||
                 i.template instanceof e ||
                 (i.template =
-                    '<div class="daterangepicker"><div class="ranges"></div><div class="drp-calendar left"><div class="calendar-table"></div><div class="calendar-time"></div></div><div class="drp-calendar right"><div class="calendar-table"></div><div class="calendar-time"></div></div><div class="drp-buttons"><span class="drp-selected"></span><button class="cancelBtn" type="button"></button><button class="applyBtn" disabled="disabled" type="button"></button> </div></div>'),
+                    '<div class="daterangepicker"><div class="ranges"></div><div class="drp-calendar left"><div class="calendar-table"></div><div class="calendar-time"></div></div><div class="drp-calendar right"><div class="calendar-table"></div><div class="calendar-time"></div></div>  <div class="drp-buttons"><a href="#" class="applyBtn btn btn-info m-0 p-2 w-100" disabled="disabled" type="button"></a> </div></div>'),
                 (this.parentEl = i.parentEl && e(i.parentEl).length ? e(i.parentEl) : e(this.parentEl)),
                 (this.container = e(i.template).appendTo(this.parentEl)),
                 "object" == typeof i.locale &&
@@ -275,7 +275,7 @@
                             this.locale.separator +
                             this.endDate.format('DD-MM-YYYY')
                         ),
-                        
+
                     this.updateElement(),
                     this.isShowing || this.updateElement(),
                     this.clickApply(),
