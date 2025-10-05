@@ -32,7 +32,7 @@
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!-- For Font Awesome 6 -->
@@ -46,13 +46,17 @@
     <link id="pagestyle" href="{{ asset('assets') }}/fontcss/fontawesome.min.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/bootstrap-datepicker.min.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/pikaday.min.css" rel="stylesheet" />
+    <link id="pagestyle" href="{{ asset('assets') }}/css/daterangpicker.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
 </head>
 <body class="{{ $bodyClass }}">
 
     {{ $slot }}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-    <script src="{{ asset('assets') }}/js/jquery.min.js"></script>
+    {{-- <script src="{{ asset('assets') }}/js/jquery.min.js"></script> --}}
+    <script src="{{ asset('assets') }}/js/plugins/daterangepicker.js"></script>
     <script src="{{ asset('assets') }}/js/bootstrap.js"></script>
     <script src="{{ asset('assets') }}/js/core/popper.min.js"></script>
     <script src="{{ asset('assets') }}/js/core/bootstrap.min.js"></script>
@@ -201,6 +205,9 @@
             picker2.setDate(parseDate(initialDate2), true); // true to trigger onSelect
         });
 
+        $(document).ready(function() {
+            $("input[name='datetimes']").daterangepicker({});
+        });
     </script>
     <script src="{{ asset('assets') }}/js/angular.min.js"></script>
     {{-- <script async defer src="https://buttons.github.io/buttons.js"></script> --}}

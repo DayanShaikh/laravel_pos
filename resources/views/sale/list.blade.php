@@ -9,7 +9,13 @@
                 <form method="GET" action="">
                     @csrf
                     <div class="row justify-content-end text-end">
-                        <div class="col-lg-2 col-md-6">
+                        <div class="col-md-3">
+                            <div class="input-group input-group-outline datepicker-container null is-filled">
+                                <label for="dates" class="form-label">Dates</label>
+                                <input type="text" class="form-control" id="dates" name="datetimes" value="{{$from_date??''}}" autocomplete="off">
+                            </div>
+                        </div>
+                        {{-- <div class="col-lg-2 col-md-6">
                             <div class="input-group input-group-outline datepicker-container null is-filled">
                                 <label for="dateRangePicker1" class="form-label">From date</label>
                                 <input type="text" class="form-control" id="dateRangePicker1" name="from_date" placeholder="From date" value="{{$from_date??''}}" autocomplete="off">
@@ -20,8 +26,8 @@
                                 <label for="dateRangePicker2" class="form-label">To date</label>
                                 <input type="text" class="form-control" id="dateRangePicker2" name="to_date" placeholder="To date" value="{{$to_date??''}}" autocomplete="off">
                             </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6">
+                        </div> --}}
+                        <div class="col-md-2">
                             <div class="input-group input-group-outline is-filled form-select w-100 h-100">
                                 <select name="customer_id" id="action" class="form-control">
                                     <option value="0">Select Customer</option>
@@ -31,7 +37,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-1 col-md-3 ">
+                        <div class="col-md-1">
                             <button type="submit" class="btn btn-info m-0 p-2 w-100">Search</button>
                         </div>
                     </div>
