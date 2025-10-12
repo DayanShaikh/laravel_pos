@@ -981,8 +981,8 @@
             },
             updateElement: function () {
                 if (this.element.is("input") && this.autoUpdateInput) {
-                    var t = this.startDate.format(this.locale.format);
-                    this.singleDatePicker || (t += this.locale.separator + this.endDate.format(this.locale.format)),
+                    var t = this.startDate.format('DD-MM-YYYY');
+                    this.singleDatePicker || (t += this.locale.separator + this.endDate.format('DD-MM-YYYY')),
                         t !== this.element.val() && this.element.val(t).trigger("change");
                 }
             },

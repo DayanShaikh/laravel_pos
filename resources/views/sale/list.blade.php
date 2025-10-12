@@ -78,7 +78,7 @@
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">S.no</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">ID</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Date</th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Supplier</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Customer</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Total Price</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Discount</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Net Price</th>
@@ -87,61 +87,61 @@
                                         </thead>
                                         <tbody>
                                             @if($sales->count()>0)
-                                            @foreach($sales as $sale)
-                                            <tr>
-                                                <td class="align-middle text-center">
-                                                    <div class="form-check check-tables">
-                                                        <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$sale->id}}">
-                                                    </div>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{$sn++}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{$sale->id}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{\Carbon\Carbon::parse($sale->date)->format('d-m-Y')}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">
-                                                        {{!empty($sale->customer)? $sale->customer->name:'Select Customer'}}
-                                                    </span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{$sale->total_amount}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{$sale->discount}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{$sale->net_amount}}</span>
-                                                </td>
-                                                <td class="align-middle text-end px-4">
-                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('purchase.edit', $sale->id)}}" title="Edit">
-                                                        <i class="material-icons">edit</i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                    @if($sale->status == 0)
-                                                    <a href=" {{ route('purchase.status', [$sale->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
-                                                        <i class="fa fa-eye-slash"></i>
-                                                    </a>
-                                                    @elseif($sale->status == 1)
-                                                    <a href="{{ route('purchase.status', [$sale->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
-                                                        <i class="fa fa-eye"></i>
-                                                    </a>
-                                                    @endif
-                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('purchase.delete', $sale->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
-                                                        <i class="fa fa-trash"></i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
+                                                @foreach($sales as $sale)
+                                                    <tr>
+                                                        <td class="align-middle text-center">
+                                                            <div class="form-check check-tables">
+                                                                <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$sale->id}}">
+                                                            </div>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{$sn++}}</span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{$sale->id}}</span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{\Carbon\Carbon::parse($sale->date)->format('d-m-Y')}}</span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">
+                                                                {{!empty($sale->customer)? $sale->customer->name:'Select Customer'}}
+                                                            </span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{$sale->total_amount}}</span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{$sale->discount}}</span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{$sale->net_amount}}</span>
+                                                        </td>
+                                                        <td class="align-middle text-end px-4">
+                                                            <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('purchase.edit', $sale->id)}}" title="Edit">
+                                                                <i class="material-icons">edit</i>
+                                                                <div class="ripple-container"></div>
+                                                            </a>
+                                                            @if($sale->status == 0)
+                                                            <a href=" {{ route('purchase.status', [$sale->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
+                                                                <i class="fa fa-eye-slash"></i>
+                                                            </a>
+                                                            @elseif($sale->status == 1)
+                                                            <a href="{{ route('purchase.status', [$sale->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            @endif
+                                                            <a href="javascript:void(0)" id="delete-user" data-url="{{ route('purchase.delete', $sale->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
+                                                                <i class="fa fa-trash"></i>
+                                                                <div class="ripple-container"></div>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             @else
-                                            <tr class="text-center">
-                                                <td colspan="8">Record Not Found</td>
-                                            </tr>
+                                                <tr class="text-center">
+                                                    <td colspan="8">Record Not Found</td>
+                                                </tr>
                                             @endif
                                         </tbody>
                                     </table>

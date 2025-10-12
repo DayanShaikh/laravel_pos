@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use Carbon\Carbon;
 use App\Models\Sale;
+use App\Models\Item;
 
 class SaleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
     public function index(Request $request)
     {
         $customers = Customer::get();
@@ -30,7 +32,10 @@ class SaleController extends Controller
      */
     public function create()
     {
-        return view('sale.create');
+        $customers = Customer::where('status', 1)->get();
+        $items = Item::where('status', 1)->get();
+        // $accounts = Account::where('status', 1)->get();
+        return view('sale.addEdit', compact('customers','items'));
     }
 
     /**
@@ -71,5 +76,13 @@ class SaleController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function fetch()
+    {
+        $date = Carbon::now()->format('d/m/Y');
+        $customer = Customer::all();
+        $items = Item::all();
+        return response()->json(['customer' => $customer, 'items' => $items, 'date' => $date]);
     }
 }

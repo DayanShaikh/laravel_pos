@@ -43,7 +43,7 @@
 .pika-title {
     position: relative;
     text-align: center;
-    background-color: #e02a6a;
+    background-image: linear-gradient(195deg, #49a3f1 0%, #1A73E8 100%);
     color: #fff;
     border-radius: 5px;
     padding: 5px;
