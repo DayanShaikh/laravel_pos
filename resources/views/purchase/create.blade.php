@@ -20,12 +20,12 @@
                             <a href="{{route('purchase.index')}}" class="btn bg-gradient-dark" title="Back to Purchase list"><i class="fa fa-arrow-right"></i></a>
                         </div>
                         @if(isset($_GET['message']))
-                        <div class="alert alert-success alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
-                            <strong>@php echo $_GET['message'] @endphp</strong>
-                            <button type="button" class="btn-close text-lg py-1 opacity-10" data-bs-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+                            <div class="alert alert-success alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
+                                <strong>@php echo $_GET['message'] @endphp</strong>
+                                <button type="button" class="btn-close text-lg py-1 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
                         @endif
                         <div class="card-body p-0 px-3">
                             <div class="input-group input-group-outline mt-3 datepicker-container null is-filled">
