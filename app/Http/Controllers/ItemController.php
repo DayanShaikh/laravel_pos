@@ -14,7 +14,7 @@ class ItemController extends Controller
     public function index(Request $request)
     {
         $sn = 1;
-        $rowsPerPage = $request->input('rowsPerPage', 2);
+        $rowsPerPage = $request->input('rowsPerPage', 10);
         $title = $request->input('title') ?? "";
         if (!empty($title)) {
             $item = Item::where('title', 'like', '%' . $title . '%')->paginate($rowsPerPage);

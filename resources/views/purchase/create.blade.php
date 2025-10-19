@@ -97,8 +97,9 @@
                                                                 <input type="text" class="form-control" ng-model="purchase.items[ $index ].total" ng-change="update_total( $index )" />
                                                             </div>
                                                         </td>
-                                                        <td class="text-center"><a href="" ng-click="add( $index )">Add</a> - <a href="" ng-click="remove( $index )">Delete</a><span ng-show="purchase.items[ $index ].id>0"> -
-                                                                <a href="" target="_blank">Print</a></span>
+                                                        <td class="text-center">
+                                                            <a href="" ng-click="add( $index )">Add</a> - <a href="" ng-click="remove( $index )">Delete</a><span ng-show="purchase.items[ $index ].id>0"> -
+                                                            <a href="" target="_blank">Print</a></span>
                                                         </td>
                                                     </tr>
                                                     <tr style="border-bottom:1px solid #7a7a7a4a">
