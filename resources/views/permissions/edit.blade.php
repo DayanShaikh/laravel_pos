@@ -24,7 +24,7 @@
                                 @method('put')
                                 <div class="input-group input-group-outline @if($permission->name) null is-filled @endif mb-3">
                                     <label class="form-label">Title</label>
-                                    <input type="text" class="form-control" name="title" value="{{$permission->name}}">
+                                    <input type="text" class="form-control" name="name" value="{{$permission->name}}">
                                 </div>
                                 @error('title')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
