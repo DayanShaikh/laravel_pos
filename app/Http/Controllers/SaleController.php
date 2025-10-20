@@ -7,6 +7,7 @@ use App\Models\Customer;
 use Carbon\Carbon;
 use App\Models\Sale;
 use App\Models\Item;
+use App\Models\SaleItem;
 
 class SaleController extends Controller
 {
@@ -35,7 +36,7 @@ class SaleController extends Controller
         $customers = Customer::where('status', 1)->get();
         $items = Item::where('status', 1)->get();
         // $accounts = Account::where('status', 1)->get();
-        return view('sale.addEdit', compact('customers','items'));
+        return view('sale.addEdit', compact('customers', 'items'));
     }
 
     /**
@@ -43,7 +44,64 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'customer' => ['required'],
+            'date' => 'required|date',
+            'items' => 'required|array',
+            'items.*.item_id' => 'required',
+            'items.*.price' => 'required',
+            'items.*.quantity' => 'required'
+        ]);
+
+        foreach ($request->items as $index => $item) {
+            $itemRecord = Item::find($item['item_id']);
+            if ($item['quantity'] > $itemRecord->quantity) {
+                $errors = [];
+                $errors[$index] = 'Quantity must be lower than available stock';
+                return response()->json([
+                    'message' => $errors,
+                    'status' => false
+                ]);
+            }
+        }
+        // return DB::transiction(function () use ($request) {
+        $date = Carbon::parse($request->date)->format('Y-m-d');
+        $sale = sale::create([
+            'customer_id' => $request->customer,
+            'total_quantity' => $request->totalQuantity,
+            'total_amount' => $request->totalPrice,
+            'total_discount' => $request->discount ?? 0,
+            'net_amount' => $request->netTotal,
+            'date' => $date,
+        ]);
+        $sale->created_by = auth()->user()->id;
+
+        foreach ($request->items as $item) {
+            SaleItem::create([
+                'sale_id' => $sale->id,
+                'item_id' => $item['item_id'],
+                'price' => $item['price'],
+                'quantity' => $item['quantity'],
+                'discount' => $item['discount'],
+            ]);
+            $items = Item::where('id', $item['item_id'])->first();
+            $items->quantity -= $item['quantity'];
+            $items->update();
+        }
+        // $sale_payment = SalePayment::create([
+        //     'sale_id' => $sale->id,
+        //     'account_id' => $request->payment_method,
+        //     'net_total' => $request->netTotal,
+        //     'recieved_payment' => $request->recievedPayment,
+        //     'return_payment' => $request->returnPayment,
+        // ]);
+        // $sale_payment->created_by = auth()->user()->id;
+        return response()->json([
+            'sale_id' => $sale->id,
+            'message' => 'Record Created Successfully',
+            'status' => true
+        ]);
+        // });
     }
 
     /**

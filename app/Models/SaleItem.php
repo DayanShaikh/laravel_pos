@@ -11,8 +11,9 @@ class SaleItem extends Model
     protected $fillable = [
         'sale_id',
         'item_id',
-        'sale_price',
+        'price',
         'quantity',
         'total',
+        'discount'
     ];
 }

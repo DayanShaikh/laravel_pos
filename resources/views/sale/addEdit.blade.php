@@ -88,8 +88,8 @@
                                                             <div class="input-group input-group-outline null is-filled">
                                                                 <label class="form-label">Price<span class="login-danger">*</span></label>
                                                                 <input type="number" class="form-control" ng-disabled="quantityAlerterrorMessage[$index]" placeholder="Price" ng-model="item.price" ng-change="item_amount($index)">
-                                                                <div class="text-danger" ng-if="error['items.' + $index + '.price']">Please select price</div>
                                                             </div>
+                                                            <div class="text-danger" ng-if="error['items.' + $index + '.price']">Please select price</div>
                                                         </td>
                                                         <td class="text-right">
                                                             <div class="input-group input-group-outline null is-filled">
@@ -109,7 +109,7 @@
                                                             </div>
                                                         </td>
                                                          <td class="text-center">
-                                                            <a href=""  ng-click="addItem()">Add</a> - <a href="" ng-click="removeItem($index)">Delete</a>
+                                                            <a href=""  ng-click="addItem()">Add</a> <a href="" ng-click="removeItem($index)" ng-if="sale.items.length > 1">- Delete</a>
                                                         </td>
                                                     </tr>
                                                     <tr style="border-bottom:1px solid #7a7a7a4a">
@@ -179,9 +179,10 @@
                             </div>
                         </div>
                         {{-- @can('update',App\Models\Sale::class) --}}
-                            <div class="form-group mt-4 text-end">
-                                <button class="btn btn-primary" ng-disabled="isButtonEnable==true" ng-click="submitForm()">
-                                    {{ isset($sale) ? 'Update' : 'Submit' }}
+                        <div class="form-group mt-4">
+                            <button class="btn bg-gradient-info" ng-disabled="isButtonEnable==true" ng-click="submitForm()">
+                                {{ isset($sale) ? 'Update' : 'Submit' }}
+                                <img src="/assets/img/tube-spinner.svg" ng-if="isLoading"  alt="" width="25px">
                                 </button>
                             </div>
                         {{-- @endcan --}}

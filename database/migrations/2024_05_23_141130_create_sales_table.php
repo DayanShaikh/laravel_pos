@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->dateTime('date')->useCurrent();
             $table->string('customer_id');
+            $table->string('total_quantity');
             $table->decimal('total_amount', 10, 2);
             $table->decimal('discount', 10, 2);
             $table->decimal('net_amount', 10, 2);

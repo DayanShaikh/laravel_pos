@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('sale_id');
             $table->unsignedBigInteger('item_id');
-            $table->decimal('sale_price', 10, 2);
+            $table->decimal('price', 10, 2);
+            $table->decimal('discount', 10, 2);
             $table->integer('quantity');
             $table->decimal('total', 10, 2);
             $table->timestamps();

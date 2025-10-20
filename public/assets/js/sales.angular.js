@@ -19,6 +19,7 @@ saleApp.controller('SaleController', function ($scope, $http) {
     $scope.quantityErrors = {};
     $scope.quantityAlerterrorMessage = [];
     $scope.isButtonEnable = false;
+    $scope.isLoading = false;
 
     // Initialize purchase data
     $scope.initSaleData = function (saleData) {
@@ -384,9 +385,9 @@ saleApp.controller('SaleController', function ($scope, $http) {
                 ('0' + (date.getMonth() + 1)).slice(-2) + '-' +
                 ('0' + date.getDate()).slice(-2);
         }
-        let url = saleData.id ? '/sale/' + saleData.id : '/sale';
+        let url = saleData.id ? '/sales/' + saleData.id : '/sales';
         let method = saleData.id ? 'PUT' : 'POST';
-
+        $scope.isLoading = true;
         $http({
             method: method,
             url: url,
@@ -394,6 +395,7 @@ saleApp.controller('SaleController', function ($scope, $http) {
         })
             .then(function (response) {
                 if (response.data.status == true) {
+                    $scope.isLoading = false;
                     $scope.message = response.data.message;
                     // window.location.href = 'http://localhost:8000/sale/' + response.data.sale_id + '/edit';
                     window.open('http://localhost:8000/sale_print/' + response.data.sale_id, '_blank', 'width=800,height=600').print();
@@ -409,6 +411,7 @@ saleApp.controller('SaleController', function ($scope, $http) {
             })
             .catch(function (error) {
                 $scope.error = error.data.errors;
+                $scope.isLoading = false;
             });
     };
     $scope.getReturnTotal = function () {
