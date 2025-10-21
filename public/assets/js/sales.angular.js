@@ -48,7 +48,7 @@ saleApp.controller('SaleController', function ($scope, $http) {
                             quantity: item.quantity,
                             price: item.price,
                             amount: item.quantity * item.price,
-                            discount: item.discount,
+                            discount: item.discount ?? 0,
                             is_return: item.is_return
                         };
                     })
@@ -72,11 +72,11 @@ saleApp.controller('SaleController', function ($scope, $http) {
                     date: new Date,
                     items: [
                         {
-                            item_id: null,
-                            price: '',
-                            quantity: '',
-                            amount: null,
-                            discount: null,
+                            item_id: 0,
+                            price: 0.00,
+                            quantity: 0,
+                            amount: 0.00,
+                            discount: 0.00,
                             is_return: 0,
                         }
                     ]

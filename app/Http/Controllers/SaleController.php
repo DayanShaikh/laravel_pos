@@ -70,7 +70,7 @@ class SaleController extends Controller
             'customer_id' => $request->customer,
             'total_quantity' => $request->totalQuantity,
             'total_amount' => $request->totalPrice,
-            'total_discount' => $request->discount ?? 0,
+            'discount' => $request->totalDiscount,
             'net_amount' => $request->netTotal,
             'date' => $date,
         ]);
@@ -83,6 +83,7 @@ class SaleController extends Controller
                 'price' => $item['price'],
                 'quantity' => $item['quantity'],
                 'discount' => $item['discount'],
+                'total' => $item['amount'],
             ]);
             $items = Item::where('id', $item['item_id'])->first();
             $items->quantity -= $item['quantity'];
