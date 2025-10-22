@@ -17,7 +17,7 @@
                         </div>
                         <div class=" mx-3 mt-3 text-end">
                             @if(isset($sale))
-                            <a ng-if="purchase_id" class="btn bg-gradient-dark" href="{{route('sale.create')}}" title="Add Sales"><i class="material-icons text-sm">add</i></a>
+                            <a ng-if="purchase_id" class="btn bg-gradient-dark" href="{{route('sales.create')}}" title="Add Sales"><i class="material-icons text-sm">add</i></a>
                             @endif
                             <a href="{{route('sales.index')}}" class="btn bg-gradient-dark" title="Back to Purchase list"><i class="fa fa-arrow-right"></i></a>
                         </div>
@@ -54,7 +54,7 @@
                                                         <th class="text-right"></th>
                                                         <th class="text-right"></th>
                                                         <th class="text-right"></th>
-                                                        <th class="text-right"></th>
+                                                        <th class="text-right">Return</th>
                                                         <th class="text-center">Actions</th>
                                                     </tr>
                                                 </thead>
@@ -74,7 +74,7 @@
                                                             <div class="input-group input-group-outline null is-filled">
                                                                 <label class="form-label">Quantity<span class="login-danger">*</span></label>
                                                                 <input type="number" id="quantity-input-@{{$index}}" class="form-control" placeholder="Quantity" ng-model="item.quantity" ng-change="item_amount($index)">
-                                                            </div>  
+                                                            </div>
                                                             <span ng-if="!quantityAlerterrorMessage[$index] && item.item_id" class="badge m-2" ng-class="{'badge-success': availableQuantity[$index].quantity > 0,'badge-danger': availableQuantity[$index].quantity <= 0}">
                                                                 Available Stock: @{{ availableQuantity[$index].quantity}}
                                                             </span>
@@ -104,12 +104,12 @@
                                                             </div>
                                                         </td>
                                                         <td class="text-right">
-                                                            <div class="input-group input-group-outline null is-filled">
+                                                            <div class="form-check check-tables">
                                                                 <input class="form-check-input" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="item.is_return" style="height: 1.5em; width: 1.5em;" ng-change="totalPrice()">
                                                             </div>
                                                         </td>
-                                                         <td class="text-center">
-                                                            <a href=""  ng-click="addItem()">Add</a> <a href="" ng-click="removeItem($index)" ng-if="sale.items.length > 1">- Delete</a>
+                                                        <td class="text-center">
+                                                            <a href="" ng-click="addItem()">Add</a> <a href="" ng-click="removeItem($index)" ng-if="sale.items.length > 1">- Delete</a>
                                                         </td>
                                                     </tr>
                                                     <tr style="border-bottom:1px solid #7a7a7a4a">
@@ -182,9 +182,9 @@
                         <div class="form-group mt-4">
                             <button class="btn bg-gradient-info" ng-disabled="isButtonEnable==true" ng-click="submitForm()">
                                 {{ isset($sale) ? 'Update' : 'Submit' }}
-                                <img src="/assets/img/tube-spinner.svg" ng-if="isLoading"  alt="" width="25px">
-                                </button>
-                            </div>
+                                <img src="/assets/img/tube-spinner.svg" ng-if="isLoading" alt="" width="25px">
+                            </button>
+                        </div>
                         {{-- @endcan --}}
                     </div>
                 </div>

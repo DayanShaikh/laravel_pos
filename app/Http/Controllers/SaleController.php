@@ -11,20 +11,18 @@ use App\Models\SaleItem;
 
 class SaleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
 
     public function index(Request $request)
     {
         $customers = Customer::get();
         $rowsPerPage = $request->input('rowsPerPage', 10);
-        $from_date = $request->input('from_date') ? Carbon::createFromFormat('d/m/Y', $request->input('from_date') ?? Carbon::now())->format('Y-m-d') : Carbon::now();
-        $to_date = $request->input('to_date') ? Carbon::createFromFormat('d/m/Y', $request->input('to_date'))->format('Y-m-d') : Carbon::now();
+        $from_date = $request->input('from_date') ? Carbon::createFromFormat('d/m/Y', $request->input('from_date'))->format('Y-m-d') : Carbon::now()->format('Y-m-d');
+        $to_date = $request->input('to_date') ? Carbon::createFromFormat('d/m/Y', $request->input('to_date'))->format('Y-m-d') : Carbon::now()->format('Y-m-d');
         $customer_id = $request->input('customer_id');
-        $sales = Sale::when($from_date != Carbon::now() && $to_date != Carbon::now(), function ($query) use ($from_date, $to_date, $customer_id) {
-            $query->whereBetween('date', [$from_date, $to_date]);
-        })->where('is_return', false)->paginate($rowsPerPage);
+        $sales = Sale::whereRaw('DATE(date) BETWEEN ? AND ?', [$from_date, $to_date])->when($customer_id, function ($query) use ($customer_id) {
+            $query->where('customer_id', $customer_id);
+        })->where('is_return', 0)->paginate($rowsPerPage);
+        // })->where('is_return', 0)->toRawSql();
         return view('sale.list', compact('sales', 'customers', 'rowsPerPage', 'from_date', 'to_date', 'customer_id'));
     }
 
@@ -66,7 +64,7 @@ class SaleController extends Controller
         }
         // return DB::transiction(function () use ($request) {
         $date = Carbon::parse($request->date)->format('Y-m-d');
-        $sale = sale::create([
+        $sale = Sale::create([
             'customer_id' => $request->customer,
             'total_quantity' => $request->totalQuantity,
             'total_amount' => $request->totalPrice,
@@ -118,7 +116,16 @@ class SaleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $customers = customer::where('status', 1)->get();
+        $items = Item::where('status', 1)->get();
+        // $accounts = Account::where('status', 1)->get();
+        $sale = Sale::with('saleItem')->findOrFail($id);
+        // Prepare sale data to be passed to the view
+        $saleData = $sale->toArray();
+        $saleData['sale_item'] = $sale->saleItem->toArray();
+        // $saleData['sale_payment'] = $sales->salePayment->toArray();
+
+        return view('sale.addEdit', compact('sale', 'customers', 'items', 'saleData'));
     }
 
     /**
@@ -126,7 +133,65 @@ class SaleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Gate::authorize('update', Sale::class);
+        $validatedData = $request->validate([
+            'customer' => ['required'],
+            'date' => 'required|date',
+            'items' => 'required|array',
+            'items.*.item_id' => 'required',
+            'items.*.price' => 'required|numeric',
+            'items.*.quantity' => 'required|integer'
+        ]);
+        $date = Carbon::parse($request->date)->format('Y-m-d');
+        $sale = Sale::where('id', $id)->update([
+            'customer_id' => $request->customer,
+            'total_quantity' => $request->totalQuantity,
+            'total_amount' => $request->totalPrice,
+            'discount' => $request->discount,
+            'net_amount' => $request->netTotal,
+            'date' => $date,
+        ]);
+        foreach ($request->items as  $item) {
+            $sale_item = SaleItem::where('sale_id', $id)->where('item_id', $item['item_id'])->first();
+            $items = Item::find($item['item_id']);
+            if ($sale_item) {
+                $items->quantity = $items->quantity + $sale_item->quantity;
+                $sale_item->update([
+                    'sale_id' => $id,
+                    'item_id' => $item['item_id'],
+                    'price' => $item['price'],
+                    'quantity' => $item['quantity'],
+                    'discount' => $item['discount'],
+                ]);
+                $items->quantity -= $item['quantity'];
+                $items->update();
+            } else {
+                SaleItem::create([
+                    'sale_id' => $sale->id,
+                    'item_id' => $item['item_id'],
+                    'price' => $item['price'],
+                    'quantity' => $item['quantity'],
+                    'discount' => $item['discount'],
+                    'total' => $item['amount'],
+                ]);
+                $items = Item::where('id', $item['item_id'])->first();
+                $items->quantity -= $item['quantity'];
+                $items->update();
+            }
+        }
+        // $sale_payment = SalePayment::where('sale_id', $id)->update([
+        //     'sale_id' => $id,
+        //     'account_id' => $request->payment_method,
+        //     'net_total' => $request->netTotal,
+        //     'recieved_payment' => $request->recievedPayment,
+        //     'return_payment' => $request->returnPayment,
+        // ]);
+
+        return response()->json([
+            'status' => true,
+            'sale_id' => $id,
+            'message' => 'Record Updated Successfully'
+        ]);
     }
 
     /**

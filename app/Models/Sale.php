@@ -16,4 +16,13 @@ class Sale extends Model
         'discount',
         'net_amount',
     ];
+
+    public function  customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
+    }
+    public function saleItem()
+    {
+        return $this->hasMany(SaleItem::class, 'sale_id', 'id');
+    }
 }

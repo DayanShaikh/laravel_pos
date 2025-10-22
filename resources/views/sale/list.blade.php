@@ -95,7 +95,7 @@
                                                             </div>
                                                         </td>
                                                         <td class="align-middle text-center">
-                                                            <span class="text-secondary text-sm">{{$sn++}}</span>
+                                                            <span class="text-secondary text-sm">{{$loop->index+1}}</span>
                                                         </td>
                                                         <td class="align-middle text-center">
                                                             <span class="text-secondary text-sm">{{$sale->id}}</span>
@@ -118,20 +118,20 @@
                                                             <span class="text-secondary text-sm">{{$sale->net_amount}}</span>
                                                         </td>
                                                         <td class="align-middle text-end px-4">
-                                                            <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('purchase.edit', $sale->id)}}" title="Edit">
+                                                            <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('sales.edit', $sale->id)}}" title="Edit">
                                                                 <i class="material-icons">edit</i>
                                                                 <div class="ripple-container"></div>
                                                             </a>
-                                                            @if($sale->status == 0)
-                                                            <a href=" {{ route('purchase.status', [$sale->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
+                                                            {{-- @if($sale->status == 0)
+                                                            <a href=" {{ route('sales.status', [$sale->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
                                                                 <i class="fa fa-eye-slash"></i>
                                                             </a>
                                                             @elseif($sale->status == 1)
-                                                            <a href="{{ route('purchase.status', [$sale->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
+                                                            <a href="{{ route('sales.status', [$sale->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
                                                                 <i class="fa fa-eye"></i>
                                                             </a>
-                                                            @endif
-                                                            <a href="javascript:void(0)" id="delete-user" data-url="{{ route('purchase.delete', $sale->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
+                                                            @endif --}}
+                                                            <a href="javascript:void(0)" id="delete-user" data-url="{{ route('sales.destroy', $sale->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
                                                                 <i class="fa fa-trash"></i>
                                                                 <div class="ripple-container"></div>
                                                             </a>

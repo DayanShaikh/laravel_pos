@@ -32,23 +32,23 @@ saleApp.controller('SaleController', function ($scope, $http) {
                 }
             }),
                 $scope.sale = {
-                    id: saleData.id,
-                    customer: saleData.customer_id,
+                    id: Number(saleData.id),
+                    customer: Number(saleData.customer_id),
+                    totalQuantity: Number(saleData.total_quantity),
+                    totalPrice: Number(saleData.total_amount),
+                    discount: Number(saleData.discount),
+                    netTotal: Number(saleData.net_amount),
                     date: new Date(saleData.date),
-                    totalQuantity: saleData.total_quantity,
-                    totalPrice: saleData.total_price,
-                    netTotal: saleData.net_total,
-                    discount: saleData.total_discount,
-                    payment_method: saleData.sale_payment.account_id,
-                    returnPayment: saleData.sale_payment.return_payment,
-                    recievedPayment: saleData.sale_payment.recieved_payment,
+                    // payment_method: saleData.sale_payment.account_id,
+                    // returnPayment: saleData.sale_payment.return_payment,
+                    // recievedPayment: saleData.sale_payment.recieved_payment,
                     items: saleData.sale_item.map(function (item) {
                         return {
-                            item_id: item.item_id,
-                            quantity: item.quantity,
-                            price: item.price,
-                            amount: item.quantity * item.price,
-                            discount: item.discount ?? 0,
+                            item_id: Number(item.item_id),
+                            quantity: Number(item.quantity),
+                            price: Number(item.price),
+                            amount: Number(item.quantity) * Number(item.price),
+                            discount: Number(item.discount) ?? 0,
                             is_return: item.is_return
                         };
                     })
@@ -190,10 +190,6 @@ saleApp.controller('SaleController', function ($scope, $http) {
                 return $scope.quantityAlerterrorMessage[0] = true;
             }
             $scope.item_id = '';
-            setTimeout(function () {
-                $('select[select2]').trigger('change.select2');
-            });
-
             $scope.getPrice(itemFind.id, 0);
             $scope.item_amount(0);
         }
@@ -245,7 +241,7 @@ saleApp.controller('SaleController', function ($scope, $http) {
     }
     $scope.addItem = function () {
         $scope.old_sale_item = angular.copy($scope.sale.items);
-        $scope.sale.items.push({ item_id: null, price: '', quantity: '', amount: null, discount: null, is_return: 0 });
+        $scope.sale.items.push({ item_id: null, price: '', quantity: '', amount: null, discount: 0.00, is_return: 0 });
     };
 
     $scope.removeItem = function (index) {
@@ -294,7 +290,7 @@ saleApp.controller('SaleController', function ($scope, $http) {
         $scope.totalQuantity();
         $scope.totalPrice();
         $scope.netTotal();
-        $scope.returnPayment();
+        // $scope.returnPayment();
 
         return $scope.sale.items[index].amount;
     };
