@@ -199,14 +199,10 @@ class SaleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
-    }
-
-    public function fetch()
-    {
-        $date = Carbon::now()->format('d/m/Y');
-        $customer = Customer::all();
-        $items = Item::all();
-        return response()->json(['customer' => $customer, 'items' => $items, 'date' => $date]);
+        $sale = sale::find($id);
+        $sale->delete();
+        saleItem::where('sale_id', $id)->delete();
+        
+        return  redirect()->route('sale.index')->with('message', 'Record Deleted Successfully');
     }
 }
