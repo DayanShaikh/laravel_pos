@@ -22,30 +22,35 @@ class DatabaseSeeder extends Seeder
         $config = ConfigType::create([
             'title' => 'General Settings'
         ]);
+
         ConfigVariable::create([
             'config_type_id' => $config->id,
             'title' => 'Site Url',
             'type' => 'text',
             'key' => 'site_url'
         ]);
+
         ConfigVariable::create([
             'config_type_id' => $config->id,
             'title' => 'Site Title',
             'type' => 'text',
             'key' => 'site_title'
         ]);
+
         ConfigVariable::create([
             'config_type_id' => $config->id,
             'title' => 'Admin Logo',
             'type' => 'file',
             'key' => 'admin_logo'
         ]);
+
         ConfigVariable::create([
             'config_type_id' => $config->id,
             'title' => 'Admin Email',
             'type' => 'text',
             'key' => 'admin_email'
         ]);
+        
         ConfigVariable::create([
             'config_type_id' => $config->id,
             'title' => 'Login Logo',

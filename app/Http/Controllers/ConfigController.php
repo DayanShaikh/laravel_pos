@@ -20,12 +20,9 @@ class ConfigController extends Controller
 
     public function store(Request $request, $id)
     {
-        // return $request;
-
         $config = ConfigVariable::where('config_type_id', $id)->get();
         foreach ($config as $configs) {
             $key = $configs->type . "_" . $configs->id;
-            
             if ($request->hasFile($key)) {
                 $confg = ConfigVariable::find($configs->id);
                 // Delete the old file if it exists
@@ -33,7 +30,13 @@ class ConfigController extends Controller
                     Storage::delete($confg->value);
                 }
                 // Store the new file
-                $confg->value = $request->file($key)->storeAs('public/config/image', $request->file($key)->getClientOriginalName());
+                $file = $request->file($key);
+                // return $file;
+                if ($file && $file->isValid()) {
+                    $filename = time() . '.' . $file->getClientOriginalExtension();
+                    $path = $file->storeAs('config/image', $filename, 'public');
+                    $confg->value = $path;
+                }
                 $confg->save();
             } else {
                 $confg = ConfigVariable::find($configs->id);
