@@ -16,6 +16,7 @@ class Item extends Model
         'unit_price',
         'sale_price',
         'quantity',
+        'barcode',
     ];
 
     public function ItemCategory(){

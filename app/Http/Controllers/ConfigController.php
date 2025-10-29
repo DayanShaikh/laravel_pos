@@ -23,21 +23,19 @@ class ConfigController extends Controller
         $config = ConfigVariable::where('config_type_id', $id)->get();
         foreach ($config as $configs) {
             $key = $configs->type . "_" . $configs->id;
-            if ($request->hasFile($key)) {
-                $confg = ConfigVariable::find($configs->id);
-                // Delete the old file if it exists
-                if ($confg->value) {
-                    Storage::delete($confg->value);
-                }
-                // Store the new file
-                $file = $request->file($key);
-                // return $file;
-                if ($file && $file->isValid()) {
-                    $filename = time() . '.' . $file->getClientOriginalExtension();
-                    $path = $file->storeAs('config/image', $filename, 'public');
+            if ($configs->type == "file") {
+                if ($request->hasFile($key)) {
+                    $confg = ConfigVariable::find($configs->id);
+                    // Delete the old file if it exists
+                    if ($confg->value) {
+                        Storage::delete($confg->value);
+                    }
+                    // Store the new file
+                    $filename = time() . '.' . $request->file($key)->getClientOriginalExtension();
+                    $path = $request->file($key)->storeAs('config/image', $filename, 'public');
                     $confg->value = $path;
+                    $confg->save();
                 }
-                $confg->save();
             } else {
                 $confg = ConfigVariable::find($configs->id);
                 $confg->value = $request->input($key);

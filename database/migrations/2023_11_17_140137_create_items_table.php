@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('sale_price')->nullable();
             $table->integer('quantity')->nullable();
             $table->boolean('status')->default(1);
+            $table->integer('barcode')->nullable();
             $table->timestamps();
         });
     }

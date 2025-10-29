@@ -2,6 +2,16 @@
     <x-navbars.sidebar activePage="tables"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <x-navbars.navs.auth titlePage="Dashboard"></x-navbars.navs.auth>
+        <style>
+           .showImage {
+                border-right: 2px solid;
+                border-top: 2px solid;
+                border-bottom: 2px solid;
+                border-radius: 5px;
+                border-color: #49a3f1;
+                padding: 1px 15px;
+            }
+        </style>
         <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-12 ">
@@ -31,11 +41,13 @@
                                     @csrf
                                     @foreach($config as $configs)
                                         @if($configs->type == 'file')
-                                            <div class="input-group input-group-outline mt-3 null is-filled">
-                                                <label class="form-label">{{$configs->title}}</label>
-                                                <input type="file" name="{{$configs->type."_".$configs->id}}" class="form-control">
+                                            <div class="d-flex align-items-center">
+                                                <div class="input-group input-group-outline mt-3 null is-filled">
+                                                    <label class="form-label">{{$configs->title}}</label>
+                                                    <input type="file" name="{{$configs->type."_".$configs->id}}" class="form-control">
+                                                </div>
                                                 @if($configs->value)
-                                                    <div>
+                                                    <div class="mt-3 showImage">
                                                         @php
                                                             $fileUrl = Storage::url($configs->value);
                                                         @endphp
@@ -46,10 +58,10 @@
                                                         @endif
                                                     </div>
                                                 @endif
+                                                @error($configs->type)
+                                                    <p class='text-danger inputerror'>{{ $message }}</p>
+                                                @enderror
                                             </div>
-                                            @error($configs->type)
-                                                <p class='text-danger inputerror'>{{ $message }}</p>
-                                            @enderror
                                         @elseif($configs->type == 'textarea')
                                             <div class=" mt-3 null ">
                                                 <label class="form-label">{{$configs->title}}</label>

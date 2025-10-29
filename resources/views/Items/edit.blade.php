@@ -50,6 +50,10 @@
                                     <label class="form-label">Quantity</label>
                                     <input type="text" class="form-control" name="quantity" value="{{ $item->quantity }}">
                                 </div>
+                                <div class="input-group input-group-outline mt-3 @if($item->barcode) null is-filled @endif">
+                                    <label class="form-label">Barcode</label>
+                                    <input type="text" class="form-control" name="barcode" value="{{ $item->barcode }}">
+                                </div>
                                 <div class="col-lg-1 col-sm-6 col-12">
                                     <button class="btn bg-gradient-info w-100 my-4 mb-2" type="submit" data-target="successToast">Submit</button>
                                 </div>

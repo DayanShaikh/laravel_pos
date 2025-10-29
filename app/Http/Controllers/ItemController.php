@@ -47,6 +47,7 @@ class ItemController extends Controller
             'unit_price' => $request->unit_price,
             'sale_price' => $request->sale_price,
             'quantity' => $request->quantity,
+            'barcode'=> $request->barcode,
         ]);
         return redirect()->route('item.index')->with('message', 'Record Create Successfully');
     }
@@ -83,6 +84,7 @@ class ItemController extends Controller
         $item->unit_price = $request->unit_price;
         $item->sale_price = $request->sale_price;
         $item->quantity = $request->quantity;
+        $item->barcode = $request->barcode;
         $item->save();
         return redirect()->route('item.index')->with('message', 'Record Update Successfully');
     }
