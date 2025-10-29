@@ -23,12 +23,12 @@ class DatabaseSeeder extends Seeder
             'title' => 'General Settings'
         ]);
 
-        ConfigVariable::create([
-            'config_type_id' => $config->id,
-            'title' => 'Site Url',
-            'type' => 'text',
-            'key' => 'site_url'
-        ]);
+        // ConfigVariable::create([
+        //     'config_type_id' => $config->id,
+        //     'title' => 'Site Url',
+        //     'type' => 'text',
+        //     'key' => 'site_url'
+        // ]);
 
         ConfigVariable::create([
             'config_type_id' => $config->id,

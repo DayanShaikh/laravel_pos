@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="input-group input-group-outline mt-3 @if($item->quantity) null is-filled @endif">
                                     <label class="form-label">Quantity</label>
-                                    <input type="text" class="form-control" name="quantity" value="{{ $item->quantity }}">
+                                    <input type="text" class="form-control" name="quantity" value="{{ $item->quantity>0?$item->quantity:'' }}">
                                 </div>
                                 <div class="input-group input-group-outline mt-3 @if($item->barcode) null is-filled @endif">
                                     <label class="form-label">Barcode</label>

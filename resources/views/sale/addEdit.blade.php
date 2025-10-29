@@ -2,6 +2,14 @@
     <x-navbars.sidebar activePage="tables"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <x-navbars.navs.auth titlePage="Dashboard"></x-navbars.navs.auth>
+        <style>
+           .itemBadge {
+                padding: 2px 12px;
+                color: #fff;
+                font-size: 12px;
+                border-radius: 10px;
+            }
+        </style>
         <div class="container-fluid py-4" ng-app='saleApp' ng-controller="SaleController">
             <div class="row" ng-init="initSaleData({{ isset($sale) ? $sale : 'null' }})">
                 <div class="col-12">
@@ -75,7 +83,7 @@
                                                                 <label class="form-label">Quantity<span class="login-danger">*</span></label>
                                                                 <input type="number" id="quantity-input-@{{$index}}" class="form-control" placeholder="Quantity" ng-model="item.quantity" ng-change="item_amount($index)">
                                                             </div>
-                                                            <span ng-if="!quantityAlerterrorMessage[$index] && item.item_id" class="badge m-2" ng-class="{'badge-success': availableQuantity[$index].quantity > 0,'badge-danger': availableQuantity[$index].quantity <= 0}">
+                                                            <span ng-if="!quantityAlerterrorMessage[$index] && item.item_id" class="itemBadge m-2" ng-class="{'bg-success': availableQuantity[$index].quantity > 0,'bg-danger': availableQuantity[$index].quantity <= 0}">
                                                                 Available Stock: @{{ availableQuantity[$index].quantity}}
                                                             </span>
                                                             <div id="quantity-row-@{{$index}}">

@@ -162,6 +162,7 @@ saleApp.controller('SaleController', function ($scope, $http) {
         }
         $scope.ItemError = false;
         const duplicateIndex = $scope.sale.items.findIndex(rec => rec.item_id == itemFind.id);
+        console.log(duplicateIndex);
         if (duplicateIndex !== -1) {
             if ($scope.sale.items[duplicateIndex].quantity < itemFind.quantity) {
                 $scope.sale.items[duplicateIndex].quantity += 1;
