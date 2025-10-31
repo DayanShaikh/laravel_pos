@@ -87,8 +87,9 @@ saleApp.controller('SaleController', function ($scope, $http) {
     $scope.getPrice = function (item_id, index, isSelect = false) {
         const foundItem = items.find(item => item.id === item_id);
         if (index != -1 && index != 0) {
-            const duplicateIndex = $scope.old_sale_item.findIndex((item, i) => item.item_id === item_id);
-            if (isSelect && duplicateIndex != -1) {
+            const duplicateIndex = $scope.old_sale_item.findIndex((item) => item.item_id === item_id);
+            console.log($scope.old_sale_item);
+            if (duplicateIndex != -1) {
                 $scope.sale.items[duplicateIndex].quantity++;
                 if (foundItem.quantity <= $scope.sale.items[duplicateIndex].quantity) {
                     $scope.isButtonEnable = true;
@@ -162,7 +163,6 @@ saleApp.controller('SaleController', function ($scope, $http) {
         }
         $scope.ItemError = false;
         const duplicateIndex = $scope.sale.items.findIndex(rec => rec.item_id == itemFind.id);
-        console.log(duplicateIndex);
         if (duplicateIndex !== -1) {
             if ($scope.sale.items[duplicateIndex].quantity < itemFind.quantity) {
                 $scope.sale.items[duplicateIndex].quantity += 1;
@@ -172,7 +172,7 @@ saleApp.controller('SaleController', function ($scope, $http) {
                     $scope.isButtonEnable = true;
                     return $scope.quantityAlerterrorMessage[duplicateIndex] = true;
                 }
-                // $scope.quantityAlerterrorMessage[duplicateIndex] = false;
+                $scope.quantityAlerterrorMessage[duplicateIndex] = false;
             } else {
                 $scope.item_id = '';
                 $scope.isButtonEnable = true;
@@ -196,8 +196,7 @@ saleApp.controller('SaleController', function ($scope, $http) {
         }
         else {
             $scope.addItem();
-            const index = $scope.sale.items.findIndex(rec => console.log(rec['item_id']));
-            // console.log($scope.sale.items, itemFind.id, index);
+            // const index = $scope.sale.items.findIndex(rec => console.log(rec['item_id']));
             const lastindex = $scope.sale.items.length - 1;
             $scope.sale.items[lastindex].item_id = itemFind.id;
             if ($scope.sale.items[lastindex].quantity < itemFind.quantity) {
@@ -228,7 +227,7 @@ saleApp.controller('SaleController', function ($scope, $http) {
         if ($scope.sale.cashPayment) {
             $scope.sale.cashPayment = 1;
             return $scope.sale.cashPayment;
-            console.log($scope.sale.cashPayment);
+            // console.log($scope.sale.cashPayment);
         }
         if ($scope.sale.onlinePayment) {
             $scope.sale.onlinePayment = 0;

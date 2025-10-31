@@ -134,10 +134,10 @@ class PurchaseController extends Controller
         $purchase = Purchase::find($id);
         $purchase->date = $format_date->format('Y-m-d');
         $purchase->supplier_id = $data['supplier_id'];
-        $purchase->total_items = $data['quantity'];
-        $purchase->total_price = $data['total'];
+        $purchase->total_items = $data['total_items'];
+        $purchase->total_price = $data['total_price'];
         $purchase->discount = $data['discount'];
-        $purchase->net_price = $data['net_total'];
+        $purchase->net_price = $data['net_price'];
         $purchase->note = $data['note'];
         if ($data['is_return'] == 1) {
             $purchase->is_return = true;
