@@ -7,20 +7,16 @@
             <!-- End Navbar -->
             <div class="container-fluid py-4">
                 <div class="card-header p-0 my-3 mx-3">
-                    <form method="GET" action="{{route('supplier.ledger', $supplier->id)}}">
+                    <form id="filters" method="GET" action="{{route('supplier.ledger', $supplier->id)}}">
                         @csrf
                         <div class="row justify-content-end text-end">
-                            <div class="col-lg-2 col-md-6">
-                                <div class="input-group input-group-outline datepicker-container">
-                                    <input type="text" class="form-control" id="dateRangePicker1" name="from_date" placeholder="From date" value="{{$from_date??''}}" autocomplete="off">
+                            <div class="col-md-3">
+                                <div class="input-group input-group-outline datepicker-container null is-filled">
+                                    <label for="dates" class="form-label">Dates</label>
+                                    <input type="text" class="form-control" id="dates" name="dates" autocomplete="off" readonly>
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-md-6">
-                                <div class="input-group input-group-outline datepicker-container">
-                                    <input type="text" class="form-control" id="dateRangePicker2" name="to_date" placeholder="To date" value="{{$to_date??''}}" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-lg-1 col-md-3 ">
+                            <div class="col-md-1">
                                 <button type="submit" class="btn btn-info m-0 p-2 w-100">Search</button>
                             </div>
                         </div>
@@ -28,15 +24,15 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-
                         <div class="card my-4">
                             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                                 <div class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
                                     <h6 class="text-white mx-3">({{$supplier->name}}) Ledger</h6>
                                 </div>
                             </div>
-                            <div class=" me-3 my-3 text-end">
-                                <a onclick="window.print()" class="btn bg-gradient-dark mb-0" href="#"><i class="material-icons text-sm">print</i></a>
+                            <div class="me-3 my-3 text-end">
+                                <a href="{{route('supplier.index')}}" class="btn bg-gradient-dark" style="padding: 13px 25px"><i class="fa fa-arrow-right"></i></a>
+                                <a onclick="window.print()" class="btn bg-gradient-dark" href="#"><i class="material-icons text-sm">print</i></a>
                             </div>
                             <div class="card-body px-0 pb-2">
                                 <div class="table-responsive p-0">
@@ -102,6 +98,10 @@
                     </div>
                 </div>
             </div>
+            <script>
+                let storedStartDate = @json($format_from_date);
+                let storedEndDate = @json($format_to_date);
+            </script>
         </main>
     </x-layout>
 </div>
@@ -158,6 +158,7 @@
             margin: 0 auto;
         }
     }
+
 </style>
 <table width="100%" cellspacing="0" cellpadding="0" class="print_tab">
     <tr class="head">

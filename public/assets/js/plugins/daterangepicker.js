@@ -16,8 +16,8 @@
         if (
             ((this.parentEl = "body"),
                 (this.element = e(a)),
-                (this.startDate = t().startOf("day")),
-                (this.endDate = t().endOf("day")),
+                (this.startDate = t(new Date(storedStartDate)).startOf("day") ?? t().startOf("day")),
+                (this.endDate = t(new Date(storedEndDate)).endOf("day") ?? t().endOf("day")),
                 (this.minDate = !1),
                 (this.maxDate = !1),
                 (this.maxSpan = !1),
@@ -47,7 +47,7 @@
                 (this.locale = {
                     direction: "ltr",
                     format: t.localeData().longDateFormat("L"),
-                    separator: " - ",
+                    separator: " , ",
                     applyLabel: "Apply",
                     cancelLabel: "Cancel",
                     weekLabel: "W",
@@ -64,7 +64,7 @@
                 "string" == typeof (i = e.extend(this.element.data(), i)).template ||
                 i.template instanceof e ||
                 (i.template =
-                    '<div class="daterangepicker"><div class="ranges"></div><div class="drp-calendar left"><div class="calendar-table"></div><div class="calendar-time"></div></div><div class="drp-calendar right"><div class="calendar-table"></div><div class="calendar-time"></div></div>  <div class="drp-buttons"><a href="#" class="applyBtn btn btn-info m-0 p-2 w-100" disabled="disabled" type="button"></a> </div></div>'),
+                    '<div class="daterangepicker"><div class="ranges"></div><div class="drp-calendar left"><div class="calendar-table"></div><div class="calendar-time"></div></div><div class="drp-calendar right"><div class="calendar-table"></div><div class="calendar-time"></div></div>  <div class="drp-buttons"><button type="submit" class="applyBtn btn btn-info m-0 p-2 w-100" onclick="document.getElementById(`filters`).submit();"></button></div></div>'),
                 (this.parentEl = i.parentEl && e(i.parentEl).length ? e(i.parentEl) : e(this.parentEl)),
                 (this.container = e(i.template).appendTo(this.parentEl)),
                 "object" == typeof i.locale &&
@@ -124,8 +124,7 @@
                 "function" == typeof i.isInvalidDate && (this.isInvalidDate = i.isInvalidDate),
                 "function" == typeof i.isCustomDate && (this.isCustomDate = i.isCustomDate),
                 "boolean" == typeof i.alwaysShowCalendars && (this.alwaysShowCalendars = i.alwaysShowCalendars),
-                0 != this.locale.firstDay)
-        )
+                0 != this.locale.firstDay))
             for (var r = this.locale.firstDay; r > 0;)
                 this.locale.daysOfWeek.push(this.locale.daysOfWeek.shift()), r--;
         var o, h, l;
@@ -202,11 +201,7 @@
                 .on("mouseenter.daterangepicker", "td.available", e.proxy(this.hoverDate, this))
                 .on("change.daterangepicker", "select.yearselect", e.proxy(this.monthOrYearChanged, this))
                 .on("change.daterangepicker", "select.monthselect", e.proxy(this.monthOrYearChanged, this))
-                .on(
-                    "change.daterangepicker",
-                    "select.hourselect,select.minuteselect,select.secondselect,select.ampmselect",
-                    e.proxy(this.timeChanged, this)
-                ),
+                .on("change.daterangepicker", "select.hourselect,select.minuteselect,select.secondselect,select.ampmselect", e.proxy(this.timeChanged, this)),
             this.container.find(".ranges").on("click.daterangepicker", "li", e.proxy(this.clickRange, this)),
             this.container.find(".drp-buttons").on("click.daterangepicker", "button.applyBtn", e.proxy(this.clickApply, this)).on("click.daterangepicker", "button.cancelBtn", e.proxy(this.clickCancel, this)),
             this.element.is("input") || this.element.is("button")
@@ -650,7 +645,6 @@
                 }
             },
             updateFormInputs: function () {
-                console.log(this.singleDatePicker);
                 this.singleDatePicker ||
                     (this.endDate && (this.startDate.isBefore(this.endDate) || this.startDate.isSame(this.endDate)))
                     ? this.container.find("button.applyBtn").prop("disabled", !1)

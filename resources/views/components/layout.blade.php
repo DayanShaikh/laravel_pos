@@ -215,7 +215,7 @@
         });
 
         $(document).ready(function() {
-            $("input[name='datetimes']").daterangepicker({});
+            $("input[name='dates']").daterangepicker({});
         });
 
     </script>

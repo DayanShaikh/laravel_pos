@@ -12,7 +12,7 @@
                         <div class="col-md-3">
                             <div class="input-group input-group-outline datepicker-container null is-filled">
                                 <label for="dates" class="form-label">Dates</label>
-                                <input type="text" class="form-control" id="dates" name="datetimes" value="{{$from_date??''}}" autocomplete="off">
+                                <input type="text" class="form-control" id="dates" name="dates" value="{{$from_date??''}}" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-2">

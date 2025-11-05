@@ -88,13 +88,15 @@ class SupplierConroller extends Controller
 
     public function ledger(Request $request, $id)
     {
-        $from_date = $request->input('from_date') ?? "";
-        $to_date = $request->input('to_date') ?? "";
+
+        $dates = array_map('trim', explode(',', $request->input('dates'), 2));
+        $from_date =  !empty($dates[0]) ? $dates[0] : Carbon::now()->format('Y-m-d');
+        $to_date = !empty($dates[1]) ? $dates[1] : Carbon::now()->format('Y-m-d');
         $rowsPerPage = $request->input('rowsPerPage', 10);
         $sn = 1;
         if (!empty($from_date) && !empty($to_date)) {
-            $format_from_date = Carbon::createFromFormat('d/m/Y', $from_date)->format('Y-m-d');
-            $format_to_date = Carbon::createFromFormat('d/m/Y', $to_date)->format('Y-m-d');
+            $format_from_date = Carbon::parse($from_date)->format('Y-m-d');
+            $format_to_date = Carbon::parse($to_date)->format('Y-m-d');
             $ledger = Purchase::select('date', DB::raw("CONCAT('Purchase:', note) as details"), DB::raw("0 as debit"), "net_price as credit")
                 ->where('is_return', false)->whereBetween('date', [$format_from_date, $format_to_date])->where('supplier_id', $id)
                 ->union(Purchase::select('date', DB::raw("CONCAT('Purchase Return:', note) as details"), "net_price as debit", DB::raw("0 as credit"))
@@ -111,9 +113,8 @@ class SupplierConroller extends Controller
                     ->where('supplier_id', $id))->get();
         }
         $supplier = Supplier::find($id);
-        
-           return view('supplier.ledger', compact('sn', 'supplier', 'ledger', 'from_date', 'to_date'));
-        
+
+        return view('supplier.ledger', compact('sn', 'supplier', 'ledger', 'format_from_date', 'format_to_date'));
     }
     public function destroy(string $id)
     {
