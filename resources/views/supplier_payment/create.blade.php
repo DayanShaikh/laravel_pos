@@ -21,35 +21,35 @@
                         <div class="card-body p-0 px-3">
                             <form role="form" method="POST" action="{{  route('supplier_payment.store') }}" class="text-start">
                                 @csrf
-                                <div class="input-group input-group-outline mt-3 form-select">
-                                    <select name="supplier_id" id="action" class="form-control">
+                                <div class="form-group">
+                                    <select name="supplier_id" class="form-select select2">
                                         <option value="0">Select Suppliers</option>
                                         @foreach($supplier as $suppliers)
-                                        <option value="{{$suppliers->id}}">{{$suppliers->name}}</option>
+                                            <option value="{{$suppliers->id}}">{{$suppliers->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 @error('supplier_id')
-                                <p class='text-danger inputerror'>{{ $message }} </p>
+                                    <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
                                 <div class="input-group input-group-outline mt-3 null is-filled ">
                                     <label for="datepicker" class="form-label">Date </label>
-                                    <input type="date"  class="form-control" name="date" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}" autocomplete="off">
+                                    <input type="date" class="form-control" name="date" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}" autocomplete="off" onclick="this.showPicker()">
                                 </div>
                                 @error('date')
-                                <p class='text-danger inputerror'>{{ $message }} </p>
+                                    <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
                                 <div class="input-group input-group-outline mt-3">
                                     <label class="form-label">Payment </label>
-                                    <input type="text" class="form-control" name="payment" value="{{ old('payment') }}">
+                                    <input type="number" class="form-control" name="payment" value="{{ old('payment') }}">
                                     <br>
                                 </div>
                                 @error('payment')
-                                <p class='text-danger inputerror'>{{ $message }} </p>
+                                    <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
                                 <div class="input-group input-group-outline mt-3 null is-filled">
                                     <label class="form-label">Detail </label>
-                                    <textarea name="detail" class="form-control border px-2" cols="10" rows="5"></textarea>
+                                    <textarea name="detail" class="form-control border px-2" rows="5"></textarea>
                                 </div>
                                 <div class="col-lg-1 col-sm-6 col-12">
                                     <button class="btn bg-gradient-info w-100 my-4 mb-2" type="submit" data-target="successToast">Submit</button>

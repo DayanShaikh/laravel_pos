@@ -75,105 +75,107 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($supplier_payment as $supplier_payments)
-                                            <tr>
-                                                <td class="align-middle text-center">
-                                                    <div class="form-check check-tables">
-                                                        <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$supplier_payments->id}}">
-                                                    </div>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{$sn++}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">
-                                                        {{--@if ($supplier->id == $supplier_payments->supplier_id)--}}
-                                                        {{$supplier_payments->supplier->name}}
-                                                        {{--@endif--}}
-                                                    </span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $supplier_payments->date}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $supplier_payments->payment}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $supplier_payments->details}}</span>
-                                                </td>
-                                                <td class="align-middle text-end px-4">
-                                                    {{-- <a href="{{ route('supplier.ledger', $suppliers->id) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Ledger">
-                                                    <i class="fa fa-print"></i>
-                                                    </a> --}}
-                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('supplier_payment.edit', $supplier_payments->id)}}" title="Edit">
-                                                        <i class="material-icons">edit</i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                    @if($supplier_payments->status == 0)
-                                                    <a href=" {{ route('supplier_payment_status', [$supplier_payments->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
-                                                        <i class="fa fa-eye-slash"></i>
-                                                    </a>
-                                                    @elseif($supplier_payments->status == 1)
-                                                    <a href="{{ route('supplier_payment_status', [$supplier_payments->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
-                                                        <i class="fa fa-eye"></i>
-                                                    </a>
-                                                    @endif
-                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('supplier_payment.destroy', $supplier_payments->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
-                                                        <i class="fa fa-trash"></i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
+                                            @if($supplier_payment->count()>0)
+                                                @foreach($supplier_payment as $supplier_payments)
+                                                    <tr>
+                                                        <td class="align-middle text-center">
+                                                            <div class="form-check check-tables">
+                                                                <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$supplier_payments->id}}">
+                                                            </div>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{$sn++}}</span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">
+                                                                {{--@if ($supplier->id == $supplier_payments->supplier_id)--}}
+                                                                {{$supplier_payments->supplier->name}}
+                                                                {{--@endif--}}
+                                                            </span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{Carbon\Carbon::parse($supplier_payments->date)->format('d-M-Y') }}</span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{ $supplier_payments->payment}}</span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{ $supplier_payments->details}}</span>
+                                                        </td>
+                                                        <td class="align-middle text-end px-4">
+                                                            <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('supplier_payment.edit', $supplier_payments->id)}}" title="Edit">
+                                                                <i class="material-icons">edit</i>
+                                                                <div class="ripple-container"></div>
+                                                            </a>
+                                                            @if($supplier_payments->status == 0)
+                                                            <a href=" {{ route('supplier_payment_status', [$supplier_payments->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
+                                                                <i class="fa fa-eye-slash"></i>
+                                                            </a>
+                                                            @elseif($supplier_payments->status == 1)
+                                                            <a href="{{ route('supplier_payment_status', [$supplier_payments->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            @endif
+                                                            <a href="javascript:void(0)" id="delete-user" data-url="{{ route('supplier_payment.destroy', $supplier_payments->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
+                                                                <i class="fa fa-trash"></i>
+                                                                <div class="ripple-container"></div>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td class="text-center" colspan="6">No Record</td>
+                                                </tr>
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <div class="row text-end my-2">
-                                <div class="col-lg-4 col-md-6 d-flex h-25">
-                                    <div class="input-group input-group-outline is-filled form-select w-30 me-2 ms-5 h-100">
-                                        <select name="action" id="action" class="form-control" onchange="confirmAndSubmit()">
-                                            <option value="">Bulk Action</option>
-                                            <option value="delete">Delete</option>
-                                            <option value="status_on">Status ON</option>
-                                            <option value="status_off">Status OFF</option>
-                                        </select>
-                                    </div>
-                                    {{-- <button type="submit" class="btn btn-info bulk_btn my-1">Apply</button> --}}
-                                </div>
                         </form>
-                        <div class="col-lg-2 col-md-6"></div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="me-5 text-start ml-260">
-                                <div class="input-group input-group-outline is-filled form-select d-inline-flex w-40 float-start">
-                                    <span class="my-2 mx-1">Show Page:</span>
-                                    <select onchange="window.location.href=this.value" class="form-control">
-                                        @for ($i = 1; $i <= $supplier_payment->lastPage(); $i++)
-                                            <option value="{{ $supplier_payment->url($i) }}" {{ $supplier_payment->currentPage() == $i ? 'selected' : '' }}>
-                                                {{ $i }}
-                                            </option>
-                                            @endfor
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="input-group input-group-outline is-filled form-select w-30 me-2 ms-5 h-100">
+                                    <select name="action" id="action" class="form-control" onchange="confirmAndSubmit()">
+                                        <option value="">Bulk Action</option>
+                                        <option value="delete">Delete</option>
+                                        <option value="status_on">Status ON</option>
+                                        <option value="status_off">Status OFF</option>
                                     </select>
                                 </div>
-                                <form action="{{ route('purchase.index') }}" method="get">
-                                    @csrf
-                                    <div class="input-group input-group-outline is-filled form-select d-inline-flex w-50">
+                                {{-- <button type="submit" class="btn btn-info bulk_btn my-1">Apply</button> --}}
+                            </div>
+                            <div class="col-md-6">
+                                <div class="me-5 text-start ml-260">
+                                    <div class="input-group input-group-outline is-filled form-select d-inline-flex w-40 float-start">
                                         <span class="my-2 mx-1">Show Page:</span>
-                                        <select name="rowsPerPage" class="form-control" id="change-row" onchange="this.form.submit()">
-                                            <option value="10" {{ $rowsPerPage == 10 ? 'selected' : '' }}>10</option>
-                                            <option value="25" {{ $rowsPerPage == 25 ? 'selected' : '' }}>25</option>
-                                            <option value="100" {{ $rowsPerPage == 100 ? 'selected' : '' }}>100</option>
-                                            <option value="1000" {{ $rowsPerPage == 1000 ? 'selected' : '' }}>1000</option>
+                                        <select onchange="window.location.href=this.value" class="form-control">
+                                            @for ($i = 1; $i <= $supplier_payment->lastPage(); $i++)
+                                                <option value="{{ $supplier_payment->url($i) }}" {{ $supplier_payment->currentPage() == $i ? 'selected' : '' }}>
+                                                    {{ $i }}
+                                                </option>
+                                                @endfor
                                         </select>
                                     </div>
-                                </form>
-                                {{$supplier_payment->links()}}
+                                    <form action="{{ route('purchase.index') }}" method="get">
+                                        @csrf
+                                        <div class="input-group input-group-outline is-filled form-select d-inline-flex w-50">
+                                            <span class="my-2 mx-1">Show Page:</span>
+                                            <select name="rowsPerPage" class="form-control" id="change-row" onchange="this.form.submit()">
+                                                <option value="10" {{ $rowsPerPage == 10 ? 'selected' : '' }}>10</option>
+                                                <option value="25" {{ $rowsPerPage == 25 ? 'selected' : '' }}>25</option>
+                                                <option value="100" {{ $rowsPerPage == 100 ? 'selected' : '' }}>100</option>
+                                                <option value="1000" {{ $rowsPerPage == 1000 ? 'selected' : '' }}>1000</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                    {{$supplier_payment->links()}}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </main>
     {{-- <x-plugins></x-plugins> --}}

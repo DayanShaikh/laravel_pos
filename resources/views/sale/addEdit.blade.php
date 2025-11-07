@@ -25,7 +25,7 @@
                         </div>
                         <div class=" mx-3 mt-3 text-end">
                             @if(isset($sale))
-                            <a ng-if="purchase_id" class="btn bg-gradient-dark" href="{{route('sales.create')}}" title="Add Sales"><i class="material-icons text-sm">add</i></a>
+                                <a ng-if="purchase_id" class="btn bg-gradient-dark" href="{{route('sales.create')}}" title="Add Sales"><i class="material-icons text-sm">add</i></a>
                             @endif
                             <a href="{{route('sales.index')}}" class="btn bg-gradient-dark" title="Back to Purchase list"><i class="fa fa-arrow-right"></i></a>
                         </div>
@@ -36,13 +36,11 @@
                                 </select>
                                 <div class="text-danger" ng-if="error.customer">Please select customer</div>
                             </div>
-
                             <div class="input-group input-group-outline mt-3 datepicker-container null is-filled">
                                 <label for="date" class="form-label">date <span class="login-danger"> *</span></label>
-                                <input type="date" name="date" class="form-control" id="date" ng-model="sale.date" onclick="this.showPicker()" />
+                                <input type="date" name="date" class="form-control" id="date" ng-model="sale.date" onclick="this.showPicker()"/>
                                 <div class="text-danger" ng-if="error.date">Please select date</div>
                             </div>
-
                             <div class="form-group mt-5">
                                 <div class="row">
                                     <div class="col-12">

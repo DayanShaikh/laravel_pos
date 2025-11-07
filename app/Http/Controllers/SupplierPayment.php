@@ -14,15 +14,13 @@ class SupplierPayment extends Controller
      */
     public function index(Request $request)
     {
-        $sn =1;
+        $sn = 1;
         $rowsPerPage = $request->input('rowsPerPage', 10);
         $name = $request->input('name') ?? "";
-        if (!empty($name)) {
-            $supplier_payment = SupplierPayments::where('name','id', 'like', '%' . $name . '%')->paginate($rowsPerPage);
-        } else {
-        }
-        $supplier_payment = SupplierPayments::with('supplier')->paginate($rowsPerPage);
-        return view('supplier_payment.list', compact('supplier_payment','sn','name','rowsPerPage'));
+        $supplier_payment = SupplierPayments::with('supplier')->when(!empty($name), function ($query) use ($name) {
+            $query->where('name', 'id', 'like', '%' . $name . '%');
+        })->paginate($rowsPerPage);
+        return view('supplier_payment.list', compact('supplier_payment', 'sn', 'name', 'rowsPerPage'));
     }
 
     /**
@@ -47,13 +45,12 @@ class SupplierPayment extends Controller
         // $date_format =Carbon::createFromFormat('d/m/Y', $request->date);
 
         SupplierPayments::create([
-            'supplier_id'=>$request->supplier_id,
-            // 'date'=>$date_format,
-            'date'=>$request->date,
-            'payment'=>$request->payment,
-            'details'=>$request->detail,
+            'supplier_id' => $request->supplier_id,
+            'date' => $request->date,
+            'payment' => $request->payment,
+            'details' => $request->detail,
         ]);
-        return redirect()->route('supplier_payment.index')->with('sucess','Record Successfully Stored');
+        return redirect()->route('supplier_payment.index')->with('sucess', 'Record Successfully Stored');
     }
 
     /**
@@ -71,7 +68,7 @@ class SupplierPayment extends Controller
     {
         $detail = SupplierPayments::find($id);
         $supplier = Supplier::all();
-        return view('supplier_payment.edit', compact('detail','supplier'));
+        return view('supplier_payment.edit', compact('detail', 'supplier'));
     }
 
     /**
@@ -79,15 +76,13 @@ class SupplierPayment extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $date_format =Carbon::createFromFormat('d/m/Y', $request->date);
-
-        $supplier_payment =SupplierPayments::find($id);
+        $supplier_payment = SupplierPayments::find($id);
         $supplier_payment->supplier_id = $request->supplier_id;
-        $supplier_payment->date =  $date_format;
+        $supplier_payment->date =  $request->date;
         $supplier_payment->payment = $request->payment;
         $supplier_payment->details = $request->detail;
         $supplier_payment->update();
-        return to_route('supplier_payment.index')->with('success','Record Successfully Update');
+        return to_route('supplier_payment.index')->with('success', 'Record Successfully Update');
     }
 
     /**
@@ -95,16 +90,15 @@ class SupplierPayment extends Controller
      */
     public function destroy(string $id)
     {
-        $supplier_payment =SupplierPayments::find($id);
+        $supplier_payment = SupplierPayments::find($id);
         $supplier_payment->delete();
     }
-    public function status($id,$status)
+    public function status($id, $status)
     {
         $supp_payment = SupplierPayments::find($id);
         $supp_payment->status = $status;
         $supp_payment->save();
-        return to_route('supplier_payment.index')->with('success','Status Successfully Update');
-        
+        return to_route('supplier_payment.index')->with('success', 'Status Successfully Update');
     }
     public function bulkAction(Request $request)
     {
@@ -136,6 +130,4 @@ class SupplierPayment extends Controller
             return redirect()->back();
         }
     }
-    
-
 }
