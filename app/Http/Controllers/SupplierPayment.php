@@ -16,11 +16,12 @@ class SupplierPayment extends Controller
     {
         $sn = 1;
         $rowsPerPage = $request->input('rowsPerPage', 10);
-        $name = $request->input('name') ?? "";
-        $supplier_payment = SupplierPayments::with('supplier')->when(!empty($name), function ($query) use ($name) {
-            $query->where('name', 'id', 'like', '%' . $name . '%');
+        $supplier_id = $request->input('supplier_id') ?? null;
+        $suppliers = Supplier::get();
+        $supplier_payment = SupplierPayments::with('supplier')->when(!empty($supplier_id), function ($query) use ($supplier_id) {
+            $query->where('supplier_id', $supplier_id);
         })->paginate($rowsPerPage);
-        return view('supplier_payment.list', compact('supplier_payment', 'sn', 'name', 'rowsPerPage'));
+        return view('supplier_payment.list', compact('supplier_payment', 'sn', 'supplier_id', 'rowsPerPage', 'suppliers'));
     }
 
     /**
@@ -93,6 +94,7 @@ class SupplierPayment extends Controller
         $supplier_payment = SupplierPayments::find($id);
         $supplier_payment->delete();
     }
+
     public function status($id, $status)
     {
         $supp_payment = SupplierPayments::find($id);
@@ -100,6 +102,7 @@ class SupplierPayment extends Controller
         $supp_payment->save();
         return to_route('supplier_payment.index')->with('success', 'Status Successfully Update');
     }
+
     public function bulkAction(Request $request)
     {
         $action = $request->action;

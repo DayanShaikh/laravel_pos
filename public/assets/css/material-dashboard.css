@@ -4,6 +4,7 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
 @media (max-width:500px) {
 
   .bottom-footer {
@@ -577,17 +578,21 @@ progress {
     font-size: 5rem;
   }
 }
+
 .choices {
   width: 100%;
 }
 
 .choices__list--multiple .choices__item {
   border: #e12b6b !important;
-  background:#e12b6b !important;
+  background: #e12b6b !important;
 }
-.choices[data-type*=select-multiple] .choices__button, .choices[data-type*=text] .choices__button{
+
+.choices[data-type*=select-multiple] .choices__button,
+.choices[data-type*=text] .choices__button {
   border-left: 1px solid #050505 !important;
 }
+
 .display-2 {
   font-size: calc(1.575rem + 3.9vw);
   font-weight: 300;
@@ -27413,13 +27418,13 @@ span.relative.z-0.inline-flex.shadow-sm.rounded-md {
   margin-left: 260px;
 }
 
-.custom_image{
+.custom_image {
   width: 55%;
   padding: 0 11px !important;
   margin: 0 45px;
 }
 
-.custom_image img{
+.custom_image img {
   width: 100%;
   object-fit: cover;
 }

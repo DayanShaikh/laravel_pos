@@ -15,15 +15,15 @@ class PurchaseController extends Controller
     {
         $suppliers = Supplier::all();
         $rowsPerPage = $request->input('rowsPerPage', 10);
-        $from_date = $request->input('from_date')?Carbon::createFromFormat('d/m/Y', $request->input('from_date')??Carbon::now())->format('Y-m-d'):Carbon::now();
-        $to_date = $request->input('to_date')?Carbon::createFromFormat('d/m/Y', $request->input('to_date'))->format('Y-m-d'):Carbon::now();
+        $from_date = $request->input('from_date') ? Carbon::createFromFormat('d/m/Y', $request->input('from_date') ?? Carbon::now())->format('Y-m-d') : Carbon::now();
+        $to_date = $request->input('to_date') ? Carbon::createFromFormat('d/m/Y', $request->input('to_date'))->format('Y-m-d') : Carbon::now();
         $supplier_id = $request->input('supplier_id');
 
         $purchase = Purchase::with('supplier')
-        ->when($from_date != Carbon::now() && $to_date != Carbon::now(), function ($query) use($from_date, $to_date, $supplier_id) {
-            $query->whereBetween('date', [$from_date, $to_date]);
-        })
-        ->where('is_return', false)->paginate($rowsPerPage);
+            ->when($from_date != Carbon::now() && $to_date != Carbon::now(), function ($query) use ($from_date, $to_date, $supplier_id) {
+                $query->whereBetween('date', [$from_date, $to_date]);
+            })
+            ->where('is_return', false)->paginate($rowsPerPage);
         return view('purchase.list', compact('purchase', 'rowsPerPage', 'from_date', 'to_date', 'suppliers', 'supplier_id',));
     }
 
@@ -68,7 +68,6 @@ class PurchaseController extends Controller
         $data = json_decode($request->input('purchase'), true);
         if (empty($data['date'])) {
             return response()->json(['status' => 0, 'error' => '"Fields with * are mandatory"']);
-
         }
         foreach ($data['items'] as $items) {
             if ($items['purchase_price'] == 0 && $items['sale_price'] == 0 && $items['quantity'] == 0) {
@@ -118,7 +117,6 @@ class PurchaseController extends Controller
     {
         $purchase = Purchase::with('items')->find($id);
         return response()->json(['purchase' => $purchase]);
-
     }
     public function update(Request $request, $id)
     {
@@ -174,7 +172,6 @@ class PurchaseController extends Controller
                 $pur_items2->quantity += $items['quantity'];
             }
             $pur_items2->save();
-
         }
         return response()->json(['status' => 1, 'message' => 'Purchase save Successfully']);
     }

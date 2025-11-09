@@ -140,8 +140,9 @@
         });
 
         function confirmAndSubmit() {
-            var selectedAction = document.getElementById('action').value;
-            var confirmation = confirm('Are you sure you want to perform this action?');
+            let selectedAction = document.getElementById('action').value;
+            document.getElementById('actionField').value = selectedAction;
+            let confirmation = confirm('Are you sure you want to perform this action?');
             if (confirmation) {
                 document.getElementById('myForm').submit();
             }
