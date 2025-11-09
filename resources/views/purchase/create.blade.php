@@ -28,12 +28,12 @@
                             </div>
                         @endif
                         <div class="card-body p-0 px-3">
-                            <div class="input-group input-group-outline mt-3 datepicker-container null is-filled">
+                            <div class="input-group input-group-outline mt-3 null is-filled">
                                 <label for="datepicker" class="form-label">date <span class="login-danger"> *</span></label>
-                                <input type="text" ng-model="purchase.date" data-controllerid="purchaseController" class="form-control" id="datepicker">
+                                <input type="date" ng-model="purchase.date" class="form-control" id="datepicker" onclick="this.showPicker()">
                             </div>
                             <div class="input-group input-group-outline is-filled form-select mt-3">
-                                <select class="form-control ps-3 py-0" ng-model="purchase.supplier_id" ng-options="supplier.id as supplier.name for supplier in suppliers">
+                                <select class="form-control ps-3 py-0" select2 ng-model="purchase.supplier_id" ng-options="supplier.id as supplier.name for supplier in suppliers">
                                     <option value="">Select Supplier </option>
                                     <option ng-repeat="supplier in suppliers" value="@{{ supplier.id }}">@{{ supplier.name }}</option>
                                 </select>
@@ -63,11 +63,9 @@
                                                 <tbody>
                                                     <tr ng-repeat="item in purchase.items">
                                                         <td class="text-center serial_number">@{{ $index+1 }}</td>
-                                                        {{-- <td class="text-center serial_number"></td> --}}
                                                         <td>
                                                             <div class="input-group input-group-outline is-filled form-select">
-                                                                {{-- <label class="form-label">Configuration Type</label> --}}
-                                                                <select class="form-control ps-3 py-0" ng-model="purchase.items[ $index ].item_id" ng-change="getItems(purchase.items[ $index ].item_id, item)" chosen convert-to-number>
+                                                                <select class="form-control ps-3 py-0" select2 ng-model="purchase.items[ $index ].item_id" ng-change="getItems(purchase.items[ $index ].item_id, item)" chosen convert-to-number>
                                                                     <option value="">Select Items </option>
                                                                     <option ng-repeat="item in items" value="@{{ item.id }}">@{{ item.title }} (@{{item.quantity}})</option>
                                                                 </select>

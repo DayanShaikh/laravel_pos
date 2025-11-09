@@ -103,7 +103,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('supplier-bulkaction', [SupplierConroller::class, 'bulkAction'])->name('supplier.bulkAction');
 
 	//purchase
-	Route::get('purchase/', [PurchaseController::class, 'index'])->name('purchase.index');
+	Route::get('purchase', [PurchaseController::class, 'index'])->name('purchase.index');
 	Route::get('purchase/create', [PurchaseController::class, 'create'])->name('purchase.create');
 	Route::get('purchase/edit/{id}/{message?}', [PurchaseController::class, 'edit'])->name('purchase.edit');
 	Route::get('purchase-update-active-status/{item}/{status}', [PurchaseController::class, 'status'])->name('purchase.status');

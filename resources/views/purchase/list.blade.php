@@ -6,7 +6,7 @@
         <!-- End Navbar -->
         <div class="container-fluid py-2 px-2">
             <div class="card-header p-0 my-3 mx-3">
-                <form method="GET" action="">
+                <form method="GET" action="{{route('purchase.index')}}" id="filters">
                     @csrf
                     <div class="row justify-content-end text-end">
                         <div class="col-md-3 d-flex align-items-center">
@@ -79,7 +79,7 @@
                                             @foreach($purchase as $purchases)
                                             <tr>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{$loop->index ++}}</span>
+                                                    <span class="text-secondary text-sm">{{$loop->index+1}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     <div class="form-check check-tables">

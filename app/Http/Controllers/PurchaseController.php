@@ -13,12 +13,12 @@ class PurchaseController extends Controller
 {
     public function index(Request $request)
     {
+        $dates = array_map('trim', explode(',', $request->input('dates'), 2));
+        $from_date =  !empty($dates[0]) ? Carbon::parse($dates[0])->format('Y-m-d') : Carbon::now()->format('Y-m-d');
+        $to_date = !empty($dates[1]) ? Carbon::parse($dates[1])->format('Y-m-d') : Carbon::now()->format('Y-m-d');
         $suppliers = Supplier::all();
         $rowsPerPage = $request->input('rowsPerPage', 10);
-        $from_date = $request->input('from_date') ? Carbon::createFromFormat('d/m/Y', $request->input('from_date') ?? Carbon::now())->format('Y-m-d') : Carbon::now();
-        $to_date = $request->input('to_date') ? Carbon::createFromFormat('d/m/Y', $request->input('to_date'))->format('Y-m-d') : Carbon::now();
         $supplier_id = $request->input('supplier_id');
-
         $purchase = Purchase::with('supplier')
             ->when($from_date != Carbon::now() && $to_date != Carbon::now(), function ($query) use ($from_date, $to_date, $supplier_id) {
                 $query->whereBetween('date', [$from_date, $to_date]);
@@ -56,39 +56,42 @@ class PurchaseController extends Controller
     {
         return view('purchase.create');
     }
+
     public function fetch(Request $request)
     {
-        $date = Carbon::now()->format('d/m/Y');
         $suppliers = Supplier::all();
         $items = Item::all();
-        return response()->json(['suppliers' => $suppliers, 'items' => $items, 'date' => $date]);
+        return response()->json(['suppliers' => $suppliers, 'items' => $items]);
     }
+
     public function store(Request $request)
     {
-        $data = json_decode($request->input('purchase'), true);
-        if (empty($data['date'])) {
-            return response()->json(['status' => 0, 'error' => '"Fields with * are mandatory"']);
-        }
-        foreach ($data['items'] as $items) {
+        $request->validate([
+            'supplier_id' => 'required',
+            'date' => 'required',
+        ]);
+
+        foreach ($request->items as $items) {
             if ($items['purchase_price'] == 0 && $items['sale_price'] == 0 && $items['quantity'] == 0) {
                 return response()->json(['status' => 0, 'error' => '"Fields with * are mandatory"']);
             }
         }
-        $format_date = Carbon::createFromFormat('d/m/Y', $data['date']);
+
+        $format_date = Carbon::parse($request->date)->format('Y-m-d');
         $purchase = Purchase::create([
-            'date' => $format_date->format('Y-m-d'),
-            'supplier_id' => $data['supplier_id'],
-            'total_items' => $data['quantity'],
-            'total_price' => $data['total'],
-            'discount' => $data['discount'],
-            'net_price' => $data['net_total'],
-            'note' => $data['notes'],
+            'date' => $format_date,
+            'supplier_id' => $request->supplier_id,
+            'total_items' => $request->quantity,
+            'total_price' => $request->total,
+            'discount' => $request->discount,
+            'net_price' => $request->net_total,
+            'note' => $request->notes?? null,
         ]);
-        if ($data['is_return'] == 1) {
+        if ($request->is_return == 1) {
             $purchase->is_return = true;
             $purchase->save();
         }
-        foreach ($data['items'] as $items) {
+        foreach ($request->items as $items) {
             $pur_items = PurchaseItems::create([
                 'purchase_id' => $purchase->id,
                 'item_id' => $items['item_id'],
@@ -98,7 +101,7 @@ class PurchaseController extends Controller
                 'total' => $items['total'],
             ]);
             $pur_items = Item::where('id', $items['item_id'])->first();
-            if ($data['is_return'] == 0) {
+            if ($request->is_return == 0) {
                 $pur_items->quantity += $items['quantity'];
             } else {
                 $pur_items->quantity -= $items['quantity'];

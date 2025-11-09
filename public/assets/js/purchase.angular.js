@@ -1,16 +1,26 @@
-angular.module('purchase', ['ngAnimate']).controller('purchaseController',
+let purchaseApp = angular.module('purchase', ['ngAnimate']);
+purchaseApp.directive('select2', function ($timeout) {
+	return {
+		restrict: 'A',
+		link: function (scope, element) {
+			$timeout(function () {
+				$(element).select2();
+			});
+		}
+	};
+});
+purchaseApp.controller('purchaseController',
 	function ($scope, $http, $interval, $filter, $location) {
 		$scope.categories = [];
 		$scope.suppliers = [];
 		$scope.items = [];
-		// $scope.errors = [];
 		$scope.processing = false;
 		$scope.item_number = "";
 		$scope.accounts = [];
 		$scope.purchase_id = 0;
 		$scope.numberMask = "";
 		$scope.purchase = {
-			date: '',
+			date: new Date(),
 			supplier_id: 0,
 			items: [],
 			quantity: 0,
@@ -23,24 +33,20 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 		};
 		$scope.item = {
 			"item_id": undefined,
-			// "item_category_id": 0,
 			"purchase_price": 0,
 			"sale_price": 0,
 			"purchase_quantity": 0,
 			"quantity": 0,
 			"total": 0,
-
 		};
 		$scope.fetchData = function () {
 			$http.get('/api/get_data').then(function (response) {
 				$scope.suppliers = response.data.suppliers;
 				$scope.items = response.data.items;
-				$scope.purchase.date = response.data.date;
 			}, function (error) {
 				console.error("Error fetching data", error);
 			});
 		};
-		$scope.fetchData();
 		function getPurchaseIdFromUrl() {
 			var pathSegments = $location.absUrl().split('/');
 			var purchaseIndex = pathSegments.indexOf('edit');
@@ -51,6 +57,7 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 		}
 		$scope.purchase_id = getPurchaseIdFromUrl() || 0;
 		angular.element(document).ready(function () {
+			$scope.fetchData();
 			if ($scope.purchase_id > 0) {
 				$http.get('/api/purchase/show/' + $scope.purchase_id).then(function (response) {
 					$scope.purchase = response.data.purchase;
@@ -60,15 +67,8 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 				});
 			}
 			else {
-				$scope.wctAJAX({ action: 'get_datetime' }, function (response) {
-					$scope.purchase.date = JSON.parse(response);
-				});
-				$scope.wctAJAX({ action: 'get_date' }, function (response) {
-					$scope.purchase.date_added = JSON.parse(response);
-				});
 				$scope.purchase.items.push(angular.copy($scope.item));
 			}
-			setTimeout(function () { init_date_picker(); }, 200);
 		});
 
 		$scope.get_action = function () {
@@ -82,7 +82,6 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 		$scope.add = function (position) {
 			$scope.purchase.items.splice(position + 1, 0, angular.copy($scope.item));
 			$scope.update_grand_total();
-			setTimeout(function () { init_date_picker(); }, 200);
 		}
 
 		$scope.remove = function (position) {
@@ -131,104 +130,44 @@ angular.module('purchase', ['ngAnimate']).controller('purchaseController',
 			}
 			$scope.update_total(position);
 		}
-		if ($scope.purchase_id > 0) {
-			$scope.wctAJAX = function (wctData, wctCallback) {
-				wctRequest = {
-					method: 'POST',
-					url: '/api/purchase/update/'+ $scope.purchase_id,
-					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-					transformRequest: function (obj) {
-						var str = [];
-						for (var p in obj) {
-							str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-						}
-						return str.join("&");
-					},
-					data: wctData
-				}
-				$http(wctRequest).then(function (wctResponse) {
-					wctCallback(wctResponse.data);
-				}, function () {
-					console.log("Error in fetching data");
+
+		$scope.save_purchase = function () {
+			$scope.processing = true;
+			if ($scope.purchase_id > 0) {
+				$http.post('/api/purchase/update/' + $scope.purchase_id, $scope.purchase).then(function (response) {
+					$scope.processing = false;
+					if (response.status == 1) {
+						window.location.reload() + encodeURIComponent(response.message);
+					}
+					else {
+						$scope.errors = response.error;
+					}
+				}, function (error) {
+					$scope.errors = error.data.errors;
+					$scope.isLoading = false;
+					$scope.processing = false;
+				});
+				$scope.processing = true;
+			} else {
+				$http.post('/api/purchase/store', $scope.purchase).then(function (response) {
+					$scope.processing = false;
+					if (response.data.status == 1) {
+						window.location.href = '/purchase/edit/' + response.data.id + '/?message=' + encodeURIComponent(response.data.message);
+					}
+					else {
+						$scope.errors = response.data.error;
+					}
+				}, function (error) {
+					$scope.errors = error.data.errors;
+					$scope.isLoading = false;
+					$scope.processing = false;
 				});
 			}
-			$scope.save_purchase = function () {
-				// $scope.errors = [];
-				if (!$scope.processing) {
-					$scope.processing = true;
-					data = { action: '/api/purchase/update/'+ $scope.purchase_id, purchase: JSON.stringify($scope.purchase) };
-					$scope.wctAJAX(data, function (response) {
-						$scope.processing = false;
-						if (response.status == 1) {
-							window.location.reload() + encodeURIComponent(response.message);
-						}
-						else {
-							$scope.errors = response.error;
-							// $scope.errorMessage = response.data.message;
-						}
-					});
-				}
-			}
-		} else {
-			$scope.wctAJAX = function (wctData, wctCallback) {
-				wctRequest = {
-					method: 'POST',
-					url: '/api/purchase/store',
-					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-					transformRequest: function (obj) {
-						var str = [];
-						for (var p in obj) {
-							str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-						}
-						return str.join("&");
-					},
-					data: wctData
-				}
-				$http(wctRequest).then(function (wctResponse) {
-					wctCallback(wctResponse.data);
-				}, function () {
-					console.log("Error in fetching data");
-				});
-			}
-			$scope.save_purchase = function () {
-				// $scope.errors = [];
-				if (!$scope.processing) {
-					$scope.processing = true;
-					data = { action: '/api/purchase/store', purchase: JSON.stringify($scope.purchase) };
-					$scope.wctAJAX(data, function (response) {
-						$scope.processing = false;
-						if (response.status == 1) {
-							// window.location.href='/purchase/edit/'+response.id
-							// $scope.successMessage = response.message;
-							window.location.href = '/purchase/edit/' + response.id + '/?message=' + encodeURIComponent(response.message);
-						}
-						else {
-							$scope.errors = response.error;
-						}
-					});
-				}
-			}
-		}
-		$scope.print_barcode = function (id) {
-			$("<iframe>")
-				.hide()
-				.attr("src", "index.php?tab=print_receipt&id=" + id)
-				.appendTo("body");
 		}
 
-		$scope.$watch('purchase.supplier_id', function (newValue, oldValue) {
-			if (newValue == "") {
-				$scope.purchase.supplier.name = "";
-			} else {
-				console.log(newValue);
-				var supplier = $filter('filter')($scope.suppliers, { id: newValue }, true);
-				if (supplier.length > 0) {
-					$scope.purchase.supplier.name = supplier[0].name;
-				} else {
-					$scope.purchase.supplier.name = "";
-				}
-			}
-		});
+		$scope.print_barcode = function (id) {
+			$("<iframe>").hide().attr("src", "index.php?tab=print_receipt&id=" + id).appendTo("body");
+		}
 	}
 ).directive('convertToNumber', function () {
 	return {
