@@ -23,6 +23,9 @@ class PurchaseController extends Controller
             ->when($from_date != Carbon::now() && $to_date != Carbon::now(), function ($query) use ($from_date, $to_date, $supplier_id) {
                 $query->whereBetween('date', [$from_date, $to_date]);
             })
+            ->when($supplier_id, function ($query) use ($supplier_id) {
+                $query->where('supplier_id', $supplier_id);
+            })
             ->where('is_return', false)->paginate($rowsPerPage);
         return view('purchase.list', compact('purchase', 'rowsPerPage', 'from_date', 'to_date', 'suppliers', 'supplier_id',));
     }
@@ -85,7 +88,7 @@ class PurchaseController extends Controller
             'total_price' => $request->total,
             'discount' => $request->discount,
             'net_price' => $request->net_total,
-            'note' => $request->notes?? null,
+            'note' => $request->notes ?? null,
         ]);
         if ($request->is_return == 1) {
             $purchase->is_return = true;
