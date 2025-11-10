@@ -124,32 +124,31 @@ class PurchaseController extends Controller
         $purchase = Purchase::with('items')->find($id);
         return response()->json(['purchase' => $purchase]);
     }
+
     public function update(Request $request, $id)
     {
-
-        $data = json_decode($request->input('purchase'), true);
-        foreach ($data['items'] as $item) {
+        foreach ($request->items as $item) {
             $purchase_item = PurchaseItems::where('purchase_id', $id)->where('item_id', $item['item_id'])->first();
             $pur_items = Item::where('id', $item['item_id'])->first();
             $pur_items->quantity -= $purchase_item['quantity'];
             $pur_items->save();
         }
-        $format_date = Carbon::createFromFormat('d/m/Y', $data['date']);
+        $format_date = Carbon::parse($request->date)->format('Y-m-d');
         $purchase = Purchase::find($id);
-        $purchase->date = $format_date->format('Y-m-d');
-        $purchase->supplier_id = $data['supplier_id'];
-        $purchase->total_items = $data['total_items'];
-        $purchase->total_price = $data['total_price'];
-        $purchase->discount = $data['discount'];
-        $purchase->net_price = $data['net_price'];
-        $purchase->note = $data['note'];
-        if ($data['is_return'] == 1) {
+        $purchase->date = $format_date;
+        $purchase->supplier_id = $request->supplier_id;
+        $purchase->total_items = $request->total_items;
+        $purchase->total_price = $request->total_price;
+        $purchase->discount = $request->discount;
+        $purchase->net_price = $request->net_price;
+        $purchase->note = $request->note;
+        if ($request->is_return == 1) {
             $purchase->is_return = true;
         } else {
             $purchase->is_return = false;
         }
         $purchase->save();
-        foreach ($data['items'] as $items) {
+        foreach ($request->items as $items) {
             $purchase_item = PurchaseItems::where('purchase_id', $id)->where('item_id', $items['item_id'])->first();
             $pur_items = Item::where('id', $items['item_id'])->first();
             $pur_items->quantity - $purchase_item['quantity'];
@@ -172,7 +171,7 @@ class PurchaseController extends Controller
                 ]);
             }
             $pur_items2 = Item::where('id', $items['item_id'])->first();
-            if ($data['is_return'] == 1) {
+            if ($request->is_return == 1) {
                 $pur_items2->quantity -= $items['quantity'];
             } else {
                 $pur_items2->quantity += $items['quantity'];
