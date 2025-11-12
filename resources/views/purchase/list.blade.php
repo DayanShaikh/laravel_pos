@@ -49,7 +49,11 @@
                         @endif
                         <div class=" me-3 my-3 text-end">
                             <a class="btn bg-gradient-dark mb-0" href="{{ route('purchase.create')}}"><i class="material-icons text-sm">add</i></a>
-                            <a class="btn bg-gradient-dark mb-0" href="{{ route('purchase.return')}}">Purchase Return</a>
+                            @if((int)$request->is_return == 1)
+                                <a class="btn bg-gradient-dark mb-0" href="{{ route('purchase.index', ['is_return' => false])}}">Purchase</a>
+                            @else
+                                <a class="btn bg-gradient-dark mb-0" href="{{ route('purchase.index', ['is_return' => true])}}">Purchase Return</a>
+                            @endif
                         </div>
                         <form method="POST" action="{{route('purchase.bulkAction')}}" id="myForm">
                             @csrf

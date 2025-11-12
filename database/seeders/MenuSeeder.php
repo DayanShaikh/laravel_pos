@@ -37,7 +37,7 @@ class MenuSeeder extends Seeder
         ]);
         Menu::create([
             'title' => 'Purchase',
-            'url' =>'/purchase',
+            'url' =>'/purchase?is_return=0',
             'parent_id' => $invetory->id,
             'small_icon' =>'<i class="fa fa-cart-shopping"></i>',
             'icon' =>'',

@@ -8,11 +8,18 @@ use App\Models\Supplier;
 use App\Models\Item;
 use Carbon\Carbon;
 use App\Models\PurchaseItems;
+use Illuminate\Support\Facades\Cookie;
 
 class PurchaseController extends Controller
 {
     public function index(Request $request)
     {
+        if ((int)$request->is_return == Cookie::get('is_return', '')) {
+            $is_return = Cookie::get('is_return', '');
+        } else {
+            Cookie::queue('is_return', (int)$request->is_return, 300);
+            $is_return = Cookie::get('is_return', '');
+        }
         $dates = array_map('trim', explode(',', $request->input('dates'), 2));
         $from_date =  !empty($dates[0]) ? Carbon::parse($dates[0])->format('Y-m-d') : Carbon::now()->format('Y-m-d');
         $to_date = !empty($dates[1]) ? Carbon::parse($dates[1])->format('Y-m-d') : Carbon::now()->format('Y-m-d');
@@ -26,33 +33,8 @@ class PurchaseController extends Controller
             ->when($supplier_id, function ($query) use ($supplier_id) {
                 $query->where('supplier_id', $supplier_id);
             })
-            ->where('is_return', false)->paginate($rowsPerPage);
-        return view('purchase.list', compact('purchase', 'rowsPerPage', 'from_date', 'to_date', 'suppliers', 'supplier_id',));
-    }
-
-    public function return(Request $request)
-    {
-        $sn = 1;
-        $rowsPerPage = $request->input('rowsPerPage', 10);
-        $from_date = $request->input('from_date') ?? "";
-        $to_date = $request->input('to_date') ?? "";
-        $supplier_id = $request->input('supplier_id') ?? "";
-
-        if (!empty($from_date) && !empty($to_date) && !empty($supplier_id)) {
-            $format_from_date = Carbon::createFromFormat('d/m/Y', $from_date)->format('Y-m-d');
-            $format_to_date = Carbon::createFromFormat('d/m/Y', $to_date)->format('Y-m-d');
-            $purchase = Purchase::where('date', '>=', $format_from_date)->where('date', '<=', $format_to_date)->where('supplier_id', $supplier_id)->where('is_return', true)->paginate($rowsPerPage);
-        } elseif (empty($from_date) && empty($to_date) && !empty($supplier_id)) {
-            $purchase = Purchase::where('supplier_id', $supplier_id)->paginate($rowsPerPage);
-        } elseif (!empty($from_date) && !empty($to_date) && empty($supplier_id)) {
-            $format_from_date = Carbon::createFromFormat('d/m/Y', $from_date)->format('Y-m-d');
-            $format_to_date = Carbon::createFromFormat('d/m/Y', $to_date)->format('Y-m-d');
-            $purchase = Purchase::where('date', '>=', $format_from_date)->where('date', '<=', $format_to_date)->where('is_return', true)->paginate($rowsPerPage);
-        } else {
-            $purchase = Purchase::with('supplier')->where('is_return', true)->paginate($rowsPerPage);
-        }
-        $suppliers = Supplier::all();
-        return view('purchase.return_list', compact('purchase', 'rowsPerPage', 'sn', 'from_date', 'to_date', 'suppliers', 'supplier_id'));
+            ->where('is_return', $is_return)->paginate($rowsPerPage);
+        return view('purchase.list', compact('purchase', 'rowsPerPage', 'from_date', 'to_date', 'suppliers', 'supplier_id', 'request'));
     }
 
     public function create(Request $request)

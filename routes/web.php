@@ -109,7 +109,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('purchase-update-active-status/{item}/{status}', [PurchaseController::class, 'status'])->name('purchase.status');
 	Route::delete('purchase/delete/{id}', [PurchaseController::class, 'delete'])->name('purchase.delete');
 	Route::post('purchase-bulkaction', [PurchaseController::class, 'bulkAction'])->name('purchase.bulkAction');
-	Route::get('purchase_return', [PurchaseController::class, 'return'])->name('purchase.return');
 	
 	//Sales
 	Route::resource('sales', SaleController::class);
