@@ -30,13 +30,15 @@
                                     <h6 class="text-white mx-3">({{$supplier->name}}) Ledger</h6>
                                 </div>
                             </div>
-                            <div class="me-3 my-3 text-end">
-                                <a href="{{route('supplier.index')}}" class="btn bg-gradient-dark" style="padding: 13px 25px"><i class="fa fa-arrow-right"></i></a>
-                                <a onclick="window.print()" class="btn bg-gradient-dark" href="#"><i class="material-icons text-sm">print</i></a>
-                                <a href="{{ route('supplier.ledger.pdf', [$supplier->id, $format_from_date, $format_to_date]) }}" class="btn bg-gradient-dark"><i class="material-icons text-sm"></i> PDF</a>
-                                <button id="downloadImage" class="btn bg-gradient-dark" style="padding: 13px 25px">
-                                    <i class="fa fa-image"></i> Image
-                                </button>
+                            <div class="row my-3 mx-2">
+                                <div class="col-md-6 text-start">
+                                    <a onclick="window.print()" class="btn bg-gradient-dark" href="#"><i class="material-icons text-sm">print</i></a>
+                                    <a href="{{ route('supplier.ledger.pdf', [$supplier->id, $format_from_date, $format_to_date]) }}" class="btn bg-gradient-dark" style="padding: 14px 25px"><i class="fa fa-file-pdf"></i></a>
+                                    <button id="downloadImage" class="btn bg-gradient-dark" style="padding: 14px 25px"><i class="fa fa-image"></i></button>
+                                </div>
+                                <div class="col-md-6 text-end">
+                                    <a href="{{route('supplier.index')}}" class="btn bg-gradient-dark" style="padding: 13px 25px"><i class="fa fa-arrow-right"></i></a>
+                                </div>
                             </div>
                             <div class="card-body px-0 pb-2">
                                 <div class="table-responsive p-0">
@@ -105,13 +107,10 @@
             <script>
                 let storedStartDate = @json($format_from_date);
                 let storedEndDate = @json($format_to_date);
-
             </script>
             <script>
                 document.getElementById("downloadImage").addEventListener("click", function() {
-
                     const element = document.querySelector(".card-body"); // choose what you want to capture
-
                     html2canvas(element).then(canvas => {
                         const link = document.createElement('a');
                         link.download = 'supplier-ledger.png';
@@ -119,7 +118,6 @@
                         link.click();
                     });
                 });
-
             </script>
         </main>
     </x-layout>
