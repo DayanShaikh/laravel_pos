@@ -58,6 +58,7 @@
     <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     {{-- <script src="{{ asset('assets') }}/js/jquery.min.js"></script> --}}
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="{{ asset('assets') }}/js/plugins/daterangepicker.js"></script>
     <script src="{{ asset('assets') }}/js/bootstrap.js"></script>
     <script src="{{ asset('assets') }}/js/core/popper.min.js"></script>

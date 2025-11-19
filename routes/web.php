@@ -98,6 +98,7 @@ Route::group(['middleware' => 'auth'], function () {
 	//Supplier
 	Route::resource('supplier', SupplierConroller::class);
 	Route::get('supplier/ledger/{id}', [SupplierConroller::class, 'ledger'])->name('supplier.ledger');
+	Route::get('supplier/ledger/pdf/{id}/{from_date}/{to_date}', [SupplierConroller::class, 'downloadPDF'])->name('supplier.ledger.pdf');
 	Route::get('supplier/print/{id}', [SupplierConroller::class, 'ledger'])->name('supplier.print');
 	Route::get('supplier-update-active-status/{item}/{status}', [SupplierConroller::class, 'status'])->name('supplier.status');
 	Route::post('supplier-bulkaction', [SupplierConroller::class, 'bulkAction'])->name('supplier.bulkAction');
@@ -109,6 +110,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('purchase-update-active-status/{item}/{status}', [PurchaseController::class, 'status'])->name('purchase.status');
 	Route::delete('purchase/delete/{id}', [PurchaseController::class, 'delete'])->name('purchase.delete');
 	Route::post('purchase-bulkaction', [PurchaseController::class, 'bulkAction'])->name('purchase.bulkAction');
+
 	
 	//Sales
 	Route::resource('sales', SaleController::class);
@@ -120,6 +122,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('supplier_payment', SupplierPayment::class);
 	Route::get('/status/{id}/{status}', [SupplierPayment::class, 'status'])->name('supplier_payment_status');
 	Route::get('/supplier_payment_bulkaction', [SupplierPayment::class, 'bulkAction'])->name('supplier_payment.bulkAction');
+	
 
 	//manage Expense
 	Route::resource('/manage_expense', Manage_ExpenseController::class);
