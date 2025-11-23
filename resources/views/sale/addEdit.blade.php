@@ -189,7 +189,11 @@
                                                     <tr style="border-bottom:1px solid #7a7a7a4a">
                                                         <th colspan="6" class="text-end">Discount</th>
                                                         <th class="text-right">
-                                                            <input type="number" style="border: 1px solid #c3c3c3; padding: 0 5px; width: 60px;" ng-model="sale.totalDiscount" ng-change="netTotal();">
+                                                            <div class="input-group input-group-outline null is-filled">
+                                                                <label class="form-label">Discount<span class="login-danger">*</span></label>
+                                                                <input type="number" class="form-control" placeholder="Discount" ng-model="sale.totalDiscount" ng-change="netTotal();">
+                                                            </div>
+                                                            {{-- <input type="number" style="border: 1px solid #c3c3c3; padding: 0 5px; width: 60px;" ng-model="sale.totalDiscount" ng-change="netTotal();"> --}}
                                                         </th>
                                                         <th class="text-right">&nbsp;</th>
                                                     </tr>
@@ -211,7 +215,6 @@
                                 {{-- <button class="btn bg-gradient-info" ng-disabled="isButtonEnable==true" ng-click="submitForm()"> --}}
                                 <button class="btn bg-gradient-info" ng-disabled="isButtonEnable==true" ng-click="openPopup()">
                                     {{ isset($sale) ? 'Update' : 'Submit' }}
-                                    <img src="/assets/img/tube-spinner.svg" ng-if="isLoading" alt="" width="25px">
                                 </button>
                             </div>
                             {{-- @endcan --}}
@@ -220,38 +223,48 @@
                 </div>
             </div>
             <div class="backdrop" ng-class="{'open': popupVisible}" ng-show="popupVisible"></div>
-            {{-- <div class="" > --}}
-                <div class="row modal-animate" ng-class="{'open': popupVisible}" role="dialog" aria-modal="true">
-                    <div class="col-12">
-                        <div class="card mt-4 flex-fill ms-2" style="width: 550px; float: inline-end">
-                            <div class="card-header">
-                                <h5 class="card-title text-center">Payment Details</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="payment_method">
-                                    {{-- @foreach($accounts as $account)
+            <div class="row modal-animate" ng-class="{'open': popupVisible}" role="dialog" aria-modal="true">
+                <div class="col-12">
+                    <div class="card mt-4 flex-fill ms-2" style="width: 550px; float: inline-end">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title">Payment Details</h5>
+                            <div class="" ng-click="closePopup()"><i class="fa-solid fa-x"></i></div>
+                        </div>
+                        <div class="card-body">
+                            <div class="payment_method">
+                                {{-- @foreach($accounts as $account)
                                     <span ng-click="is_active({{$account->id}})" ng-class="sale.payment_method=={{$account->id}}?'toggle_active':''" style="padding:5px 10px; margin:5px;">
-                                    {{$account->title}}
-                                    </span>
-                                    @endforeach --}}
-                                </div>
-                                <b class="mt-3 d-block">Net Total Price</b>
-                                <input type="number" readonly class="form-control" value="@{{sale.netTotal}}" style="width: 100%">
-                                <b class="mt-2 d-block">Received Payment</b>
-                                <input type="number" class="form-control" ng-model="sale.recievedPayment" ng-change="returnPayment()" style="width: 100%">
-                                <b class="mt-2 d-block">Return Payment</b>
-                                <input type="number" readonly class="form-control" value="@{{sale.returnPayment}}" style="width: 100%">
+                                {{$account->title}}
+                                </span>
+                                @endforeach --}}
                             </div>
-                            <div class="row">
-                                <div class="col-12 text-center">
-                                    <button class="btn bg-gradient-info me-2" ng-click="submitForm()">Submit</button>
-                                    <button class="btn btn-danger" ng-click="closePopup()">Skip</button>
-                                </div>
+                            <div class="mt-3 input-group input-group-outline null is-filled">
+                                <label class="form-label">Net Total Price</label>
+                                <input type="number" class="form-control" placeholder="Net Total Price" value="@{{sale.netTotal}}" readonly>
                             </div>
+                            <div class="mt-3 input-group input-group-outline null is-filled">
+                                <label class="form-label">Received Payment</label>
+                                <input type="number" class="form-control" placeholder="Received Payment" ng-model="sale.recievedPayment" ng-change="returnPayment()">
+                            </div>
+                            <div class="mt-3 input-group input-group-outline null is-filled">
+                                <label class="form-label">Return Payment</label>
+                                <input type="number" class="form-control" placeholder="Return Payment" value="@{{sale.returnPayment}}" readonly>
+                            </div>
+                        </div>
+                        <div class="card-header d-flex align-items-center">
+                            <button class="btn bg-gradient-info me-2" ng-click="submitForm()">
+                                Submit
+                                <img src="/assets/img/tube-spinner.svg" ng-if="isLoading" alt="" width="25px">
+                            </button>
+                            <button class="btn btn-danger" ng-click="submitForm()">
+                                Skip
+                                <img src="/assets/img/tube-spinner.svg" ng-if="isLoading" alt="" width="25px">
+                            </button>
                         </div>
                     </div>
                 </div>
-            {{-- </div> --}}
+            </div>
+        </div>
         </div>
     </main>
     <script>
