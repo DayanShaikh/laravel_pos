@@ -23,7 +23,7 @@ class PurchaseController extends Controller
         $dates = array_map('trim', explode(',', $request->input('dates'), 2));
         $from_date =  !empty($dates[0]) ? Carbon::parse($dates[0])->format('Y-m-d') : Carbon::now()->format('Y-m-d');
         $to_date = !empty($dates[1]) ? Carbon::parse($dates[1])->format('Y-m-d') : Carbon::now()->format('Y-m-d');
-        $suppliers = Supplier::all();
+        $suppliers = Supplier::get();
         $rowsPerPage = $request->input('rowsPerPage', 10);
         $supplier_id = $request->input('supplier_id');
         $purchase = Purchase::with('supplier')

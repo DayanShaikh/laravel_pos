@@ -22,7 +22,7 @@
                             <form role="form" method="POST" action="{{  route('customer_payment.store') }}" class="text-start">
                                 @csrf
                                 <div class="input-group input-group-outline mt-3 form-select">
-                                    <select name="customer_id" id="action" class="form-control">
+                                    <select name="customer_id" id="action" class="form-control select2">
                                         <option value="0">Select customers</option>
                                         @foreach($customer as $customers)
                                         <option value="{{$customers->id}}">{{$customers->name}}</option>
@@ -33,7 +33,7 @@
                                     @enderror
                                     <div class="input-group input-group-outline mt-3 null is-filled ">
                                         <label  for="datepicker" class="form-label">Date </label>
-                                        <input type="text" id="datepicker" class="form-control" name="date" value="{{ old('date') }}">
+                                        <input type="date" class="form-control" name="date" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}" onclick="this.showPicker()">
                                     </div>
                                         @error('date')
                                         <p class='text-danger inputerror'>{{ $message }} </p>

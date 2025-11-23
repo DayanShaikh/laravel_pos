@@ -148,73 +148,73 @@
                 document.getElementById('myForm').submit();
             }
         }
-        document.addEventListener('DOMContentLoaded', function() {
-            var currentDate = new Date();
-            var formattedDate = currentDate.getDate() + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
-            document.getElementById('datepicker').value = formattedDate;
-            var picker = new Pikaday({
-                field: document.getElementById('datepicker')
-                , format: 'D/M/YYYY'
-                , toString(date, format) {
-                    const day = date.getDate();
-                    const month = date.getMonth() + 1;
-                    const year = date.getFullYear();
-                    return `${day}/${month}/${year}`;
-                }
-                , parse(dateString, format) {
-                    const parts = dateString.split('/');
-                    const day = parseInt(parts[0], 10);
-                    const month = parseInt(parts[1], 10) - 1;
-                    const year = parseInt(parts[2], 10);
-                    return new Date(year, month, day);
-                }
-            });
-        });
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     var currentDate = new Date();
+        //     var formattedDate = currentDate.getDate() + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
+        //     document.getElementById('datepicker').value = formattedDate;
+        //     var picker = new Pikaday({
+        //         field: document.getElementById('datepicker')
+        //         , format: 'D/M/YYYY'
+        //         , toString(date, format) {
+        //             const day = date.getDate();
+        //             const month = date.getMonth() + 1;
+        //             const year = date.getFullYear();
+        //             return `${day}/${month}/${year}`;
+        //         }
+        //         , parse(dateString, format) {
+        //             const parts = dateString.split('/');
+        //             const day = parseInt(parts[0], 10);
+        //             const month = parseInt(parts[1], 10) - 1;
+        //             const year = parseInt(parts[2], 10);
+        //             return new Date(year, month, day);
+        //         }
+        //     });
+        // });
 
         //range datepicker
-        document.addEventListener('DOMContentLoaded', function() {
-            const initialDate1 = document.getElementById('dateRangePicker1').value;
-            const initialDate2 = document.getElementById('dateRangePicker2').value;
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const initialDate1 = document.getElementById('dateRangePicker1').value;
+        //     const initialDate2 = document.getElementById('dateRangePicker2').value;
 
-            function parseDate(dateString) {
-                const parts = dateString.split('/');
-                const day = parseInt(parts[0], 10);
-                const month = parseInt(parts[1], 10) - 1; // months are 0-based in JavaScript
-                const year = parseInt(parts[2], 10);
-                return new Date(year, month, day);
-            }
+        //     function parseDate(dateString) {
+        //         const parts = dateString.split('/');
+        //         const day = parseInt(parts[0], 10);
+        //         const month = parseInt(parts[1], 10) - 1; // months are 0-based in JavaScript
+        //         const year = parseInt(parts[2], 10);
+        //         return new Date(year, month, day);
+        //     }
 
-            var picker1 = new Pikaday({
-                field: document.getElementById('dateRangePicker1')
-                , format: 'D/M/YYYY'
-                , toString(date, format) {
-                    const day = date.getDate();
-                    const month = date.getMonth() + 1;
-                    const year = date.getFullYear();
-                    return `${day}/${month}/${year}`;
-                }
-                , parse(dateString, format) {
-                    return parseDate(dateString);
-                }
-            });
+        //     var picker1 = new Pikaday({
+        //         field: document.getElementById('dateRangePicker1')
+        //         , format: 'D/M/YYYY'
+        //         , toString(date, format) {
+        //             const day = date.getDate();
+        //             const month = date.getMonth() + 1;
+        //             const year = date.getFullYear();
+        //             return `${day}/${month}/${year}`;
+        //         }
+        //         , parse(dateString, format) {
+        //             return parseDate(dateString);
+        //         }
+        //     });
 
-            var picker2 = new Pikaday({
-                field: document.getElementById('dateRangePicker2')
-                , format: 'D/M/YYYY'
-                , toString(date, format) {
-                    const day = date.getDate();
-                    const month = date.getMonth() + 1;
-                    const year = date.getFullYear();
-                    return `${day}/${month}/${year}`;
-                }
-                , parse(dateString, format) {
-                    return parseDate(dateString);
-                }
-            });
+        //     var picker2 = new Pikaday({
+        //         field: document.getElementById('dateRangePicker2')
+        //         , format: 'D/M/YYYY'
+        //         , toString(date, format) {
+        //             const day = date.getDate();
+        //             const month = date.getMonth() + 1;
+        //             const year = date.getFullYear();
+        //             return `${day}/${month}/${year}`;
+        //         }
+        //         , parse(dateString, format) {
+        //             return parseDate(dateString);
+        //         }
+        //     });
 
-            picker1.setDate(parseDate(initialDate1), true); // true to trigger onSelect
-            picker2.setDate(parseDate(initialDate2), true); // true to trigger onSelect
-        });
+        //     picker1.setDate(parseDate(initialDate1), true); // true to trigger onSelect
+        //     picker2.setDate(parseDate(initialDate2), true); // true to trigger onSelect
+        // });
 
         $(document).ready(function() {
             $("input[name='dates']").daterangepicker({});

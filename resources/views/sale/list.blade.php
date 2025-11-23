@@ -12,12 +12,12 @@
                         <div class="col-md-3">
                             <div class="input-group input-group-outline datepicker-container null is-filled">
                                 <label for="dates" class="form-label">Dates</label>
-                                <input type="text" class="form-control" id="dates" name="dates" value="{{$from_date??''}}" autocomplete="off">
+                                <input type="text" class="form-control" id="dates" name="dates" autocomplete="off" readonly>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="input-group input-group-outline is-filled form-select w-100 h-100">
-                                <select name="customer_id" id="action" class="form-control">
+                                <select name="customer_id" id="action" class="form-control select2">
                                     <option value="0">Select Customer</option>
                                     @foreach($customers as $customer)
                                     <option value="{{$customer->id}}" @if($customer_id==$customer->id) selected @endif>{{$customer->name}}</option>
@@ -140,7 +140,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="me-5 text-start ml-260">
-                                    <div class="input-group input-group-outline is-filled form-select d-inline-flex w-40 float-start">
+                                    <div class="input-group input-group-outline is-filled form-select d-inline-flex w-50 float-start">
                                         <span class="my-2 mx-1">Show Page:</span>
                                         <select onchange="window.location.href=this.value" class="form-control">
                                             @for ($i = 1; $i <= $sales->lastPage(); $i++)
@@ -170,5 +170,8 @@
                 </div>
             </div>
     </main>
-    {{-- <x-plugins></x-plugins> --}}
+    <script>
+        let storedStartDate = @json($from_date);
+        let storedEndDate = @json($to_date);
+    </script>
 </x-layout>

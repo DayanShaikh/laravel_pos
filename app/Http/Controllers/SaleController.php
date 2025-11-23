@@ -14,15 +14,15 @@ class SaleController extends Controller
 
     public function index(Request $request)
     {
+        $dates = array_map('trim', explode(',', $request->input('dates'), 2));
+        $from_date =  !empty($dates[0]) ? Carbon::parse($dates[0])->format('Y-m-d') : Carbon::now()->format('Y-m-d');
+        $to_date = !empty($dates[1]) ? Carbon::parse($dates[1])->format('Y-m-d') : Carbon::now()->format('Y-m-d');
         $customers = Customer::get();
-        $rowsPerPage = $request->input('rowsPerPage', 10);
-        $from_date = $request->input('from_date') ? Carbon::createFromFormat('d/m/Y', $request->input('from_date'))->format('Y-m-d') : Carbon::now()->format('Y-m-d');
-        $to_date = $request->input('to_date') ? Carbon::createFromFormat('d/m/Y', $request->input('to_date'))->format('Y-m-d') : Carbon::now()->format('Y-m-d');
         $customer_id = $request->input('customer_id');
+        $rowsPerPage = $request->input('rowsPerPage', 10);
         $sales = Sale::whereRaw('DATE(date) BETWEEN ? AND ?', [$from_date, $to_date])->when($customer_id, function ($query) use ($customer_id) {
             $query->where('customer_id', $customer_id);
         })->where('is_return', 0)->paginate($rowsPerPage);
-        // })->where('is_return', 0)->toRawSql();
         return view('sale.list', compact('sales', 'customers', 'rowsPerPage', 'from_date', 'to_date', 'customer_id'));
     }
 
@@ -202,7 +202,7 @@ class SaleController extends Controller
         $sale = sale::find($id);
         $sale->delete();
         saleItem::where('sale_id', $id)->delete();
-        
+
         return  redirect()->route('sale.index')->with('message', 'Record Deleted Successfully');
     }
 }

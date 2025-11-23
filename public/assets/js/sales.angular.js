@@ -10,6 +10,7 @@ saleApp.directive('select2', function ($timeout) {
     };
 });
 saleApp.controller('SaleController', function ($scope, $http) {
+    $scope.popupVisible = false;
     $scope.error = {};
     $scope.customers = customers;
     $scope.items = items;
@@ -424,4 +425,11 @@ saleApp.controller('SaleController', function ($scope, $http) {
             .toFixed(2);
     };
 
+    $scope.openPopup = function () {
+        $scope.popupVisible = true;
+    };
+
+    $scope.closePopup = function () {
+        $scope.popupVisible = false;
+    };
 });

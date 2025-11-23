@@ -23,35 +23,32 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="input-group input-group-outline mt-3 form-select">
-                                     <select name="customer_id" id="action" class="form-control">
+                                    <select name="customer_id" id="action" class="form-control select2">
                                         <option value="0">Select customers</option>
                                         @foreach($customer as $customers)
-                                        {{-- @php
-                                            $detail->id=
-                                        @endphp --}}
-                                    <option value="{{$customers->id}}" @if ($customers->id==$detail->customer_id) selected @endif>{{$customers->name}}</option>
+                                        <option value="{{$customers->id}}" @if ($customers->id==$detail->customer_id) selected @endif>{{$customers->name}}</option>
                                         @endforeach
                                     </select>
                                     @error('customer_id')
-                                    <p class='text-danger inputerror'>{{ $message }} </p>
+                                    <p class='text-danger inputerror'>{{ $message }}</p>
                                     @enderror
                                     <div class="input-group input-group-outline mt-3 @if($detail->date) null is-filled @endif">
-                                        <label  for="datepicker" class="form-label">Date </label>
-                                        <input type="text"  ng-model="purchase.date" id="datepicker" class="form-control" name="date" value="{{ $detail->date }}">
+                                        <label for="datepicker" class="form-label">Date </label>
+                                        <input type="date" class="form-control" name="date" value="{{ $detail->date }}" onclick="this.showPicker()">
                                     </div>
-                                        @error('date')
-                                        <p class='text-danger inputerror'>{{ $message }} </p>
-                                        @enderror
+                                    @error('date')
+                                    <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
                                     <div class="input-group input-group-outline mt-3 @if($detail->payment) null is-filled @endif">
-                                        <label  class="form-label">Payment </label>
+                                        <label class="form-label">Payment </label>
                                         <input type="number" class="form-control" name="payment" value="{{$detail->payment }}">
                                         <br>
                                     </div>
-                                        @error('payment')
-                                        <p class='text-danger inputerror'>{{ $message }} </p>
-                                        @enderror
+                                    @error('payment')
+                                    <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
                                     <div class="input-group input-group-outline mt-3 @if($detail->details) null is-filled @endif">
-                                        <label class="form-label">Detail </label> 
+                                        <label class="form-label">Detail </label>
                                         <input type="text" class="form-control" name="detail" value="{{$detail->details}}">
                                     </div>
                                     <div class="col-lg-1 col-sm-6 col-12">
