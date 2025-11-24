@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\ConfigType;
 use App\Models\ConfigVariable;
+use App\Models\Permissions;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(AdminSeeder::class);   
         $this->call(MenuSeeder::class);
+        
         $config = ConfigType::create([
             'title' => 'General Settings'
         ]);
@@ -57,18 +59,21 @@ class DatabaseSeeder extends Seeder
             'type' => 'file',
             'key' => 'login_logo'
         ]);
+
         ConfigVariable::create([
             'config_type_id' => $config->id,
             'title' => 'Recipt Logo',
             'type' => 'file',
             'key' => 'recipt_logo'
         ]);
+
         ConfigVariable::create([
             'config_type_id' => $config->id,
             'title' => 'Fav icon',
             'type' => 'file',
             'key' => 'fav_icon'
         ]);
+
         ConfigVariable::create([
             'config_type_id' => $config->id,
             'title' => 'Address',
