@@ -66,7 +66,7 @@
                                                     </td>
                                                     <td class="align-middle text-center">
                                                         {{-- @foreach ($users->roles as $role) --}}
-                                                        <span class="text-secondary text-xs font-weight-bold">{{ implode(',', $users->roles()->pluck('name')->toArray()) }}</span>
+                                                        <span class="text-secondary text-xs font-weight-bold">{{ implode(',', $users->userRoles()->pluck('title')->toArray()) }}</span>
                                                         {{-- @endforeach --}}
                                                     </td>
                                                     <td class="align-middle text-end px-4">

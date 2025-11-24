@@ -17,7 +17,6 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
-    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -60,4 +59,23 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function userRoles()
+    {
+        return $this->belongsToMany(Roles::class, 'user_roles', 'user_id', 'roles_id');
+    }
+
+    public function getPermissionsAttribute()
+    {
+        return $this->userRoles()->with('permission')->get()->pluck('permission')->flatten();
+    }
+
+    public function hasRole($roleName)
+    {
+        foreach ($this->userRoles as $role) {
+            if ($role->title == $roleName)
+                return true;
+        }
+        return false;
+    }
 }
