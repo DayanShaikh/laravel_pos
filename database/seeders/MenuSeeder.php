@@ -23,7 +23,7 @@ class MenuSeeder extends Seeder
         ]);
         Menu::create([
             'title' => 'Items',
-            'url' => url('item'),
+            'url' =>'item',
             'parent_id' => $Items1->id,
             'small_icon' =>'<i class="fa fa-tag"></i>',
             'icon' =>'',
@@ -37,21 +37,21 @@ class MenuSeeder extends Seeder
         ]);
         Menu::create([
             'title' => 'Purchase',
-            'url' => url('purchase?is_return=0'),
+            'url' =>'purchase?is_return=0',
             'parent_id' => $invetory->id,
             'small_icon' =>'<i class="fa fa-cart-shopping"></i>',
             'icon' =>'',
         ]);
         Menu::create([
             'title' => 'Supplier',
-            'url' => url('supplier'),
+            'url' =>'supplier',
             'parent_id' => $invetory->id,
             'small_icon' =>'<i class="fa fa-cart-flatbed"></i>',
             'icon' =>'',
         ]);
         Menu::create([
             'title' => 'Supplier Payments',
-            'url' => url('supplier_payment'),
+            'url' =>'supplier_payment',
             'parent_id' => $invetory->id,
             'small_icon' =>'<i class="fa fa-cart-flatbed"></i>',
             'icon' =>'',
@@ -65,21 +65,21 @@ class MenuSeeder extends Seeder
         ]);
         Menu::create([
             'title' => 'Sales',
-            'url' => url('sales'),
+            'url' =>'sales',
             'parent_id' => $Sales->id,
             'small_icon' =>'<i class="fa fa-sack-dollar"></i>',
             'icon' =>'',
         ]);
         Menu::create([
             'title' => 'Customer',
-            'url' => url('customer'),
+            'url' =>'customer',
             'parent_id' => $Sales->id,
             'small_icon' =>'<i class="fa fa-cart-flatbed"></i>',
             'icon' =>'',
         ]);
         Menu::create([
             'title' => 'Customer Payment',
-            'url' => url('customer_payment'),
+            'url' =>'customer_payment',
             'parent_id' => $Sales->id,
             'small_icon' =>'<i class="fa fa-cart-flatbed"></i>',
             'icon' =>'',
@@ -93,21 +93,21 @@ class MenuSeeder extends Seeder
         ]);
         Menu::create([
             'title' => 'Expense',
-            'url' => url('expense_category'),
+            'url' =>'expense_category',
             'parent_id' => $Accounts->id,
             'small_icon' =>'<i class="fa fa-hand-holding-dollar"></i>',
             'icon' =>'',
         ]);
         Menu::create([
             'title' => 'Manage Expense',
-            'url' => url('manage_expense'),
+            'url' =>'manage_expense',
             'parent_id' => $Accounts->id,
             'small_icon' =>'<i class="fa-solid fa-hand-holding-dollar"></i>',
             'icon' =>'',
         ]);
         Menu::create([
             'title' => 'Manage Account',
-            'url' => url('account'),
+            'url' =>'account',
             'parent_id' => $Accounts->id,
             'small_icon' =>'<i class="fa-solid fa-hand-holding-dollar"></i>',
             'icon' =>'',
