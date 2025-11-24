@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Menu;
-use App\Models\Role;
+use App\Models\Roles;
 use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
@@ -25,7 +25,7 @@ class MenuController extends Controller
     public function create()
     {
         $menu = Menu::all();
-        $role = Role::all();
+        $role = Roles::all();
         return view('menu.create', compact('menu', 'role'));
     }
 

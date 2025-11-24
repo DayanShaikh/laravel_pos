@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Role;
-use App\Models\Permission;
+use App\Models\Roles;
+use App\Models\Permissions;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +16,7 @@ class RolesController extends Controller
     public function index()
     {
         $sn = 1;
-        $role = Role::all();
+        $role = Roles::all();
         return view('roles.list', compact('role', 'sn'));
     }
 
@@ -25,7 +25,7 @@ class RolesController extends Controller
      */
     public function create()
     {
-        $permission = Permission::all();
+        $permission = Permissions::all();
         return view('roles.create', compact('permission'));
     }
 
@@ -37,7 +37,7 @@ class RolesController extends Controller
         $request->validate([
             'name' => 'required'
         ]);
-        $role = Role::create([
+        $role = Roles::create([
             'name' => $request->name,
             'guard_name' => 'web'
         ]);
@@ -58,8 +58,8 @@ class RolesController extends Controller
      */
     public function edit(string $id)
     {
-        $role = Role::find($id);
-        $permission = Permission::all();
+        $role = Roles::find($id);
+        $permission = Permissions::all();
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $id)->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')->all();
         return view('roles.edit', compact('role', 'permission', 'rolePermissions'));
     }
@@ -72,7 +72,7 @@ class RolesController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string',
         ]);
-        $role = Role::find($id);
+        $role = Roles::find($id);
         if (!empty($role)) {
             $role->update($validatedData);
             $role->syncPermissions($request->input('permission'));
@@ -86,7 +86,7 @@ class RolesController extends Controller
     public function destroy(string $id)
     {
         //dd($id);
-        Role::find($id)->delete();
+        Roles::find($id)->delete();
         // DB::table('role_has_permissions')->where('role_has_permissions.role_id', $id)->delete();
         return redirect()->back()->with('message', 'Record delete successfully');
     }
@@ -100,7 +100,7 @@ class RolesController extends Controller
         }
         if ($action == 'delete') {
             foreach ($multi as $multis) {
-                Role::where('id', $multis)->delete();
+                Roles::where('id', $multis)->delete();
             }
             return redirect()->back()->with('message', 'Selected Records delete Successfully');
         }
