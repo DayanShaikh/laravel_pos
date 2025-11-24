@@ -20,24 +20,12 @@
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    {{-- <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets') }}/img/apple-icon.png"> --}}
-    {{-- <link rel="icon" type="image/png" href="{{ asset('assets') }}/img/favicon.png"> --}}
     <title>POS</title>
-    <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-    <!-- Nucleo Icons -->
+    <link href="{{ asset('assets') }}/css/fonts.font" rel="stylesheet" />
     <link href="{{ asset('assets') }}/css/nucleo-icons.css" rel="stylesheet" />
     <link href="{{ asset('assets') }}/css/nucleo-svg.css" rel="stylesheet" />
-    <!-- Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-    <!-- CSS Files -->
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-    <!-- For Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <link id="pagestyle" href="{{ asset('assets') }}/css/all-5.min.css" rel="stylesheet" />
+    <link id="pagestyle" href="{{ asset('assets') }}/css/all-6.min.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/material-dashboard.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/jquery-ui.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/docs.css" rel="stylesheet" />
@@ -48,17 +36,15 @@
     <link id="pagestyle" href="{{ asset('assets') }}/css/pikaday.min.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/daterangpicker.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+    <link id="pagestyle" href="{{ asset('assets') }}/css/choices.min.css" rel="stylesheet" />
+    <link id="pagestyle" href="{{ asset('assets') }}/css/multi-select.min.css" rel="stylesheet" />
 </head>
 <body class="{{ $bodyClass }}">
 
     {{ $slot }}
     @stack('js')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-    {{-- <script src="{{ asset('assets') }}/js/jquery.min.js"></script> --}}
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="{{ asset('assets') }}/js/jquery.min.js"></script>
+    <script src="{{ asset('assets') }}/js/html2canvas.min.js"></script>
     <script src="{{ asset('assets') }}/js/plugins/daterangepicker.js"></script>
     <script src="{{ asset('assets') }}/js/bootstrap.js"></script>
     <script src="{{ asset('assets') }}/js/core/popper.min.js"></script>
@@ -67,12 +53,13 @@
     <script src="{{ asset('assets') }}/js/plugins/smooth-scrollbar.min.js"></script>
     <script src="{{ asset('assets') }}/js/header-header.js"></script>
     <script src="{{ asset('assets') }}/js/plugins/popper.min.js"></script>
+    <script src="{{ asset('assets') }}/js/plugins/multi-select.min.js"></script>
     <script src="{{ asset('assets') }}/js/bootstrap-datepicker.min.js"></script>
     <script src="{{ asset('assets') }}/js/pikaday.min.js"></script>
     <script src="{{ asset('assets') }}/js/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('assets') }}/js/sweetalert.min.js"></script>
     <script type="text/javascript" src="{{ asset('assets') }}/js/angular-animate.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+    <script src="{{ asset('assets') }}/js/choices.min.js"></script>
     <script src="{{ asset('assets') }}/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {

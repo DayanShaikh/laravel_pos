@@ -67,7 +67,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $roles = Roles::all();
-        $userrole = $user->roles->pluck('id');
+        $userrole = $user->userRoles->pluck('roles_id')->toArray();
         // return $userrole;
         return view('user.edit', compact('user',  'roles', 'userrole'));
     }
