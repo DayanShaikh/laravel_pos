@@ -33,18 +33,10 @@
     <!-- Material Icons -->
     <link href="{{ asset('assets') }}/css/material-icons.css" rel="stylesheet">
     <!-- CSS Files -->
- 
-    <link rel="stylesheet" href="{{ asset('assets') }}/css/fontawesome-5.css">
- 
-    <!-- For Font Awesome 6 -->
+
     <link rel="stylesheet" href="{{ asset('assets') }}/css/fontawesome-6.css">
- 
+
     <link id="pagestyle" href="{{ asset('assets') }}/css/material-dashboard.css" rel="stylesheet" />
-    <link id="pagestyle" href="{{ asset('assets') }}/css/jquery-ui.css" rel="stylesheet" />
-    <link id="pagestyle" href="{{ asset('assets') }}/css/docs.css" rel="stylesheet" />
-    <link id="pagestyle" href="{{ asset('assets') }}/fontcss/all.css" rel="stylesheet" />
-    <link id="pagestyle" href="{{ asset('assets') }}/fontcss/fontawesome.css" rel="stylesheet" />
-    <link id="pagestyle" href="{{ asset('assets') }}/fontcss/fontawesome.min.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/bootstrap-datepicker.min.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/pikaday.min.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/daterangpicker.css" rel="stylesheet" />
