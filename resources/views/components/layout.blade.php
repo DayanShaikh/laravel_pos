@@ -2,30 +2,42 @@
 =========================================================
 * Material Dashboard 2 - v3.0.0
 =========================================================
-
+ 
 * Product Page: https://www.creative-tim.com/product/material-dashboard
 * Copyright 2021 Creative Tim (https://www.creative-tim.com) & UPDIVISION (https://www.updivision.com)
 * Licensed under MIT (https://www.creative-tim.com/license)
 * Coded by www.creative-tim.com & www.updivision.com
-
+ 
 =========================================================
-
+ 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 @props(['bodyClass'])
 <!DOCTYPE html>
 <html lang="en">
-
+ 
 <head>
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ 
+    {{-- <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets') }}/img/apple-icon.png"> --}}
+    {{-- <link rel="icon" type="image/png" href="{{ asset('assets') }}/img/favicon.png"> --}}
     <title>POS</title>
-    <link href="{{ asset('assets') }}/css/fonts.font" rel="stylesheet" />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+    <!-- Nucleo Icons -->
     <link href="{{ asset('assets') }}/css/nucleo-icons.css" rel="stylesheet" />
     <link href="{{ asset('assets') }}/css/nucleo-svg.css" rel="stylesheet" />
-    <link id="pagestyle" href="{{ asset('assets') }}/css/all-5.min.css" rel="stylesheet" />
-    <link id="pagestyle" href="{{ asset('assets') }}/css/all-6.min.css" rel="stylesheet" />
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <!-- CSS Files -->
+ 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+ 
+    <!-- For Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+ 
     <link id="pagestyle" href="{{ asset('assets') }}/css/material-dashboard.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/jquery-ui.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/docs.css" rel="stylesheet" />
@@ -36,15 +48,17 @@
     <link id="pagestyle" href="{{ asset('assets') }}/css/pikaday.min.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/daterangpicker.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/select2.min.css" rel="stylesheet" />
-    <link id="pagestyle" href="{{ asset('assets') }}/css/choices.min.css" rel="stylesheet" />
-    <link id="pagestyle" href="{{ asset('assets') }}/css/multi-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
 </head>
 <body class="{{ $bodyClass }}">
-
+ 
     {{ $slot }}
     @stack('js')
-    <script src="{{ asset('assets') }}/js/jquery.min.js"></script>
-    <script src="{{ asset('assets') }}/js/html2canvas.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    {{-- <script src="{{ asset('assets') }}/js/jquery.min.js"></script> --}}
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="{{ asset('assets') }}/js/plugins/daterangepicker.js"></script>
     <script src="{{ asset('assets') }}/js/bootstrap.js"></script>
     <script src="{{ asset('assets') }}/js/core/popper.min.js"></script>
@@ -53,13 +67,12 @@
     <script src="{{ asset('assets') }}/js/plugins/smooth-scrollbar.min.js"></script>
     <script src="{{ asset('assets') }}/js/header-header.js"></script>
     <script src="{{ asset('assets') }}/js/plugins/popper.min.js"></script>
-    <script src="{{ asset('assets') }}/js/plugins/multi-select.min.js"></script>
     <script src="{{ asset('assets') }}/js/bootstrap-datepicker.min.js"></script>
     <script src="{{ asset('assets') }}/js/pikaday.min.js"></script>
     <script src="{{ asset('assets') }}/js/moment.min.js"></script>
-    <script src="{{ asset('assets') }}/js/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="{{ asset('assets') }}/js/angular-animate.js"></script>
-    <script src="{{ asset('assets') }}/js/choices.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
     <script src="{{ asset('assets') }}/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -126,7 +139,7 @@
                 $('.menu-btn').css("visibility", "visible");
             });
         });
-
+ 
         function confirmAndSubmit() {
             let selectedAction = document.getElementById('action').value;
             document.getElementById('actionField').value = selectedAction;
@@ -157,12 +170,12 @@
         //         }
         //     });
         // });
-
+ 
         //range datepicker
         // document.addEventListener('DOMContentLoaded', function() {
         //     const initialDate1 = document.getElementById('dateRangePicker1').value;
         //     const initialDate2 = document.getElementById('dateRangePicker2').value;
-
+ 
         //     function parseDate(dateString) {
         //         const parts = dateString.split('/');
         //         const day = parseInt(parts[0], 10);
@@ -170,7 +183,7 @@
         //         const year = parseInt(parts[2], 10);
         //         return new Date(year, month, day);
         //     }
-
+ 
         //     var picker1 = new Pikaday({
         //         field: document.getElementById('dateRangePicker1')
         //         , format: 'D/M/YYYY'
@@ -184,7 +197,7 @@
         //             return parseDate(dateString);
         //         }
         //     });
-
+ 
         //     var picker2 = new Pikaday({
         //         field: document.getElementById('dateRangePicker2')
         //         , format: 'D/M/YYYY'
@@ -198,15 +211,15 @@
         //             return parseDate(dateString);
         //         }
         //     });
-
+ 
         //     picker1.setDate(parseDate(initialDate1), true); // true to trigger onSelect
         //     picker2.setDate(parseDate(initialDate2), true); // true to trigger onSelect
         // });
-
+ 
         $(document).ready(function() {
             $("input[name='dates']").daterangepicker({});
         });
-
+ 
     </script>
     <script src="{{ asset('assets') }}/js/angular.min.js"></script>
     {{-- <script async defer src="https://buttons.github.io/buttons.js"></script> --}}
