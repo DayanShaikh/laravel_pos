@@ -24,19 +24,20 @@
     {{-- <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets') }}/img/apple-icon.png"> --}}
     {{-- <link rel="icon" type="image/png" href="{{ asset('assets') }}/img/favicon.png"> --}}
     <title>POS</title>
+    
     <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/css/roboto.css" />
     <!-- Nucleo Icons -->
     <link href="{{ asset('assets') }}/css/nucleo-icons.css" rel="stylesheet" />
     <link href="{{ asset('assets') }}/css/nucleo-svg.css" rel="stylesheet" />
     <!-- Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link href="{{ asset('assets') }}/css/material-icons.css" rel="stylesheet">
     <!-- CSS Files -->
  
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('assets') }}/css/fontawesome-5.css">
  
     <!-- For Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('assets') }}/css/fontawesome-6.css">
  
     <link id="pagestyle" href="{{ asset('assets') }}/css/material-dashboard.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/jquery-ui.css" rel="stylesheet" />
@@ -48,17 +49,17 @@
     <link id="pagestyle" href="{{ asset('assets') }}/css/pikaday.min.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/daterangpicker.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+    <link rel="stylesheet" href="{{ asset('assets') }}/css/choices.min.css">
 </head>
 <body class="{{ $bodyClass }}">
  
     {{ $slot }}
     @stack('js')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <script src="{{ asset('assets') }}/js/core/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('assets') }}/js/plugins/moment.min.js"></script>
+    {{-- <script src="{{ asset('assets') }}/js/plugins/fontawesome-kit.js" crossorigin="anonymous"></script> --}}
     {{-- <script src="{{ asset('assets') }}/js/jquery.min.js"></script> --}}
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="{{ asset('assets') }}/js/plugins/html2canvas.min.js"></script>
     <script src="{{ asset('assets') }}/js/plugins/daterangepicker.js"></script>
     <script src="{{ asset('assets') }}/js/bootstrap.js"></script>
     <script src="{{ asset('assets') }}/js/core/popper.min.js"></script>
@@ -70,9 +71,9 @@
     <script src="{{ asset('assets') }}/js/bootstrap-datepicker.min.js"></script>
     <script src="{{ asset('assets') }}/js/pikaday.min.js"></script>
     <script src="{{ asset('assets') }}/js/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('assets') }}/js/plugins/sweetalert2.all.min.js"></script>
     <script type="text/javascript" src="{{ asset('assets') }}/js/angular-animate.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+    <script src="{{ asset('assets') }}/js/plugins/choices.min.js"></script>
     <script src="{{ asset('assets') }}/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -148,73 +149,6 @@
                 document.getElementById('myForm').submit();
             }
         }
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     var currentDate = new Date();
-        //     var formattedDate = currentDate.getDate() + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
-        //     document.getElementById('datepicker').value = formattedDate;
-        //     var picker = new Pikaday({
-        //         field: document.getElementById('datepicker')
-        //         , format: 'D/M/YYYY'
-        //         , toString(date, format) {
-        //             const day = date.getDate();
-        //             const month = date.getMonth() + 1;
-        //             const year = date.getFullYear();
-        //             return `${day}/${month}/${year}`;
-        //         }
-        //         , parse(dateString, format) {
-        //             const parts = dateString.split('/');
-        //             const day = parseInt(parts[0], 10);
-        //             const month = parseInt(parts[1], 10) - 1;
-        //             const year = parseInt(parts[2], 10);
-        //             return new Date(year, month, day);
-        //         }
-        //     });
-        // });
- 
-        //range datepicker
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     const initialDate1 = document.getElementById('dateRangePicker1').value;
-        //     const initialDate2 = document.getElementById('dateRangePicker2').value;
- 
-        //     function parseDate(dateString) {
-        //         const parts = dateString.split('/');
-        //         const day = parseInt(parts[0], 10);
-        //         const month = parseInt(parts[1], 10) - 1; // months are 0-based in JavaScript
-        //         const year = parseInt(parts[2], 10);
-        //         return new Date(year, month, day);
-        //     }
- 
-        //     var picker1 = new Pikaday({
-        //         field: document.getElementById('dateRangePicker1')
-        //         , format: 'D/M/YYYY'
-        //         , toString(date, format) {
-        //             const day = date.getDate();
-        //             const month = date.getMonth() + 1;
-        //             const year = date.getFullYear();
-        //             return `${day}/${month}/${year}`;
-        //         }
-        //         , parse(dateString, format) {
-        //             return parseDate(dateString);
-        //         }
-        //     });
- 
-        //     var picker2 = new Pikaday({
-        //         field: document.getElementById('dateRangePicker2')
-        //         , format: 'D/M/YYYY'
-        //         , toString(date, format) {
-        //             const day = date.getDate();
-        //             const month = date.getMonth() + 1;
-        //             const year = date.getFullYear();
-        //             return `${day}/${month}/${year}`;
-        //         }
-        //         , parse(dateString, format) {
-        //             return parseDate(dateString);
-        //         }
-        //     });
- 
-        //     picker1.setDate(parseDate(initialDate1), true); // true to trigger onSelect
-        //     picker2.setDate(parseDate(initialDate2), true); // true to trigger onSelect
-        // });
  
         $(document).ready(function() {
             $("input[name='dates']").daterangepicker({});
@@ -222,7 +156,6 @@
  
     </script>
     <script src="{{ asset('assets') }}/js/angular.min.js"></script>
-    {{-- <script async defer src="https://buttons.github.io/buttons.js"></script> --}}
     <script src="{{ asset('assets') }}/js/material-dashboard.min.js?v=3.0.0"></script>
     <script src="{{ asset('assets') }}/js/angular-moment.min.js"></script>
     <script src="{{ asset('assets') }}/js/angular-locale_de-de.js"></script>
