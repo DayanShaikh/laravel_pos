@@ -20,12 +20,9 @@
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
- 
-    {{-- <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets') }}/img/apple-icon.png"> --}}
-    {{-- <link rel="icon" type="image/png" href="{{ asset('assets') }}/img/favicon.png"> --}}
     <title>POS</title>
     
-    <!--     Fonts and icons     -->
+    <!-- Fonts and icons -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/css/roboto.css" />
     <!-- Nucleo Icons -->
     <link href="{{ asset('assets') }}/css/nucleo-icons.css" rel="stylesheet" />
@@ -33,9 +30,7 @@
     <!-- Material Icons -->
     <link href="{{ asset('assets') }}/css/material-icons.css" rel="stylesheet">
     <!-- CSS Files -->
-
     <link rel="stylesheet" href="{{ asset('assets') }}/css/fontawesome-6.css">
-
     <link id="pagestyle" href="{{ asset('assets') }}/css/material-dashboard.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/bootstrap-datepicker.min.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/pikaday.min.css" rel="stylesheet" />
@@ -44,13 +39,10 @@
     <link rel="stylesheet" href="{{ asset('assets') }}/css/choices.min.css">
 </head>
 <body class="{{ $bodyClass }}">
- 
     {{ $slot }}
     @stack('js')
     <script src="{{ asset('assets') }}/js/core/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('assets') }}/js/plugins/moment.min.js"></script>
-    {{-- <script src="{{ asset('assets') }}/js/plugins/fontawesome-kit.js" crossorigin="anonymous"></script> --}}
-    {{-- <script src="{{ asset('assets') }}/js/jquery.min.js"></script> --}}
     <script src="{{ asset('assets') }}/js/plugins/html2canvas.min.js"></script>
     <script src="{{ asset('assets') }}/js/plugins/daterangepicker.js"></script>
     <script src="{{ asset('assets') }}/js/bootstrap.js"></script>
@@ -67,6 +59,8 @@
     <script type="text/javascript" src="{{ asset('assets') }}/js/angular-animate.js"></script>
     <script src="{{ asset('assets') }}/js/plugins/choices.min.js"></script>
     <script src="{{ asset('assets') }}/js/select2.min.js"></script>
+    <script src="{{ asset('assets') }}/js/bootstrap.bundle.min.js"></script>
+
     <script>
         $(document).ready(function() {
             $('.select2').select2({

@@ -7,7 +7,7 @@
                 <ul class="navbar-nav justify-content-end">
                     <li class="nav-item dropdown">
                         <a class="dropdown-toggle d-flex align-items-center py-0 text-body" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="material-icons me-sm-1">account_circle</i><strong>{{ Auth::user()->name}}</strong>
+                            <i class="fa-solid fa-user me-sm-1"></i><strong>{{ Auth::user()->name}}</strong>
                         </a>
                         <form method="POST" action="{{ route('logout') }}" class="d-none" id="logout-form">
                             @csrf
@@ -23,8 +23,8 @@
                     <li class="nav-item d-xl-none ps-3 d-flex align-items-center"><a href="#" class="p-0 nav-link text-body lh-1" id="iconNavbarSidenav">
                             <div class="sidenav-toggler-inner"><i class="sidenav-toggler-line"></i><i class="sidenav-toggler-line"></i><i class="sidenav-toggler-line"></i></div>
                         </a></li>
-                    <li class="px-3 nav-item d-flex align-items-center"><a href="{{ route('config.index', 1)}}" title="Software Settings" class="p-0 nav-link lh-1 text-body"><i class="material-icons cursor-pointer"> settings </i></a></li>
-                    <li class="nav-item dropdown d-flex align-items-center pe-2"><a href="#" class="p-0 nav-link lh-1 text-body" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons cursor-pointer"> notifications </i></a>
+                    <li class="px-3 nav-item d-flex align-items-center"><a href="{{ route('config.index', 1)}}" title="Software Settings" class="p-0 nav-link lh-1 text-body"><i class="fa-solid fa-gear cursor-pointer"></i></a></li>
+                    {{-- <li class="nav-item dropdown d-flex align-items-center pe-2"><a href="#" class="p-0 nav-link lh-1 text-body" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons cursor-pointer"> notifications </i></a>
                         <ul class="px-2 py-3 dropdown-menu dropdown-menu-end me-sm-n4" aria-labelledby="dropdownMenuButton">
                             <li class="mb-2"><a class="dropdown-item border-radius-md" href="javascript:;">
                                     <div class="py-1 d-flex">
@@ -67,7 +67,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
         </div>

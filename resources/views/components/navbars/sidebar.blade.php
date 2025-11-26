@@ -20,7 +20,8 @@
             <div class="side-bar">
                 <div class="menu">
                     <div class="item">
-                        <a class="sub-btn"><i class="material-icons">house</i>Dashboard<i class="fas fa-angle-right dropdown"></i></a>
+                        {{-- <a class="sub-btn"><i class="material-icons">house</i>Dashboard<i class="fas fa-angle-right dropdown"></i></a> --}}
+                        <a class="sub-btn"><i class="fa fa-home" aria-hidden="true"></i>Dashboard<i class="fas fa-angle-right dropdown"></i></a>
                         <div class="sub-menu">
                             <a href="{{ route('config.index', 1) }}" class="sub-item"><i class="material-icons">settings</i>General Settings</a>
                             <a href="{{ route('user.index') }}" class="sub-item"><i class="material-icons">person</i>User</a>
@@ -38,7 +39,8 @@
                 </form>
                 <a class="nav-link text-white " href="">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons me-sm-1">logout</i>
+                        {{-- <i class="material-icons me-sm-1">logout</i> --}}
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     </div>
                     <span onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</span>
                 </a>
