@@ -2768,6 +2768,57 @@ progress {
   transition: 0.2s ease;
 }
 
+.custom-dropdown {
+  position: relative;
+}
+
+.custom-dropdown a {
+  text-decoration: none;
+}
+
+/* Add a smooth transition to the arrow icon */
+.dropdown-arrow {
+  transition: transform 0.3s ease;
+  /* Smooth rotation over 0.3 seconds */
+}
+
+/* When the parent 'custom-dropdown' has the 'menu-open' class, rotate the icon */
+.custom-dropdown.menu-open .dropdown-arrow {
+  transform: rotate(180deg);
+  /* Rotates the icon upside down */
+}
+
+/* Hide the menu list using max-height and opacity for smooth transitions */
+.custom-dropdown-menu {
+  position: absolute;
+  right: 0;
+  left: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 160px;
+  z-index: 1000;
+
+  /* Animation properties */
+  max-height: 0;
+  /* Hidden state */
+  opacity: 0;
+  overflow: hidden;
+  /* Hide overflowing content during animation */
+  transition: opacity 0.3s ease, max-height 0.3s ease;
+  /* Smooth transition */
+}
+
+/* Show the menu when the parent 'custom-dropdown' has the 'menu-open' class */
+.custom-dropdown.menu-open .custom-dropdown-menu {
+  max-height: 300px;
+  /* Needs to be a fixed value larger than the menu's actual height */
+  opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .form-control {
     transition: none;

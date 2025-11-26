@@ -66,7 +66,7 @@
                                                         <span class="text-secondary text-sm">{{$sn++}}</span>
                                                     </td>
                                                     <td class="align-middle text-left">
-                                                        <span class="text-secondary text-sm">{{$roles->name}}</span>
+                                                        <span class="text-secondary text-sm">{{$roles->title}}</span>
                                                     </td>
                                                     <td class="align-middle text-end px-4">
                                                         <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('role.edit', $roles->id)}}" data-original-title="" title="">
@@ -74,8 +74,7 @@
                                                             <div class="ripple-container"></div>
                                                         </a>
                                                         <a href="javascript:void(0)" id="delete-user" data-url="{{ route('role.destroy', $roles->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
-                                                            {{-- <i class="material-icons">close</i> --}}
-                                                            <i class="fa fa-trash"></i>
+                                                             <i class="material-icons">delete</i>
                                                             <div class="ripple-container"></div>
                                                         </a>
                                                     </td>

@@ -15,13 +15,13 @@
 @props(['bodyClass'])
 <!DOCTYPE html>
 <html lang="en">
- 
+
 <head>
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>POS</title>
-    
+
     <!-- Fonts and icons -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/css/roboto.css" />
     <!-- Nucleo Icons -->
@@ -37,6 +37,7 @@
     <link id="pagestyle" href="{{ asset('assets') }}/css/daterangpicker.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('assets') }}/css/choices.min.css">
+    <link rel="stylesheet" href="{{ asset('assets') }}/css/multi-select.css">
 </head>
 <body class="{{ $bodyClass }}">
     {{ $slot }}
@@ -52,6 +53,7 @@
     <script src="{{ asset('assets') }}/js/plugins/smooth-scrollbar.min.js"></script>
     <script src="{{ asset('assets') }}/js/header-header.js"></script>
     <script src="{{ asset('assets') }}/js/plugins/popper.min.js"></script>
+    <script src="{{ asset('assets') }}/js/plugins/multi-select.js"></script>
     <script src="{{ asset('assets') }}/js/bootstrap-datepicker.min.js"></script>
     <script src="{{ asset('assets') }}/js/pikaday.min.js"></script>
     <script src="{{ asset('assets') }}/js/moment.min.js"></script>
@@ -67,6 +69,7 @@
                 placeholder: 'Select an option'
             });
         });
+
     </script>
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
@@ -126,7 +129,7 @@
                 $('.menu-btn').css("visibility", "visible");
             });
         });
- 
+
         function confirmAndSubmit() {
             let selectedAction = document.getElementById('action').value;
             document.getElementById('actionField').value = selectedAction;
@@ -135,11 +138,30 @@
                 document.getElementById('myForm').submit();
             }
         }
- 
+
         $(document).ready(function() {
             $("input[name='dates']").daterangepicker({});
         });
- 
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const dropdownToggle = document.querySelector('.custom-dropdown-toggle');
+            const dropdownContainer = document.querySelector('.custom-dropdown');
+
+            dropdownToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                // Toggle the 'menu-open' class on the parent container
+                dropdownContainer.classList.toggle('menu-open');
+            });
+
+            // Close the dropdown if the user clicks anywhere else
+            document.addEventListener('click', function(e) {
+                if (!dropdownContainer.contains(e.target)) {
+                    dropdownContainer.classList.remove('menu-open');
+                }
+            });
+        });
+
     </script>
     <script src="{{ asset('assets') }}/js/angular.min.js"></script>
     <script src="{{ asset('assets') }}/js/material-dashboard.min.js?v=3.0.0"></script>

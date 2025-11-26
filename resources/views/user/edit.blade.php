@@ -51,15 +51,9 @@
                                         @endforeach
                                     </select> --}}
                                     <select class="form-multi-select" multiple data-coreui-search="true">
-                                        <option value="0" selected>Angular</option>
-                                        <option value="1">Bootstrap</option>
-                                        <option value="2">React.js</option>
-                                        <option value="3">Vue.js</option>
-                                        <optgroup label="backend">
-                                            <option value="4">Django</option>
-                                            <option value="5" selected>Laravel</option>
-                                            <option value="6">Node.js</option>
-                                        </optgroup>
+                                         @foreach($roles as $role)
+                                            <option value="{{$role->id}}"  @if(isset($role->id) && in_array($role->id, $userrole)) selected @endif>{{$role->name}}</option>
+                                        @endforeach
                                     </select>
                                     {{-- <select class="form-control ps-3 py-0" name="role_id">
                                         <option value="">Select Admin Role</option>
@@ -67,6 +61,7 @@
                                         <option value="{{$role->id}}" @if($role->id == $userrole) selected @endif>{{$role->name}}</option>
                                     @endforeach
                                     </select> --}}
+
                                 </div>
                                 @error('role_id')
                                 <p class='text-danger inputerror'>{{ $message }} </p>

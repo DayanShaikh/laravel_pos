@@ -52,6 +52,17 @@
                                         <option value="{{$role->name}}" @if(old('role_id')==$role->id) selected @endif>{{$role->name}}</option>
                                     @endforeach
                                     </select> --}}
+                                    <select class="form-multi-select" multiple data-coreui-search="true">
+                                        <option value="0" selected>Angular</option>
+                                        <option value="1">Bootstrap</option>
+                                        <option value="2">React.js</option>
+                                        <option value="3">Vue.js</option>
+                                        <optgroup label="backend">
+                                            <option value="4">Django</option>
+                                            <option value="5" selected>Laravel</option>
+                                            <option value="6">Node.js</option>
+                                        </optgroup>
+                                    </select>
                                 </div>
                                 @error('role')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
