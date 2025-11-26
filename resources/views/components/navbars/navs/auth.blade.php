@@ -9,7 +9,6 @@
                         <a class="custom-dropdown-toggle d-flex align-items-center py-0 text-body" href="#">
                             <i class="material-icons me-sm-1"> account_circle </i>
                             <strong>{{ Auth::user()->name }}</strong>
-                            <!-- Added 'dropdown-arrow' class for targeting -->
                             <i class="material-icons dropdown-arrow">keyboard_arrow_down</i>
                         </a>
 

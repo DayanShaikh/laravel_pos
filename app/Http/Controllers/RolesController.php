@@ -13,11 +13,11 @@ class RolesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $sn = 1;
-        $role = Roles::all();
-        return view('roles.list', compact('role', 'sn'));
+        $rowsPerPage = $request->input('rowsPerPage', 10);
+        $role = Roles::paginate($rowsPerPage);
+        return view('roles.list', compact('role', 'rowsPerPage'));
     }
 
     /**

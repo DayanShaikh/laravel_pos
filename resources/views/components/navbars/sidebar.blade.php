@@ -25,7 +25,7 @@
                         <div class="sub-menu">
                             <a href="{{ route('config.index', 1) }}" class="sub-item"><i class="material-icons">settings</i>General Settings</a>
                             <a href="{{ route('user.index') }}" class="sub-item"><i class="material-icons">person</i>User</a>
-                            <a href="{{ route('role.index') }}" class="sub-item"><i class="fa fa-user-lock"></i>Role</a>
+                            <a href="{{ route('role.index') }}" class="sub-item"><i class="material-icons">diversity_2</i>Role</a>
                             {{-- <a href="{{ route('permission.index') }}" class="sub-item"><i class="fa fa-lock-open"></i>Permission</a> --}}
                         </div>
                     </div>
