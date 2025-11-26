@@ -28,20 +28,43 @@
                                 @error('name')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
-                                <div class="input-group input-group-outline mt-3">
-                                    <label class="">Permissions</label>
-                                    @foreach($permission as $permissions)
-                                    <div class="form-check check-tables col-12 col-sm-12 my-3 p-0">
-                                        <input class="form-check-input" type="checkbox" name="permission[]" value="{{$permissions['id']}}"> {{$permissions['name']}}<br>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        @foreach($menus as $key => $menu)
+                                        <div class="card-title">
+                                            <strong>{{$menu->title}}</strong>
+                                            <input type="hidden" value="{{$key}}" />
+                                            <div class="SelectAllPermissions">
+                                                <div class="form-check">
+                                                    <label class="check-wrap">
+                                                        <input type="checkbox" id="select-all{{$key}}">
+                                                        <span class="custom-box"></span>
+                                                    </label>
+                                                    <label class="form-check-label" for="select-all{{$key}}" style="vertical-align: middle;">
+                                                        Select All
+                                                    </label>
+                                                </div>
+                                                <div class="d-flex permissions_checked">
+                                                    @foreach(App\Utility::$permissions as $permissionKey => $permission)
+                                                    <div class="form-check">
+                                                        <label class="check-wrap">
+                                                            <input type="checkbox" id="permission{{$key}}{{$permissionKey}}">
+                                                            <span class="custom-box"></span>
+                                                        </label>
+                                                        <label class="form-check-label" for="permission{{$key}}{{$permissionKey}}" style="vertical-align: middle;">
+                                                            {{$permission}}
+                                                        </label>
+                                                    </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
                                     </div>
-                                    @endforeach
                                 </div>
                                 <div class="col-lg-1 col-sm-6 col-12">
                                     <button class="btn bg-gradient-info w-100 my-4 mb-2" type="submit" data-target="successToast">Submit</button>
                                 </div>
-                                {{-- <div class="text-center">
-                                    <button type="submit" class="btn bg-gradient-info w-100 my-4 mb-2">Sign in</button>
-                                </div> --}}
                             </form>
                         </div>
                     </div>

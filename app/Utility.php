@@ -7,6 +7,7 @@ use App\Models\ConfigVariable;
 
 class Utility
 {
+	public static $permissions = ['Add', 'Edit', 'Delete'];
 	public static function getMenu()
 	{
 		$menus = Menu::all();

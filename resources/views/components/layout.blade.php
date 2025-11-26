@@ -66,6 +66,7 @@
                 placeholder: 'Select an option'
             });
         });
+
     </script>
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
@@ -157,6 +158,22 @@
                 }
             });
         });
+
+        $(document).on('change', '.SelectAllPermissions input[id^="select-all"]', function() {
+            const container = $(this).closest('.SelectAllPermissions');
+            const checked = $(this).prop('checked');
+
+            container.find('.permissions_checked input[type="checkbox"]').prop('checked', checked).trigger('change');
+        });
+
+        $(document).on('change', '.permissions_checked input[type="checkbox"]', function() {
+            const container = $(this).closest('.SelectAllPermissions');
+            const total = container.find('.permissions_checked input[type="checkbox"]').length;
+            const checkedCount = container.find('.permissions_checked input[type="checkbox"]:checked').length;
+
+            container.find('input[id^="select-all"]').prop('checked', total === checkedCount);
+        });
+
     </script>
     <script src="{{ asset('assets') }}/js/angular.min.js"></script>
     <script src="{{ asset('assets') }}/js/material-dashboard.min.js?v=3.0.0"></script>

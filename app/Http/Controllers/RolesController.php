@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use App\Models\Roles;
 use App\Models\Permissions;
@@ -25,8 +26,8 @@ class RolesController extends Controller
      */
     public function create()
     {
-        $permission = Permissions::all();
-        return view('roles.create', compact('permission'));
+        $menus = Menu::get();
+        return view('roles.create', compact('menus'));
     }
 
     /**
