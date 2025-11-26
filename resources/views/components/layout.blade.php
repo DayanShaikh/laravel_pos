@@ -30,14 +30,12 @@
     <!-- Material Icons -->
     <link href="{{ asset('assets') }}/css/material-icons.css" rel="stylesheet">
     <!-- CSS Files -->
-    <link rel="stylesheet" href="{{ asset('assets') }}/css/fontawesome-6.css">
     <link id="pagestyle" href="{{ asset('assets') }}/css/material-dashboard.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/bootstrap-datepicker.min.css" rel="stylesheet" />
-    <link id="pagestyle" href="{{ asset('assets') }}/css/pikaday.min.css" rel="stylesheet" />
+    {{-- <link id="pagestyle" href="{{ asset('assets') }}/css/pikaday.min.css" rel="stylesheet" /> --}}
     <link id="pagestyle" href="{{ asset('assets') }}/css/daterangpicker.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('assets') }}/css/choices.min.css">
-    <link rel="stylesheet" href="{{ asset('assets') }}/css/multi-select.css">
 </head>
 <body class="{{ $bodyClass }}">
     {{ $slot }}
@@ -53,12 +51,11 @@
     <script src="{{ asset('assets') }}/js/plugins/smooth-scrollbar.min.js"></script>
     <script src="{{ asset('assets') }}/js/header-header.js"></script>
     <script src="{{ asset('assets') }}/js/plugins/popper.min.js"></script>
-    <script src="{{ asset('assets') }}/js/plugins/multi-select.js"></script>
     <script src="{{ asset('assets') }}/js/bootstrap-datepicker.min.js"></script>
     <script src="{{ asset('assets') }}/js/pikaday.min.js"></script>
     <script src="{{ asset('assets') }}/js/moment.min.js"></script>
     <script src="{{ asset('assets') }}/js/plugins/sweetalert2.all.min.js"></script>
-    <script type="text/javascript" src="{{ asset('assets') }}/js/angular-animate.js"></script>
+    <script src="{{ asset('assets') }}/js/angular-animate.js"></script>
     <script src="{{ asset('assets') }}/js/plugins/choices.min.js"></script>
     <script src="{{ asset('assets') }}/js/select2.min.js"></script>
     <script src="{{ asset('assets') }}/js/bootstrap.bundle.min.js"></script>
@@ -69,7 +66,6 @@
                 placeholder: 'Select an option'
             });
         });
-
     </script>
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
@@ -161,7 +157,6 @@
                 }
             });
         });
-
     </script>
     <script src="{{ asset('assets') }}/js/angular.min.js"></script>
     <script src="{{ asset('assets') }}/js/material-dashboard.min.js?v=3.0.0"></script>

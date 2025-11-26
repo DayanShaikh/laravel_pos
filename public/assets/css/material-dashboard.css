@@ -2776,16 +2776,12 @@ progress {
   text-decoration: none;
 }
 
-/* Add a smooth transition to the arrow icon */
 .dropdown-arrow {
   transition: transform 0.3s ease;
-  /* Smooth rotation over 0.3 seconds */
 }
 
-/* When the parent 'custom-dropdown' has the 'menu-open' class, rotate the icon */
 .custom-dropdown.menu-open .dropdown-arrow {
   transform: rotate(180deg);
-  /* Rotates the icon upside down */
 }
 
 /* Hide the menu list using max-height and opacity for smooth transitions */
