@@ -45,7 +45,10 @@
                                             <tr>
                                                 <th width="2%" class="align-middle text-center">
                                                     <div class="form-check check-tables">
-                                                        <input class="form-check-input" id="select-all" type="checkbox" name="" value="">
+                                                        <label class="check-wrap">
+                                                            <input type="checkbox" id="select-all">
+                                                            <span class="custom-box"></span>
+                                                        </label>
                                                     </div>
                                                 </th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">s.no</th>
@@ -59,7 +62,10 @@
                                             <tr>
                                                 <td class="align-middle text-center">
                                                     <div class="form-check check-tables">
-                                                        <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$roles->id}}">
+                                                        <label class="check-wrap">
+                                                            <input type="checkbox" name="multidelete[]" value="{{$roles->id}}">
+                                                            <span class="custom-box"></span>
+                                                        </label>
                                                     </div>
                                                 </td>
                                                 <td class="align-middle text-center">
@@ -134,5 +140,61 @@
             </div>
         </div>
     </main>
-    {{-- <x-plugins></x-plugins> --}}
+    <!-- <script>
+        // Handle Material Icons checkbox functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectAllIcon = document.getElementById('select-all');
+            const selectAllInput = document.getElementById('select-all-input');
+            
+            // Handle individual row checkbox clicks
+            document.querySelectorAll('.row-checkbox').forEach(function(icon) {
+                icon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const checkbox = this.nextElementSibling;
+                    
+                    // Toggle checkbox state
+                    checkbox.checked = !checkbox.checked;
+                    
+                    // Update icon
+                    this.textContent = checkbox.checked ? 'check_box' : 'check_box_outline_blank';
+                    
+                    // Update select-all state
+                    updateSelectAllState();
+                });
+            });
+            
+            // Handle select-all checkbox click
+            if (selectAllIcon) {
+                selectAllIcon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Toggle the select-all checkbox state
+                    const newState = !selectAllInput.checked;
+                    selectAllInput.checked = newState;
+                    
+                    // Update select-all icon
+                    this.textContent = newState ? 'check_box' : 'check_box_outline_blank';
+                    
+                    // Update all row checkboxes to match
+                    document.querySelectorAll('.row-checkbox-input').forEach(function(checkbox) {
+                        checkbox.checked = newState;
+                        const icon = checkbox.previousElementSibling;
+                        icon.textContent = newState ? 'check_box' : 'check_box_outline_blank';
+                    });
+                });
+            }
+            
+            // Function to update select-all state based on individual checkboxes
+            function updateSelectAllState() {
+                const allCheckboxes = document.querySelectorAll('.row-checkbox-input');
+                const checkedCheckboxes = document.querySelectorAll('.row-checkbox-input:checked');
+                
+                if (allCheckboxes.length > 0) {
+                    const allChecked = allCheckboxes.length === checkedCheckboxes.length;
+                    selectAllInput.checked = allChecked;
+                    selectAllIcon.textContent = allChecked ? 'check_box' : 'check_box_outline_blank';
+                }
+            }
+        });
+    </script> -->
 </x-layout>

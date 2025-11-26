@@ -4,6 +4,47 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+.check-wrap {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.check-wrap input {
+  position: absolute;
+  opacity: 0;
+}
+
+.custom-box {
+  width: 18px;
+  height: 18px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  position: relative;
+}
+
+/* centered check */
+.custom-box::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 12px;
+  border-right: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+  transform: translate(-50%, -50%) rotate(45deg);
+  top: 45%;
+  left: 50%;
+  opacity: 0;
+}
+
+.check-wrap input:checked+.custom-box {
+  background: #1e90ff;
+  border-color: #1e90ff;
+}
+
+.check-wrap input:checked+.custom-box::after {
+  opacity: 1;
+}
 
 @media (max-width:500px) {
 
