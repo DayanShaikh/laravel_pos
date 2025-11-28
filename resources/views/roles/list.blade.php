@@ -16,7 +16,6 @@
                         @if (session()->has('message'))
                         <div class="alert alert-success alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
                             <strong>{{ session()->get('message') }}</strong>
-                            {{-- <strong>This Is testing</strong> --}}
                             <button type="button" class="btn-close text-lg py-1 opacity-10" data-bs-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -25,7 +24,6 @@
                         @if (session()->has('error'))
                         <div class="alert alert-danger alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
                             <strong>{{ session()->get('error') }}</strong>
-                            {{-- <strong>This Is testing</strong> --}}
                             <button type="button" class="btn-close text-lg py-1 opacity-10" data-bs-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -58,38 +56,38 @@
                                         </thead>
                                         <tbody>
                                             @if($role->count()>0)
-                                            @foreach($role as $roles)
-                                            <tr>
-                                                <td class="align-middle text-center">
-                                                    <div class="form-check check-tables">
-                                                        <label class="check-wrap">
-                                                            <input type="checkbox" name="multidelete[]" value="{{$roles->id}}">
-                                                            <span class="custom-box"></span>
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{$loop->index+1}}</span>
-                                                </td>
-                                                <td class="align-middle text-left">
-                                                    <span class="text-secondary text-sm">{{$roles->title}}</span>
-                                                </td>
-                                                <td class="align-middle text-end px-4">
-                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('role.edit', $roles->id)}}" data-original-title="" title="">
-                                                        <i class="material-icons">edit</i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('role.destroy', $roles->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
-                                                        <i class="material-icons">delete</i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
+                                                @foreach($role as $roles)
+                                                    <tr>
+                                                        <td class="align-middle text-center">
+                                                            <div class="form-check check-tables">
+                                                                <label class="check-wrap">
+                                                                    <input type="checkbox" name="multidelete[]" value="{{$roles->id}}">
+                                                                    <span class="custom-box"></span>
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{$loop->index+1}}</span>
+                                                        </td>
+                                                        <td class="align-middle text-left">
+                                                            <span class="text-secondary text-sm">{{$roles->title}}</span>
+                                                        </td>
+                                                        <td class="align-middle text-end px-4">
+                                                            <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('role.edit', $roles->id)}}" data-original-title="" title="">
+                                                                <i class="material-icons">edit</i>
+                                                                <div class="ripple-container"></div>
+                                                            </a>
+                                                            <a href="javascript:void(0)" id="delete-user" data-url="{{ route('role.destroy', $roles->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
+                                                                <i class="material-icons">delete</i>
+                                                                <div class="ripple-container"></div>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             @else
-                                            <tr class="text-center">
-                                                <td colspan="4">Record Not Found</td>
-                                            </tr>
+                                                <tr class="text-center">
+                                                    <td colspan="4">Record Not Found</td>
+                                                </tr>
                                             @endif
                                         </tbody>
                                     </table>

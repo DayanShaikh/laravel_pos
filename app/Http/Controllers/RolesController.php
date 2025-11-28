@@ -35,14 +35,15 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required'
-        ]);
-        $role = Roles::create([
-            'name' => $request->name,
-            'guard_name' => 'web'
-        ]);
-        $role->syncPermissions($request->input('permission'));
+        $output = [];
+
+        foreach ($request->permissions as $model => $actions) {
+            $output[] = [
+                "model" => $model,
+                "permissions" => $actions
+            ];
+        }
+        return $output;
         return redirect()->route('role.index')->with('message', 'Record Create Successfully');
     }
 

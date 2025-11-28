@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('sortorder')->nullable();
             $table->string('icon')->nullable();
             $table->string('small_icon');
+            $table->string('model_name')->nullable();
             $table->timestamps();
         });
     }

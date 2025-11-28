@@ -16,7 +16,7 @@
                             </div>
                         </div>
                         <div class=" me-3 my-3 text-end">
-                            <a href="{{route('role.index')}}" class="btn bg-gradient-dark"><i class="fa fa-arrow-right"></i></a>
+                            <a href="{{route('role.index')}}" class="btn bg-gradient-dark"><i class="material-icons">arrow_back</i></a>
                         </div>
                         <div class="card-body p-0 px-3">
                             <form role="form" method="POST" action="{{ route('role.store') }}" class="text-start">
@@ -31,11 +31,11 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         @foreach($menus as $key => $menu)
+                                        @if($menu->model_name != null)
                                         <div class="card-title">
                                             <strong>{{$menu->title}}</strong>
-                                            <input type="hidden" value="{{$key}}" />
                                             <div class="SelectAllPermissions">
-                                                <div class="form-check">
+                                                <div>
                                                     <label class="check-wrap">
                                                         <input type="checkbox" id="select-all{{$key}}">
                                                         <span class="custom-box"></span>
@@ -46,9 +46,9 @@
                                                 </div>
                                                 <div class="d-flex permissions_checked">
                                                     @foreach(App\Utility::$permissions as $permissionKey => $permission)
-                                                    <div class="form-check">
+                                                    <div class="">
                                                         <label class="check-wrap">
-                                                            <input type="checkbox" id="permission{{$key}}{{$permissionKey}}">
+                                                            <input type="checkbox" name="permissions[{{ $menu->model_name }}][]" value="{{ strtolower($permission) }}">
                                                             <span class="custom-box"></span>
                                                         </label>
                                                         <label class="form-check-label" for="permission{{$key}}{{$permissionKey}}" style="vertical-align: middle;">
@@ -59,6 +59,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @endif
                                         @endforeach
                                     </div>
                                 </div>
