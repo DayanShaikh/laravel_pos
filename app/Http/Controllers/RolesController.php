@@ -35,15 +35,29 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        $output = [];
-
+        $request->validate([
+            'name' =>  ['required']
+        ]);
+        $output = collect();
         foreach ($request->permissions as $model => $actions) {
-            $output[] = [
+            $output->push((object)[
                 "model" => $model,
-                "permissions" => $actions
-            ];
+                "permissions" => collect($actions)
+            ]);
         }
-        return $output;
+        $role = Roles::create([
+            'title' => $request->name,
+        ]);
+
+        $output->each(function ($rec) use ($role) {
+            $rec->permissions->each(function ($per) use ($rec, $role) {
+                Permissions::create([
+                    'role_id' => $role->id,
+                    'model' => $rec->model,
+                    'action' => $per,
+                ]);
+            });
+        });
         return redirect()->route('role.index')->with('message', 'Record Create Successfully');
     }
 
@@ -60,10 +74,13 @@ class RolesController extends Controller
      */
     public function edit(string $id)
     {
-        $role = Roles::find($id);
-        $permission = Permissions::all();
-        $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $id)->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')->all();
-        return view('roles.edit', compact('role', 'permission', 'rolePermissions'));
+        $menus = Menu::get();
+        $role = Roles::with('permissions')->find($id);
+        $rolePermissions = [];
+        foreach ($role->permissions as $p) {
+            $rolePermissions[$p->model][] = $p->action;
+        }
+        return view('roles.edit', compact('role', 'menus', 'rolePermissions'));
     }
 
     /**
@@ -71,13 +88,31 @@ class RolesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string',
+        $request->validate([
+            'name' =>  ['required']
         ]);
+        $output = collect();
+        foreach ($request->permissions as $model => $actions) {
+            $output->push((object)[
+                "model" => $model,
+                "permissions" => collect($actions)
+            ]);
+        }
         $role = Roles::find($id);
         if (!empty($role)) {
-            $role->update($validatedData);
-            $role->syncPermissions($request->input('permission'));
+            $role->update([
+                'title' => $request->name,
+            ]);
+            Permissions::where('role_id', $role->id)->delete();
+            $output->each(function ($rec) use ($role) {
+                $rec->permissions->each(function ($per) use ($rec, $role) {
+                    Permissions::create([
+                        'role_id' => $role->id,
+                        'model' => $rec->model,
+                        'action' => $per,
+                    ]);
+                });
+            });
         }
         return redirect()->route('role.index')->with('message', 'Record updated successfully');
     }
@@ -87,10 +122,12 @@ class RolesController extends Controller
      */
     public function destroy(string $id)
     {
-        //dd($id);
-        Roles::find($id)->delete();
-        // DB::table('role_has_permissions')->where('role_has_permissions.role_id', $id)->delete();
-        return redirect()->back()->with('message', 'Record delete successfully');
+        $role = Roles::find($id);
+        if ($role->permissions()->exists()) {
+            $role->permissions()->delete();
+        }
+        $role->delete();
+        return redirect()->back()->with('message', 'Record deleted successfully');
     }
     public function bulkAction(Request $request)
     {

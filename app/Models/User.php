@@ -56,9 +56,32 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $appends = [
-        'profile_photo_url',
-    ];
+    protected $appends = ['profile_photo_url', 'given_permissions', 'permissions'];
+    protected function getGivenPermissionsAttribute()
+    {
+        $permissions = [];
+        foreach ($this->permissions as $permission) {
+            if ($permission->action == "view") {
+                $permissions[] = $permission->action = "view" . '-' . $permission->model;
+            }
+            if ($permission->action == "add") {
+                $permissions[] = $permission->action = "create" . '-' . $permission->model;
+            }
+            if ($permission->action == "edit") {
+                $permissions[] = $permission->action = "updateAny" . '-' . $permission->model;
+                $permissions[] = $permission->action = "update" . '-' . $permission->model;
+            }
+            if ($permission->action == "delete") {
+                $permissions[] = $permission->action = "deleteAny" . '-' . $permission->model;
+                $permissions[] = $permission->action = "delete" . '-' . $permission->model;
+                $permissions[] = $permission->action = "restoreAny" . '-' . $permission->model;
+                $permissions[] = $permission->action = "restore" . '-' . $permission->model;
+                $permissions[] = $permission->action = "forceDeleteAny" . '-' . $permission->model;
+                $permissions[] = $permission->action = "forceDelete" . '-' . $permission->model;
+            }
+        }
+        return $permissions;
+    }
 
     public function userRoles()
     {

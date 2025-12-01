@@ -16,33 +16,57 @@
                             </div>
                         </div>
                         <div class=" me-3 my-3 text-end">
-                            <a href="{{route('role.index')}}" class="btn bg-gradient-dark"><i class="fa fa-arrow-right"></i></a>
+                            <a href="{{route('role.index')}}" class="btn bg-gradient-dark"><i class="material-icons">arrow_back</i></a>
                         </div>
                         <div class="card-body p-0 px-3">
-                            <form role="form" method="POST" action="{{ route('role.update', $role->id) }}" class="text-start">
+                            <form role="form" method="POST" action="{{ route('role.update',$role->id) }}" class="text-start">
                                 @csrf
                                 @method('PUT')
-                                <div class="input-group input-group-outline null is-filled mt-4">
+                                <div class="input-group input-group-outline is-filled mt-3">
                                     <label class="form-label">Title</label>
-                                    <input type="text" class="form-control" name="name" value="{{$role->name}}">
+                                    <input type="text" class="form-control" name="name" value="{{$role->title}}">
                                 </div>
                                 @error('name')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
-                                <div class="input-group input-group-outline mt-3">
-                                    <label class="">Permissions</label>
-                                    @foreach($permission as $permissions)
-                                    <div class="form-check check-tables col-12 col-sm-12 my-3 p-0">
-                                        <input class="form-check-input" type="checkbox" name="permission[]" @if(in_array($permissions->id, $rolePermissions)) Checked @endif value="{{ $permissions->name }}"> {{ $permissions->name }}<br>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        @foreach($menus as $key => $menu)
+                                        @if($menu->model_name != null)
+                                        <div class="card-title">
+                                            <strong>{{$menu->title}}</strong>
+                                            <div class="SelectAllPermissions">
+                                                <div>
+                                                    <label class="check-wrap">
+                                                        <input type="checkbox" id="select-all{{$key}}" {{isset($rolePermissions[$menu->model_name]) && count(App\Utility::$permissions) == count($rolePermissions[$menu->model_name])?'checked':''}}>
+                                                        <span class="custom-box"></span>
+                                                    </label>
+                                                    <label class="form-check-label" for="select-all{{$key}}" style="vertical-align: middle;">
+                                                        Select All
+                                                    </label>
+                                                </div>
+                                                <div class="d-flex permissions_checked">
+                                                    @foreach(App\Utility::$permissions as $permissionKey => $permission)
+                                                    <div class="">
+                                                        <label class="check-wrap">
+                                                            <input type="checkbox" name="permissions[{{ $menu->model_name }}][]" {{ isset($rolePermissions[$menu->model_name]) && in_array(strtolower($permission), $rolePermissions[$menu->model_name]) ? 'checked' : '' }} value="{{ strtolower($permission) }}">
+                                                            <span class="custom-box"></span>
+                                                        </label>
+                                                        <label class="form-check-label" for="permission{{$key}}{{$permissionKey}}" style="vertical-align: middle;">
+                                                            {{$permission}}
+                                                        </label>
+                                                    </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endif
+                                        @endforeach
                                     </div>
-                                    @endforeach
                                 </div>
                                 <div class="col-lg-1 col-sm-6 col-12">
                                     <button class="btn bg-gradient-info w-100 my-4 mb-2" type="submit" data-target="successToast">Submit</button>
                                 </div>
-                                {{-- <div class="text-center">
-                                    <button type="submit" class="btn bg-gradient-info w-100 my-4 mb-2">Sign in</button>
-                                </div> --}}
                             </form>
                         </div>
                     </div>

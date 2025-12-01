@@ -26,40 +26,40 @@
                                     <input type="text" class="form-control" name="name">
                                 </div>
                                 @error('name')
-                                <p class='text-danger inputerror'>{{ $message }} </p>
+                                    <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
                                 <div class="card-body">
                                     <div class="form-group">
                                         @foreach($menus as $key => $menu)
-                                        @if($menu->model_name != null)
-                                        <div class="card-title">
-                                            <strong>{{$menu->title}}</strong>
-                                            <div class="SelectAllPermissions">
-                                                <div>
-                                                    <label class="check-wrap">
-                                                        <input type="checkbox" id="select-all{{$key}}">
-                                                        <span class="custom-box"></span>
-                                                    </label>
-                                                    <label class="form-check-label" for="select-all{{$key}}" style="vertical-align: middle;">
-                                                        Select All
-                                                    </label>
-                                                </div>
-                                                <div class="d-flex permissions_checked">
-                                                    @foreach(App\Utility::$permissions as $permissionKey => $permission)
-                                                    <div class="">
-                                                        <label class="check-wrap">
-                                                            <input type="checkbox" name="permissions[{{ $menu->model_name }}][]" value="{{ strtolower($permission) }}">
-                                                            <span class="custom-box"></span>
-                                                        </label>
-                                                        <label class="form-check-label" for="permission{{$key}}{{$permissionKey}}" style="vertical-align: middle;">
-                                                            {{$permission}}
-                                                        </label>
+                                            @if($menu->model_name != null)
+                                                <div class="card-title">
+                                                    <strong>{{$menu->title}}</strong>
+                                                    <div class="SelectAllPermissions">
+                                                        <div>
+                                                            <label class="check-wrap">
+                                                                <input type="checkbox" id="select-all{{$key}}">
+                                                                <span class="custom-box"></span>
+                                                            </label>
+                                                            <label class="form-check-label" for="select-all{{$key}}" style="vertical-align: middle;">
+                                                                Select All
+                                                            </label>
+                                                        </div>
+                                                        <div class="d-flex permissions_checked">
+                                                            @foreach(App\Utility::$permissions as $permissionKey => $permission)
+                                                                <div class="">
+                                                                    <label class="check-wrap">
+                                                                        <input type="checkbox" name="permissions[{{ $menu->model_name }}][]" value="{{ strtolower($permission) }}">
+                                                                        <span class="custom-box"></span>
+                                                                    </label>
+                                                                    <label class="form-check-label" for="permission{{$key}}{{$permissionKey}}" style="vertical-align: middle;">
+                                                                        {{$permission}}
+                                                                    </label>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
                                                     </div>
-                                                    @endforeach
                                                 </div>
-                                            </div>
-                                        </div>
-                                        @endif
+                                            @endif
                                         @endforeach
                                     </div>
                                 </div>

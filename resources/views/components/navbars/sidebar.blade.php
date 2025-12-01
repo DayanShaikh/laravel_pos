@@ -16,22 +16,21 @@
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Menu</h6>
             </li>
-            @if(auth()->user()->hasrole("admin"))
-            <div class="side-bar">
-                <div class="menu">
-                    <div class="item">
-                        {{-- <a class="sub-btn"><i class="material-icons">house</i>Dashboard<i class="fas fa-angle-right dropdown"></i></a> --}}
-                        <a class="sub-btn"><i class="material-icons me-sm-1"> home </i>Dashboard<i class="material-icons dropdown">keyboard_arrow_down</i></a>
-                        <div class="sub-menu">
-                            <a href="{{ route('config.index', 1) }}" class="sub-item"><i class="material-icons">settings</i>General Settings</a>
-                            <a href="{{ route('user.index') }}" class="sub-item"><i class="material-icons">person</i>User</a>
-                            <a href="{{ route('role.index') }}" class="sub-item"><i class="material-icons">diversity_2</i>Role</a>
-                            {{-- <a href="{{ route('permission.index') }}" class="sub-item"><i class="fa fa-lock-open"></i>Permission</a> --}}
+            {{-- @if(auth()->user()->hasrole("admin")) --}}
+                <div class="side-bar">
+                    <div class="menu">
+                        <div class="item">
+                            {{-- <a class="sub-btn"><i class="material-icons">house</i>Dashboard<i class="fas fa-angle-right dropdown"></i></a> --}}
+                            <a class="sub-btn"><i class="material-icons me-sm-1"> home </i>Dashboard<i class="material-icons dropdown">keyboard_arrow_down</i></a>
+                            <div class="sub-menu">
+                                <a href="{{ route('config.index', 1) }}" class="sub-item"><i class="material-icons">settings</i>General Settings</a>
+                                <a href="{{ route('user.index') }}" class="sub-item"><i class="material-icons">person</i>User</a>
+                                <a href="{{ route('role.index') }}" class="sub-item"><i class="material-icons">diversity_2</i>Role</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            @endif
+            {{-- @endif --}}
              {!! \App\Utility::getMenu() !!}
             <li class="nav-item">
                 <form method="POST" action="{{ route('logout') }}" class="d-none" id="logout-form">

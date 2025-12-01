@@ -10,7 +10,9 @@ class Permissions extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'guard_name'
+        // 'id',
+        'role_id',
+        'model',
+        'action'
     ];
 }
