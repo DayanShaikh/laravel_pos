@@ -55,14 +55,19 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('permission', PermissionsController::class);
 	Route::post('Permission-bulkaction', [PermissionsController::class, 'bulkAction'])->name('permission.bulkAction');
 
-	// Roles
-	Route::resource('role', RolesController::class);
-	Route::post('role-bulkaction', [RolesController::class, 'bulkAction'])->name('role.bulkAction');
+	// Option 1: middleware() then group()
+	Route::middleware('can:viewAny,App\Models\Roles')->group(function () {
+		Route::resource('role', RolesController::class);
+		Route::post('role-bulkaction', [RolesController::class, 'bulkAction'])->name('role.bulkAction');
+	});
 
 	//User
-	Route::resource('user', UserController::class);
-	Route::get('users-update-active-status/{user}/{status}', [UserController::class, 'status'])->name('users.status');
-	Route::post('user-bulkaction', [UserController::class, 'bulkAction'])->name('user.bulkAction');
+
+	Route::middleware('can:viewAny,App\Models\User')->group(function () {
+		Route::resource('user', UserController::class);
+		Route::get('users-update-active-status/{user}/{status}', [UserController::class, 'status'])->name('users.status');
+		Route::post('user-bulkaction', [UserController::class, 'bulkAction'])->name('user.bulkAction');
+	});
 
 	//config_type
 	Route::resource('config_type', ConfigTypeController::class);

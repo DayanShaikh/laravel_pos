@@ -90,7 +90,7 @@ class User extends Authenticatable
 
     public function getPermissionsAttribute()
     {
-        return $this->userRoles()->with('permission')->get()->pluck('permission')->flatten();
+        return $this->userRoles()->with('permissions')->get()->pluck('permissions')->flatten();
     }
 
     public function hasRole($roleName)

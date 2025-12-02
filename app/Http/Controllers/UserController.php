@@ -13,11 +13,14 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $sn = 1;
-        $user = User::all();
-        return view('user.list', compact('user', 'sn'));
+        $rowsPerPage = $request->input('rowsPerPage', 10);
+        $name = $request->input('name') ?? "";
+        $users = User::when($name, function($query) use($name) {
+            $query->where('name', 'like', '%' . $name . '%');
+        })->paginate($rowsPerPage);
+        return view('user.list', compact('users', 'rowsPerPage', 'name'));
     }
 
     /**
@@ -25,7 +28,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Roles::all();
+        $roles = Roles::get();
         return view('user.create', compact('roles'));
     }
 
@@ -37,15 +40,13 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'role' => ['required']
-
         ]);
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-        $user->assignRole($request->role);
+        $user->userRoles()->sync($request->roles);
         return redirect()->route('user.index')->with('message', 'Record Create Successfully');
     }
 
@@ -60,21 +61,13 @@ class UserController extends Controller
         return redirect()->back()->with('message', 'Status Update Successfully');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        $user = User::find($id);
-        $roles = Roles::all();
-        $userrole = $user->userRoles->pluck('roles_id')->toArray();
-        // return $userrole;
-        return view('user.edit', compact('user',  'roles', 'userrole'));
+        $user = User::with('userRoles')->find($id);
+        $roles = Roles::get();
+        return view('user.edit', compact('user', 'roles'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $user = User::find($id);
@@ -86,6 +79,7 @@ class UserController extends Controller
             $validate['password'] = Hash::make($request->password);
         }
         $user->update($validate);
+        $user->userRoles()->sync([$request->role]);
         return redirect()->route('user.index')->with('message', 'Record updated successfully');
     }
 

@@ -16,7 +16,7 @@
                             </div>
                         </div>
                         <div class=" me-3 my-3 text-end">
-                            <a href="{{route('user.index')}}" class="btn bg-gradient-dark"><i class="fa fa-arrow-right"></i></a>
+                            <a href="{{route('user.index')}}" class="btn bg-gradient-dark"><i class="material-icons">arrow_back</i></a>
                         </div>
                         <div class="card-body p-0 px-3">
                             <form role="form" method="POST" action="{{  route('user.update', $user->id) }}" class="text-start">
@@ -44,28 +44,12 @@
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
                                 <div class="input-group input-group-outline is-filled form-select mt-3">
-                                    {{-- <label class="form-label">Configuration Type</label> --}}
-                                    {{-- <select name="role[]" id="choices-multiple-remove-button" placeholder="Select Roles" multiple>
+                                    <select class="form-control ps-3 py-0 select2" name="roles[]" multiple="multiple">
                                         @foreach($roles as $role)
-                                        <option value="{{$role->name}}" @if(isset($role->id) && in_array($role->id, $userrole)) selected @endif>{{$role->name}}</option>
-                                        @endforeach
-                                    </select> --}}
-                                    <select class="form-multi-select" multiple data-coreui-search="true">
-                                         @foreach($roles as $role)
-                                            <option value="{{$role->id}}"  @if(isset($role->id) && in_array($role->id, $userrole)) selected @endif>{{$role->name}}</option>
+                                            <option value="{{$role->id}}" @if($user->userRoles->contains($role->id)) selected @endif>{{$role->title}}</option>
                                         @endforeach
                                     </select>
-                                    {{-- <select class="form-control ps-3 py-0" name="role_id">
-                                        <option value="">Select Admin Role</option>
-                                        @foreach($roles as $role)
-                                        <option value="{{$role->id}}" @if($role->id == $userrole) selected @endif>{{$role->name}}</option>
-                                    @endforeach
-                                    </select> --}}
-
                                 </div>
-                                @error('role_id')
-                                <p class='text-danger inputerror'>{{ $message }} </p>
-                                @enderror
                                 <div class="col-lg-1 col-sm-6 col-12">
                                     <button class="btn bg-gradient-info w-100 my-4 mb-2" type="submit" data-target="successToast">Submit</button>
                                 </div>
