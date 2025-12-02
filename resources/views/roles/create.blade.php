@@ -31,9 +31,9 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         @foreach($menus as $key => $menu)
-                                            @if($menu->model_name != null)
+                                            @if($menu['model_name'] != null)
                                                 <div class="card-title">
-                                                    <strong>{{$menu->title}}</strong>
+                                                    <strong>{{$menu['title']}}</strong>
                                                     <div class="SelectAllPermissions">
                                                         <div>
                                                             <label class="check-wrap">
@@ -48,7 +48,7 @@
                                                             @foreach(App\Utility::$permissions as $permissionKey => $permission)
                                                                 <div class="">
                                                                     <label class="check-wrap">
-                                                                        <input type="checkbox" name="permissions[{{ $menu->model_name }}][]" value="{{ strtolower($permission) }}">
+                                                                        <input type="checkbox" name="permissions[{{ $menu["model_name"] }}][]" value="{{ strtolower($permission) }}">
                                                                         <span class="custom-box"></span>
                                                                     </label>
                                                                     <label class="form-check-label" for="permission{{$key}}{{$permissionKey}}" style="vertical-align: middle;">

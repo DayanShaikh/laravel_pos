@@ -27,6 +27,17 @@ class RolesController extends Controller
     public function create()
     {
         $menus = Menu::get();
+        $menus = collect([
+            [
+                'title' => 'Users',
+                'model_name' => 'App\\Model\\User',
+            ],
+            [
+                'title' => 'Roles',
+                'model_name' => 'App\\Model\\Roles',
+            ],
+        ])->concat($menus);
+        // return $menus;
         return view('roles.create', compact('menus'));
     }
 
