@@ -41,32 +41,26 @@
                                 </div>
                                 <div class="input-group input-group-outline is-filled mt-3">
                                     {{-- <label class="form-label">Configuration Type</label> --}}
-                                    <select name="role[]" id="choices-multiple-remove-button" placeholder="Select Roles" multiple>
+                                    {{-- <select name="role[]" id="choices-multiple-remove-button" placeholder="Select Roles" multiple>
                                         @foreach($roles as $role)
                                         <option value="{{$role->name}}" @if(old('role_id')==$role->id) selected @endif>{{$role->name}}</option>
-                                        @endforeach
-                                    </select>
+                                    @endforeach
+                                    </select> --}}
                                     {{-- <select class="form-control ps-3 py-0" name="role">
                                         <option value="">Select Admin Role</option>
                                         @foreach($roles as $role)
                                         <option value="{{$role->name}}" @if(old('role_id')==$role->id) selected @endif>{{$role->name}}</option>
                                     @endforeach
                                     </select> --}}
-                                    <select class="form-multi-select" multiple data-coreui-search="true">
-                                        <option value="0" selected>Angular</option>
-                                        <option value="1">Bootstrap</option>
-                                        <option value="2">React.js</option>
-                                        <option value="3">Vue.js</option>
-                                        <optgroup label="backend">
-                                            <option value="4">Django</option>
-                                            <option value="5" selected>Laravel</option>
-                                            <option value="6">Node.js</option>
-                                        </optgroup>
+
+                                    <select class="form-control ps-3 py-0 select2" name="states[]" multiple="multiple">
+                                        <option value="AL">Alabama</option>
+                                        <option value="WY">Wyoming</option>
                                     </select>
+                                    @error('role')
+                                    <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
                                 </div>
-                                @error('role')
-                                <p class='text-danger inputerror'>{{ $message }} </p>
-                                @enderror
                                 <div class="col-lg-1 col-sm-6 col-12">
                                     <button class="btn bg-gradient-info w-100 my-4 mb-2" type="submit" data-target="successToast">Submit</button>
                                 </div>

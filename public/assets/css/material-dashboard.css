@@ -4,6 +4,22 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: #49a3f1 !important;
+  color: #fff !important;
+  border: 1px solid #1A73E8 !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  border: 1px solid #1A73E8 !important;
+  color: #fff !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+  background-color: #1A73E8 !important;
+}
+
 .check-wrap {
   display: inline-flex;
   align-items: center;
