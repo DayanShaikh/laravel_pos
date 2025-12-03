@@ -16,7 +16,7 @@ class ItemPolicy
 
     public function viewAny(User $user): bool
     {
-        return in_array('view-App\Models\Item', $user->given_permissions) || auth()->user()->hasRole('Admin');
+        return in_array('viewAny-App\Model\Item', $user->given_permissions) || auth()->user()->hasRole('Admin');
     }
 
     /**
@@ -25,7 +25,7 @@ class ItemPolicy
 
     public function create(User $user): bool
     {
-        return in_array('create-App\Models\Item', $user->given_permissions) || auth()->user()->hasRole('Admin');
+        return in_array('create-App\Model\Item', $user->given_permissions) || auth()->user()->hasRole('Admin');
     }
 
     /**
@@ -34,7 +34,7 @@ class ItemPolicy
 
     public function update(User $user): bool
     {
-        return in_array('update-App\Models\Item', $user->given_permissions) || auth()->user()->hasRole('Admin');
+        return in_array('update-App\Model\Item', $user->given_permissions) || auth()->user()->hasRole('Admin');
     }
 
     /**
@@ -42,7 +42,7 @@ class ItemPolicy
      */
     public function delete(User $user): bool
     {
-        return in_array('delete-App\Models\Item', $user->given_permissions) || auth()->user()->hasRole('Admin');
+        return in_array('delete-App\Model\Item', $user->given_permissions) || auth()->user()->hasRole('Admin');
     }
 
     /**
