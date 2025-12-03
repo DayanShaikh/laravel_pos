@@ -63,6 +63,7 @@ class User extends Authenticatable
         foreach ($this->permissions as $permission) {
             if ($permission->action == "view") {
                 $permissions[] = $permission->action = "view" . '-' . $permission->model;
+                $permissions[] = "viewAny" . '-' . $permission->model;
             }
             if ($permission->action == "add") {
                 $permissions[] = $permission->action = "create" . '-' . $permission->model;
