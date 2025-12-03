@@ -96,9 +96,12 @@ Route::middleware(['auth'])->group(function () {
 
 	//item
 	Route::middleware('can:viewAny, App\Models\Item')->group(function () {
-		Route::resource('item', ItemController::class);
-		Route::get('item-update-active-status/{item}/{status}', [ItemController::class, 'status'])->name('item.status');
-		Route::post('item-bulkaction', [ItemController::class, 'bulkAction'])->name('item.bulkAction');
+		Route::resource('item', ItemController::class)
+		->middleware('can:create, App\Models\Item', ['only' => ['create', 'store']])
+		->middleware('can:update, App\Models\Item', ['only' => ['edit', 'update']])
+		->middleware('can:delete, App\Models\Item', ['only' => ['destroy']]);
+		Route::get('item-update-active-status/{item}/{status}', [ItemController::class, 'status'])->name('item.status')->middleware('can:update, App\Models\Item');
+		Route::post('item-bulkaction', [ItemController::class, 'bulkAction'])->name('item.bulkAction')->middleware('can:delete, App\Models\Item');
 	});
 
 	//Supplier
