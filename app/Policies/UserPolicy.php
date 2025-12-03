@@ -16,7 +16,7 @@ class UserPolicy
 
     public function viewAny(User $user): bool
     {
-        return in_array('view-App\Models\User', $user->given_permissions) || auth()->user()->hasRole('Admin');
+        return in_array('view-App\Model\User', $user->given_permissions) || auth()->user()->hasRole('Admin');
     }
 
     /**
@@ -25,7 +25,7 @@ class UserPolicy
 
     public function create(User $user): bool
     {
-        return in_array('create-App\Models\User', $user->given_permissions) || auth()->user()->hasRole('Admin');
+        return in_array('create-App\Model\User', $user->given_permissions) || auth()->user()->hasRole('Admin');
     }
 
     /**
@@ -34,7 +34,7 @@ class UserPolicy
 
     public function update(User $user): bool
     {
-        return in_array('update-App\Models\User', $user->given_permissions) || auth()->user()->hasRole('Admin');
+        return in_array('update-App\Model\User', $user->given_permissions) || auth()->user()->hasRole('Admin');
     }
 
     /**
@@ -42,7 +42,7 @@ class UserPolicy
      */
     public function delete(User $user): bool
     {
-        return in_array('delete-App\Models\User', $user->given_permissions) || auth()->user()->hasRole('Admin');
+        return in_array('delete-App\Model\User', $user->given_permissions) || auth()->user()->hasRole('Admin');
     }
 
     /**
