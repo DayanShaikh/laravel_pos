@@ -31,7 +31,7 @@ use App\Http\Controllers\TransactionController;
 Route::get('/', function () {
 	return redirect('sign-in');
 })->middleware('guest');
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+
 Route::get('sign-up', [RegisterController::class, 'create'])->middleware('guest')->name('register');
 Route::post('sign-up', [RegisterController::class, 'store'])->middleware('guest');
 Route::get('sign-in', [SessionsController::class, 'create'])->middleware('guest');
@@ -45,50 +45,49 @@ Route::get('/reset-password/{token}', function ($token) {
 	return view('sessions.password.reset', ['token' => $token]);
 })->middleware('guest')->name('password.reset');
 
-
-Route::post('sign-out', [SessionsController::class, 'destroy'])->middleware('auth')->name('logout');
-Route::get('profile', [ProfileController::class, 'create'])->middleware('auth')->name('profile');
-Route::post('user-profile', [ProfileController::class, 'update'])->middleware('auth');
-Route::group(['middleware' => 'auth'], function () {
+Route::middleware(['auth'])->group(function () {
+	Route::get('dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+	Route::post('sign-out', [SessionsController::class, 'destroy'])->middleware('auth')->name('logout');
+	Route::get('profile', [ProfileController::class, 'create'])->middleware('auth')->name('profile');
+	Route::post('user-profile', [ProfileController::class, 'update'])->middleware('auth');
 
 	// Permission
 	Route::resource('permission', PermissionsController::class);
 	Route::post('Permission-bulkaction', [PermissionsController::class, 'bulkAction'])->name('permission.bulkAction');
 
 	// Option 1: middleware() then group()
-	Route::middleware('can:viewAny,App\Models\Roles')->group(function () {
+	Route::middleware(['role:Admin'])->group(function () {
 		Route::resource('role', RolesController::class);
 		Route::post('role-bulkaction', [RolesController::class, 'bulkAction'])->name('role.bulkAction');
-	});
 
-	//User
-
-	Route::middleware('can:viewAny,App\Models\User')->group(function () {
+		//user
 		Route::resource('user', UserController::class);
 		Route::get('users-update-active-status/{user}/{status}', [UserController::class, 'status'])->name('users.status');
 		Route::post('user-bulkaction', [UserController::class, 'bulkAction'])->name('user.bulkAction');
+
+		//config_type
+		Route::resource('config_type', ConfigTypeController::class);
+		Route::post('config_type_bulkaction', [ConfigTypeController::class, 'bulkAction'])->name('config_type.bulkAction');
+
+		//config_variable
+		Route::resource('config_variable', ConfigVariableController::class);
+		Route::post('config_type-bulkaction', [ConfigVariableController::class, 'bulkAction'])->name('config_variable.bulkAction');
+
+		//config
+		Route::get('config/{id}', [ConfigController::class, 'index'])->name('config.index');
+		Route::post('config/store/{id}', [ConfigController::class, 'store'])->name('config.store');
+
+		//Menu
+		Route::resource('menu', MenuController::class);
+		Route::post('menu-bulkaction', [MenuController::class, 'bulkAction'])->name('menu.bulkAction');
 	});
 
-	//config_type
-	Route::resource('config_type', ConfigTypeController::class);
-	Route::post('config_type_bulkaction', [ConfigTypeController::class, 'bulkAction'])->name('config_type.bulkAction');
-
-	//config_variable
-	Route::resource('config_variable', ConfigVariableController::class);
-	Route::post('config_type-bulkaction', [ConfigVariableController::class, 'bulkAction'])->name('config_variable.bulkAction');
-
-	//config
-	Route::get('config/{id}', [ConfigController::class, 'index'])->name('config.index');
-	Route::post('config/store/{id}', [ConfigController::class, 'store'])->name('config.store');
 
 	//expense category
 	Route::resource('/expense_category', Expense_CategoryController::class);
 	Route::get('/expense_category_status/{id}/{status}', [Expense_CategoryController::class, 'status'])->name('expense_category_status');
 	Route::post('/expense_category_bulkAction', [Expense_CategoryController::class, 'bulkAction'])->name('expense_category.bulkAction');
 
-	//Menu
-	Route::resource('menu', MenuController::class);
-	Route::post('menu-bulkaction', [MenuController::class, 'bulkAction'])->name('menu.bulkAction');
 
 	//item_Category
 	Route::resource('item_category', ItemCategoryController::class);
@@ -96,9 +95,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('item_category-bulkaction', [ItemCategoryController::class, 'bulkAction'])->name('item_category.bulkAction');
 
 	//item
-	Route::resource('item', ItemController::class);
-	Route::get('item-update-active-status/{item}/{status}', [ItemController::class, 'status'])->name('item.status');
-	Route::post('item-bulkaction', [ItemController::class, 'bulkAction'])->name('item.bulkAction');
+	Route::middleware('can:viewAny, App\Models\Item')->group(function () {
+		Route::resource('item', ItemController::class);
+		Route::get('item-update-active-status/{item}/{status}', [ItemController::class, 'status'])->name('item.status');
+		Route::post('item-bulkaction', [ItemController::class, 'bulkAction'])->name('item.bulkAction');
+	});
 
 	//Supplier
 	Route::resource('supplier', SupplierConroller::class);
@@ -116,7 +117,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::delete('purchase/delete/{id}', [PurchaseController::class, 'delete'])->name('purchase.delete');
 	Route::post('purchase-bulkaction', [PurchaseController::class, 'bulkAction'])->name('purchase.bulkAction');
 
-	
+
 	//Sales
 	Route::resource('sales', SaleController::class);
 	// Route::get('purchase-update-active-status/{item}/{status}', [PurchaseController::class, 'status'])->name('purchase.status');
@@ -127,7 +128,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('supplier_payment', SupplierPayment::class);
 	Route::get('/status/{id}/{status}', [SupplierPayment::class, 'status'])->name('supplier_payment_status');
 	Route::get('/supplier_payment_bulkaction', [SupplierPayment::class, 'bulkAction'])->name('supplier_payment.bulkAction');
-	
+
 
 	//manage Expense
 	Route::resource('/manage_expense', Manage_ExpenseController::class);
@@ -162,5 +163,4 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::delete('purchase/delete/{id}', [PurchaseController::class, 'delete'])->name('purchase.delete');
 	Route::post('purchase-bulkaction', [PurchaseController::class, 'bulkAction'])->name('purchase.bulkAction');
 	Route::get('purchase_return', [PurchaseController::class, 'return'])->name('purchase.return');
-
 });

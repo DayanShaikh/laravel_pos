@@ -39,11 +39,9 @@
                             </button>
                         </div>
                         @endif
-                        @can('create',App\Models\User::class)
-                            <div class=" me-3 my-3 text-end">
-                                <a class="btn bg-gradient-dark mb-0" href="{{ route('user.create')}}"><i class="material-icons text-sm">add</i></a>
-                            </div>
-                        @endcan
+                        <div class=" me-3 my-3 text-end">
+                            <a class="btn bg-gradient-dark mb-0" href="{{ route('user.create')}}"><i class="material-icons text-sm">add</i></a>
+                        </div>
                         <form method="POST" action="{{ route('user.bulkAction') }}" id="myForm">
                             @csrf
                             @method('POST')
@@ -53,7 +51,7 @@
                                     <table class="table align-items-center mb-0">
                                         <thead>
                                             <tr>
-                                               <th width="2%" class="align-middle text-center">
+                                                <th width="2%" class="align-middle text-center">
                                                     <div class="form-check check-tables">
                                                         <label class="check-wrap">
                                                             <input type="checkbox" id="select-all">
@@ -70,59 +68,57 @@
                                         </thead>
                                         <tbody>
                                             @if($users->count()>0)
-                                                @foreach($users as $user)
-                                                    <tr>
-                                                        <td class="align-middle text-center">
-                                                            <div class="form-check check-tables">
-                                                                <label class="check-wrap">
-                                                                    <input type="checkbox" name="multidelete[]" value="{{$user->id}}">
-                                                                    <span class="custom-box"></span>
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        <td class="align-middle text-center">
-                                                            <span class="text-secondary text-xs font-weight-bold">{{$loop->index+1}}</span>
-                                                        </td>
-                                                        <td class="align-middle text-center">
-                                                            <span class="text-secondary text-xs font-weight-bold">{{$user->name}}</span>
-                                                        </td>
-                                                        <td class="align-middle text-center">
-                                                            <span class="text-secondary text-xs font-weight-bold">{{$user->email}}</span>
-                                                        </td>
-                                                        <td class="align-middle text-center">
-                                                            {{-- @foreach ($users->roles as $role) --}}
-                                                            <span class="text-secondary text-xs font-weight-bold">{{ implode(',', $user->userRoles()->pluck('title')->toArray()) }}</span>
-                                                            {{-- @endforeach --}}
-                                                        </td>
-                                                        <td class="align-middle text-end px-4">
-                                                            @can('update',App\Models\User::class)
-                                                                <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('user.edit', $user->id)}}" data-original-title="" title="Edit">
-                                                                    <i class="material-icons">edit</i>
-                                                                    <div class="ripple-container"></div>
-                                                                </a>
-                                                            @endcan
-                                                            @if($user->status == 0)
-                                                            <a href=" {{ route('users.status', [$user->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
-                                                                <i class="material-icons">visibility_off</i>
-                                                            </a>
-                                                            @elseif($user->status == 1)
-                                                            <a href="{{ route('users.status', [$user->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
-                                                                <i class="material-icons">visibility</i>
-                                                            </a>
-                                                            @endif
-                                                            @can('delete',App\Models\User::class)
-                                                            <a href="javascript:void(0)" id="delete-user" data-url="{{ route('user.destroy', $user->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
-                                                                <i class="material-icons">delete</i>
-                                                                <div class="ripple-container"></div>
-                                                            </a>
-                                                            @endcan
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
+                                            @foreach($users as $user)
+                                            <tr>
+                                                <td class="align-middle text-center">
+                                                    <div class="form-check check-tables">
+                                                        <label class="check-wrap">
+                                                            <input type="checkbox" name="multidelete[]" value="{{$user->id}}">
+                                                            <span class="custom-box"></span>
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <span class="text-secondary text-xs font-weight-bold">{{$loop->index+1}}</span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <span class="text-secondary text-xs font-weight-bold">{{$user->name}}</span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <span class="text-secondary text-xs font-weight-bold">{{$user->email}}</span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    {{-- @foreach ($users->roles as $role) --}}
+                                                    <span class="text-secondary text-xs font-weight-bold">{{ implode(',', $user->userRoles()->pluck('title')->toArray()) }}</span>
+                                                    {{-- @endforeach --}}
+                                                </td>
+                                                <td class="align-middle text-end px-4">
+                                                    @can('update',App\Models\User::class)
+                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('user.edit', $user->id)}}" data-original-title="" title="Edit">
+                                                        <i class="material-icons">edit</i>
+                                                        <div class="ripple-container"></div>
+                                                    </a>
+                                                    @endcan
+                                                    @if($user->status == 0)
+                                                    <a href=" {{ route('users.status', [$user->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
+                                                        <i class="material-icons">visibility_off</i>
+                                                    </a>
+                                                    @elseif($user->status == 1)
+                                                    <a href="{{ route('users.status', [$user->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
+                                                        <i class="material-icons">visibility</i>
+                                                    </a>
+                                                    @endif
+                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('user.destroy', $user->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
+                                                        <i class="material-icons">delete</i>
+                                                        <div class="ripple-container"></div>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
                                             @else
-                                                <tr class="text-center">
-                                                    <td colspan="4">Record Not Found</td>
-                                                </tr>
+                                            <tr class="text-center">
+                                                <td colspan="4">Record Not Found</td>
+                                            </tr>
                                             @endif
                                         </tbody>
                                     </table>

@@ -101,4 +101,9 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    public function hasAnyRole($roles)
+    {
+        return $this->userRoles()->whereIn('title', $roles)->exists();
+    }
 }

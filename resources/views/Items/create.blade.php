@@ -16,7 +16,7 @@
                             </div>
                         </div>
                         <div class=" mx-3 mt-3 text-end">
-                            <a href="{{route('item.index')}}" class="btn bg-gradient-dark"><i class="fa fa-arrow-right"></i></a>
+                            <a href="{{route('item.index')}}" class="btn bg-gradient-dark"><i class="material-icons">arrow_back</i></a>
                         </div>
                         <div class="card-body p-0 px-3">
                             <form role="form" method="POST" action="{{  route('item.store') }}" class="text-start">

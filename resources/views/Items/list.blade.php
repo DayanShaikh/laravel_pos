@@ -50,11 +50,14 @@
                         </div>
                         @endif
                         <div class=" me-3 my-3 text-end">
-                            <a class="btn bg-gradient-dark mb-0" href="{{ route('item.create')}}"><i class="material-icons text-sm">add</i></a>
+                            @can('create', App\Models\Item::class)
+                                <a class="btn bg-gradient-dark mb-0" href="{{ route('item.create')}}"><i class="material-icons text-sm">add</i></a>
+                            @endcan
                         </div>
                         <form method="POST" action="{{ route('item.bulkAction') }}" id="myForm">
                             @csrf
                             @method('POST')
+                            <input type="hidden" id="actionField" name="action">
                             <div class="card-body px-0 pb-2">
                                 <div class="table-responsive p-0">
                                     <table class="table align-items-center mb-0">
@@ -62,11 +65,13 @@
                                             <tr>
                                                 <th width="2%" class="align-middle text-center">
                                                     <div class="form-check check-tables">
-                                                        <input class="form-check-input" id="select-all" type="checkbox" name="" value="">
+                                                        <label class="check-wrap">
+                                                            <input type="checkbox" id="select-all">
+                                                            <span class="custom-box"></span>
+                                                        </label>
                                                     </div>
                                                 </th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">s.no</th>
-                                                {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Item Category</th> --}}
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">title</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Unit Price</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder display-1">Sale Price</th>
@@ -76,53 +81,56 @@
                                         </thead>
                                         <tbody>
                                             @if($item->count()>0)
-
-                                            @foreach($item as $items)
-                                            <tr>
-                                                <td class="align-middle text-center">
-                                                    <div class="form-check check-tables">
-                                                        <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$items->id}}">
-                                                    </div>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{$sn++}}</span>
-                                                </td>
-                                                {{-- <td class="align-middle text-center">
-                                                        <span class="text-secondary text-xs font-weight-bold">{{ $items->ItemCategory->title}}</span>
-                                                </td> --}}
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $items->title}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $items->unit_price}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $items->sale_price}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $items->quantity}}</span>
-                                                </td>
-                                                <td class="align-middle text-end px-4">
-                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('item.edit', $items->id)}}" title="Edit">
-                                                        <i class="material-icons">edit</i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                    @if($items->status == 0)
-                                                    <a href=" {{ route('item.status', [$items->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
-                                                        <i class="fa fa-eye-slash"></i>
-                                                    </a>
-                                                    @elseif($items->status == 1)
-                                                    <a href="{{ route('item.status', [$items->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
-                                                        <i class="fa fa-eye"></i>
-                                                    </a>
-                                                    @endif
-                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('item.destroy', $items->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
-                                                        <i class="fa fa-trash"></i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
+                                                @foreach($item as $items)
+                                                    <tr>
+                                                        <td class="align-middle text-center">
+                                                            <div class="form-check check-tables">
+                                                                <label class="check-wrap">
+                                                                    <input type="checkbox" name="multidelete[]" value="{{$items->id}}">
+                                                                    <span class="custom-box"></span>
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{$loop->index+1}}</span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{ $items->title}}</span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{ $items->unit_price}}</span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{ $items->sale_price}}</span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{ $items->quantity}}</span>
+                                                        </td>
+                                                        <td class="align-middle text-end px-4">
+                                                            @can('update', App\Models\Item::class)
+                                                                <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('item.edit', $items->id)}}" title="Edit">
+                                                                    <i class="material-icons">edit</i>
+                                                                    <div class="ripple-container"></div>
+                                                                </a>
+                                                                @if($items->status == 0)
+                                                                    <a href=" {{ route('item.status', [$items->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
+                                                                        <i class="material-icons">visibility_off</i>
+                                                                    </a>
+                                                                @elseif($items->status == 1)
+                                                                    <a href="{{ route('item.status', [$items->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
+                                                                        <i class="material-icons">visibility</i>
+                                                                    </a>
+                                                                @endif
+                                                            @endcan
+                                                            @can('delete', App\Models\Item::class)
+                                                                <a href="javascript:void(0)" id="delete-user" data-url="{{ route('item.destroy', $items->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
+                                                                    <i class="material-icons">delete</i>
+                                                                    <div class="ripple-container"></div>
+                                                                </a>
+                                                            @endcan
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             @else
                                             <tr class="text-center">
                                                 <td colspan="6">Record Not Found</td>

@@ -13,15 +13,12 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-        $sn = 1;
         $rowsPerPage = $request->input('rowsPerPage', 10);
         $title = $request->input('title') ?? "";
-        if (!empty($title)) {
-            $item = Item::where('title', 'like', '%' . $title . '%')->paginate($rowsPerPage);
-        } else {
-            $item = Item::paginate($rowsPerPage);
-        }
-        return view('items.list', compact('item', 'rowsPerPage', 'sn', 'title'));
+        $item = Item::when($title, function ($query) use ($title) {
+            $query->where('title', 'like', '%' . $title . '%');
+        })->paginate($rowsPerPage);
+        return view('items.list', compact('item', 'rowsPerPage', 'title'));
     }
 
     /**
@@ -47,7 +44,7 @@ class ItemController extends Controller
             'unit_price' => $request->unit_price,
             'sale_price' => $request->sale_price,
             'quantity' => $request->quantity,
-            'barcode'=> $request->barcode,
+            'barcode' => $request->barcode,
         ]);
         return redirect()->route('item.index')->with('message', 'Record Create Successfully');
     }
