@@ -14,7 +14,7 @@
                             <select class="select2 w-100" name="supplier_id">
                                 <option value="0" selected>Search Supplier</option>
                                 @foreach($suppliers as $supplier)
-                                    <option value="{{$supplier->id}}" {{$supplier_id == $supplier->id?'selected':''}}>{{$supplier->name}}</option>
+                                <option value="{{$supplier->id}}" {{$supplier_id == $supplier->id?'selected':''}}>{{$supplier->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -37,7 +37,6 @@
                         @if (session()->has('message'))
                         <div class="alert alert-success alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
                             <strong>{{ session()->get('message') }}</strong>
-                            {{-- <strong>This Is testing</strong> --}}
                             <button type="button" class="btn-close text-lg py-1 opacity-10" data-bs-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -46,27 +45,32 @@
                         @if (session()->has('error'))
                         <div class="alert alert-danger alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
                             <strong>{{ session()->get('error') }}</strong>
-                            {{-- <strong>This Is testing</strong> --}}
                             <button type="button" class="btn-close text-lg py-1 opacity-10" data-bs-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         @endif
-                        <div class=" me-3 my-3 text-end">
+                        <div class="me-3 my-3 text-end">
+                            @can('create', App\Model\SupplierPayments::class)
                             <a class="btn bg-gradient-dark mb-0" href="{{ route('supplier_payment.create')}}"><i class="material-icons text-sm">add</i></a>
+                            @endcan
                         </div>
                         <form method="POST" action="{{ route('supplier_payment.bulkAction') }}" id="myForm">
                             <input type="hidden" id="actionField" name="action">
                             @csrf
                             @method('GET')
+                            <input type="hidden" id="actionField" name="action">
                             <div class="card-body px-0 pb-2">
                                 <div class="table-responsive p-0">
                                     <table class="table align-items-center mb-0">
                                         <thead>
                                             <tr>
                                                 <th width="2%" class="align-middle text-center">
-                                                    <div class="form-check check-tables">
-                                                        <input class="form-check-input" id="select-all" type="checkbox" name="" value="">
+                                                   <div class="form-check check-tables">
+                                                        <label class="check-wrap">
+                                                            <input type="checkbox" id="select-all" name="multidelete[]">
+                                                            <span class="custom-box"></span>
+                                                        </label>
                                                     </div>
                                                 </th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">s.no</th>
@@ -79,57 +83,62 @@
                                         </thead>
                                         <tbody>
                                             @if($supplier_payment->count()>0)
-                                            @foreach($supplier_payment as $supplier_payments)
-                                            <tr>
-                                                <td class="align-middle text-center">
-                                                    <div class="form-check check-tables">
-                                                        <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$supplier_payments->id}}">
-                                                    </div>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{$sn++}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">
-                                                        {{--@if ($supplier->id == $supplier_payments->supplier_id)--}}
-                                                        {{$supplier_payments->supplier->name}}
-                                                        {{--@endif--}}
-                                                    </span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{Carbon\Carbon::parse($supplier_payments->date)->format('d-M-Y') }}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $supplier_payments->payment}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{ $supplier_payments->details}}</span>
-                                                </td>
-                                                <td class="align-middle text-end px-4">
-                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('supplier_payment.edit', $supplier_payments->id)}}" title="Edit">
-                                                        <i class="material-icons">edit</i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                    @if($supplier_payments->status == 0)
-                                                    <a href=" {{ route('supplier_payment_status', [$supplier_payments->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
-                                                        <i class="fa fa-eye-slash"></i>
-                                                    </a>
-                                                    @elseif($supplier_payments->status == 1)
-                                                    <a href="{{ route('supplier_payment_status', [$supplier_payments->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
-                                                        <i class="fa fa-eye"></i>
-                                                    </a>
-                                                    @endif
-                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('supplier_payment.destroy', $supplier_payments->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
-                                                        <i class="fa fa-trash"></i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
+                                                @foreach($supplier_payment as $supplier_payments)
+                                                    <tr>
+                                                        <td width="2%" class="align-middle text-center">
+                                                            <div class="form-check check-tables">
+                                                                <label class="check-wrap">
+                                                                    <input type="checkbox" id="select-all" value="{{$supplier_payments->id}}">
+                                                                    <span class="custom-box"></span>
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{$loop->index+1}}</span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">
+                                                                {{$supplier_payments->supplier->name}}
+                                                            </span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{Carbon\Carbon::parse($supplier_payments->date)->format('d-M-Y') }}</span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{ $supplier_payments->payment}}</span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm">{{ $supplier_payments->details}}</span>
+                                                        </td>
+                                                        <td class="align-middle text-end px-4">
+                                                            @can('update', App\Model\SupplierPayments::class)
+                                                                <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('supplier_payment.edit', $supplier_payments->id)}}" title="Edit">
+                                                                    <i class="material-icons">edit</i>
+                                                                    <div class="ripple-container"></div>
+                                                                </a>
+                                                                @if($supplier_payments->status == 0)
+                                                                    <a href=" {{ route('supplier_payment_status', [$supplier_payments->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
+                                                                        <i class="fa fa-eye-slash"></i>
+                                                                    </a>
+                                                                @elseif($supplier_payments->status == 1)
+                                                                    <a href="{{ route('supplier_payment_status', [$supplier_payments->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
+                                                                        <i class="fa fa-eye"></i>
+                                                                    </a>
+                                                                @endif
+                                                            @endcan
+                                                            @can('delete', App\Model\SupplierPayments::class)
+                                                                <a href="javascript:void(0)" id="delete-user" data-url="{{ route('supplier_payment.destroy', $supplier_payments->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
+                                                                    <i class="fa fa-trash"></i>
+                                                                    <div class="ripple-container"></div>
+                                                                </a>
+                                                            @endcan
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             @else
-                                            <tr>
-                                                <td class="text-center" colspan="6">No Record</td>
-                                            </tr>
+                                                <tr>
+                                                    <td class="text-center" colspan="6">No Record</td>
+                                                </tr>
                                             @endif
                                         </tbody>
                                     </table>
@@ -138,14 +147,16 @@
                         </form>
                         <div class="row mb-2">
                             <div class="col-md-6">
-                                <div class="input-group input-group-outline is-filled form-select w-30 me-2 ms-5">
-                                    <select id="action" class="form-control" onchange="confirmAndSubmit()">
-                                        <option value="">Bulk Action</option>
-                                        <option value="delete">Delete</option>
-                                        {{-- <option value="status_on">Status ON</option>
-                                        <option value="status_off">Status OFF</option> --}}
-                                    </select>
-                                </div>
+                                @can('delete', App\Model\SupplierPayments::class)
+                                    <div class="input-group input-group-outline is-filled form-select w-30 me-2 ms-5">
+                                        <select id="action" class="form-control" onchange="confirmAndSubmit()">
+                                            <option value="">Bulk Action</option>
+                                            <option value="delete">Delete</option>
+                                            {{-- <option value="status_on">Status ON</option>
+                                                <option value="status_off">Status OFF</option> --}}
+                                        </select>
+                                    </div>
+                                @endcan
                             </div>
                             <div class="col-md-6">
                                 <div class="me-5 text-start ml-260">

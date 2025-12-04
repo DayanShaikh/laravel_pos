@@ -34,7 +34,6 @@
                         @if (session()->has('message'))
                             <div class="alert alert-success alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
                                 <strong>{{ session()->get('message') }}</strong>
-                                {{-- <strong>This Is testing</strong> --}}
                                 <button type="button" class="btn-close text-lg py-1 opacity-10" data-bs-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -43,18 +42,20 @@
                         @if (session()->has('error'))
                             <div class="alert alert-danger alert-dismissible text-white card-header px-3 p-1 mx-3 my-2 z-index-2" role="alert">
                                 <strong>{{ session()->get('error') }}</strong>
-                                {{-- <strong>This Is testing</strong> --}}
                                 <button type="button" class="btn-close text-lg py-1 opacity-10" data-bs-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                         @endif
                         <div class=" me-3 my-3 text-end">
-                            <a class="btn bg-gradient-dark mb-0" href="{{ route('supplier.create')}}"><i class="material-icons text-sm">add</i></a>
+                            @can('create', App\Model\Supplier::class)
+                                <a class="btn bg-gradient-dark mb-0" href="{{ route('supplier.create')}}"><i class="material-icons text-sm">add</i></a>
+                            @endcan
                         </div>
                         <form method="POST" action="{{ route('supplier.bulkAction') }}" id="myForm">
                             @csrf
                             @method('POST')
+                            <input type="hidden" id="actionField" name="action">
                             <div class="card-body px-0 pb-2">
                                 <div class="table-responsive p-0">
                                     <table class="table align-items-center mb-0">
@@ -62,10 +63,13 @@
                                             <tr>
                                                 <th width="2%" class="align-middle text-center">
                                                     <div class="form-check check-tables">
-                                                        <input class="form-check-input" id="select-all" type="checkbox" name="" value="">
+                                                        <label class="check-wrap">
+                                                            <input type="checkbox" id="select-all">
+                                                            <span class="custom-box"></span>
+                                                        </label>
                                                     </div>
                                                 </th>
-                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">s.no</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">S.no</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Name</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Phone</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">Address</th>
@@ -76,13 +80,16 @@
                                         <tbody>
                                             @foreach($supplier as $suppliers)
                                             <tr>
-                                                <td class="align-middle text-center">
+                                                <td width="2%" class="align-middle text-center">
                                                     <div class="form-check check-tables">
-                                                        <input class="form-check-input" name="multidelete[]" type="checkbox" value="{{$suppliers->id}}">
+                                                        <label class="check-wrap">
+                                                            <input type="checkbox" id="select-all" name="multidelete[]" value="{{$suppliers->id}}">
+                                                            <span class="custom-box"></span>
+                                                        </label>
                                                     </div>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm">{{$sn++}}</span>
+                                                    <span class="text-secondary text-sm">{{$loop->index+1}}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     <span class="text-secondary text-sm">{{ $suppliers->name}}</span>
@@ -97,26 +104,33 @@
                                                     <span class="text-secondary text-sm">{{ $suppliers->balance}}</span>
                                                 </td>
                                                 <td class="align-middle text-end px-4">
-                                                    <a href="{{ route('supplier.ledger', $suppliers->id) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Ledger">
-                                                        <i class="fa-solid fa-list"></i>
-                                                    </a>
-                                                    <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('supplier.edit', $suppliers->id)}}" title="Edit">
-                                                        <i class="material-icons">edit</i>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                    @if($suppliers->status == 0)
-                                                    <a href=" {{ route('supplier.status', [$suppliers->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
-                                                        <i class="fa fa-eye-slash"></i>
-                                                    </a>
-                                                    @elseif($suppliers->status == 1)
-                                                    <a href="{{ route('supplier.status', [$suppliers->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
-                                                        <i class="fa fa-eye"></i>
-                                                    </a>
+                                                    @if(auth()->user()->hasRole('Admin'))
+                                                        
                                                     @endif
-                                                    <a href="javascript:void(0)" id="delete-user" data-url="{{ route('supplier.destroy', $suppliers->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
-                                                        <i class="fa fa-trash"></i>
-                                                        <div class="ripple-container"></div>
+                                                    <a href="{{ route('supplier.ledger', $suppliers->id) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Ledger">
+                                                            <i class="material-icons">account_balance_wallet</i>
                                                     </a>
+                                                    @can('update', App\Model\Supplier::class)
+                                                        <a rel="tooltip" class="btn text-success btn-link pbtn fs-6 p-2" href="{{ route('supplier.edit', $suppliers->id)}}" title="Edit">
+                                                            <i class="material-icons">edit</i>
+                                                            <div class="ripple-container"></div>
+                                                        </a>
+                                                        @if($suppliers->status == 0)
+                                                        <a href=" {{ route('supplier.status', [$suppliers->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
+                                                            <i class="material-icons">visibility_off</i>
+                                                        </a>
+                                                        @elseif($suppliers->status == 1)
+                                                        <a href="{{ route('supplier.status', [$suppliers->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
+                                                            <i class="material-icons">visibility</i>
+                                                        </a>
+                                                        @endif
+                                                    @endcan
+                                                    @can('delete', App\Model\Supplier::class)
+                                                        <a href="javascript:void(0)" id="delete-user" data-url="{{ route('supplier.destroy', $suppliers->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
+                                                            <i class="material-icons">delete</i>
+                                                            <div class="ripple-container"></div>
+                                                        </a>
+                                                    @endcan
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -127,14 +141,16 @@
                         </form>
                         <div class="row text-end my-2">
                             <div class="col-md-6">
-                                <div class="input-group input-group-outline is-filled form-select w-30 me-2 ms-5">
-                                    <select name="action" id="action" class="form-control" onchange="confirmAndSubmit()">
-                                        <option value="">Bulk Action</option>
-                                        <option value="delete">Delete</option>
-                                        <option value="status_on">Status ON</option>
-                                        <option value="status_off">Status OFF</option>
-                                    </select>
-                                </div>
+                                @can('delete', App\Model\Supplier::class)
+                                    <div class="input-group input-group-outline is-filled form-select w-30 me-2 ms-5">
+                                        <select name="action" id="action" class="form-control" onchange="confirmAndSubmit()">
+                                            <option value="">Bulk Action</option>
+                                            <option value="delete">Delete</option>
+                                            <option value="status_on">Status ON</option>
+                                            <option value="status_off">Status OFF</option>
+                                        </select>
+                                    </div>
+                                @endcan
                             </div>
                             <div class="col-md-6">
                                 <div class="me-5 text-start ml-260">
@@ -169,5 +185,4 @@
             </div>
         </div>
     </main>
-    {{-- <x-plugins></x-plugins> --}}
 </x-layout>

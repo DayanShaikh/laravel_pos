@@ -19,15 +19,12 @@ class SupplierConroller extends Controller
      */
     public function index(Request $request)
     {
-        $sn = 1;
         $rowsPerPage = $request->input('rowsPerPage', 10);
         $name = $request->input('name') ?? "";
-        if (!empty($name)) {
-            $supplier = Supplier::where('name', 'like', '%' . $name . '%')->paginate($rowsPerPage);
-        } else {
-            $supplier = Supplier::paginate($rowsPerPage);
-        }
-        return view('supplier.list', compact('supplier', 'rowsPerPage', 'sn', 'name'));
+        $supplier = Supplier::when($name, function ($query) use ($name) {
+            $query->where('name', 'like', '%' . $name . '%');
+        })->paginate($rowsPerPage);
+        return view('supplier.list', compact('supplier', 'rowsPerPage', 'name'));
     }
 
     /**

@@ -97,20 +97,25 @@ Route::middleware(['auth'])->group(function () {
 	//item
 	Route::middleware('can:viewAny, App\Models\Item')->group(function () {
 		Route::resource('item', ItemController::class)
-		->middleware('can:create, App\Models\Item', ['only' => ['create', 'store']])
-		->middleware('can:update, App\Models\Item', ['only' => ['edit', 'update']])
-		->middleware('can:delete, App\Models\Item', ['only' => ['destroy']]);
+			->middleware('can:create, App\Models\Item', ['only' => ['create', 'store']])
+			->middleware('can:update, App\Models\Item', ['only' => ['edit', 'update']])
+			->middleware('can:delete, App\Models\Item', ['only' => ['destroy']]);
 		Route::get('item-update-active-status/{item}/{status}', [ItemController::class, 'status'])->name('item.status')->middleware('can:update, App\Models\Item');
 		Route::post('item-bulkaction', [ItemController::class, 'bulkAction'])->name('item.bulkAction')->middleware('can:delete, App\Models\Item');
 	});
 
 	//Supplier
-	Route::resource('supplier', SupplierConroller::class);
-	Route::get('supplier/ledger/{id}', [SupplierConroller::class, 'ledger'])->name('supplier.ledger');
-	Route::get('supplier/ledger/pdf/{id}/{from_date}/{to_date}', [SupplierConroller::class, 'downloadPDF'])->name('supplier.ledger.pdf');
-	Route::get('supplier/print/{id}', [SupplierConroller::class, 'ledger'])->name('supplier.print');
-	Route::get('supplier-update-active-status/{item}/{status}', [SupplierConroller::class, 'status'])->name('supplier.status');
-	Route::post('supplier-bulkaction', [SupplierConroller::class, 'bulkAction'])->name('supplier.bulkAction');
+	Route::middleware('can:viewAny, App\Models\Supplier')->group(function () {
+		Route::resource('supplier', SupplierConroller::class)
+			->middleware('can:create, App\Models\Supplier', ['only' => ['create', 'store']])
+			->middleware('can:update, App\Models\Supplier', ['only' => ['edit', 'update']])
+			->middleware('can:delete, App\Models\Supplier', ['only' => ['destroy']]);
+		Route::get('supplier/ledger/{id}', [SupplierConroller::class, 'ledger'])->name('supplier.ledger');
+		Route::get('supplier/ledger/pdf/{id}/{from_date}/{to_date}', [SupplierConroller::class, 'downloadPDF'])->name('supplier.ledger.pdf')->middleware('can:delete, App\Models\Supplier');
+		Route::get('supplier/print/{id}', [SupplierConroller::class, 'ledger'])->name('supplier.print');
+		Route::get('supplier-update-active-status/{item}/{status}', [SupplierConroller::class, 'status'])->name('supplier.status');
+		Route::post('supplier-bulkaction', [SupplierConroller::class, 'bulkAction'])->name('supplier.bulkAction');
+	});
 
 	//purchase
 	Route::get('purchase', [PurchaseController::class, 'index'])->name('purchase.index');

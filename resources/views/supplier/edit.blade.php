@@ -16,7 +16,7 @@
                             </div>
                         </div>
                         <div class=" mx-3 mt-3 text-end">
-                            <a href="{{route('supplier.index')}}" class="btn bg-gradient-dark"><i class="fa fa-arrow-right"></i></a>
+                            <a href="{{route('supplier.index')}}" class="btn bg-gradient-dark"><i class="material-icons">arrow_back</i></a>
                         </div>
                         <div class="card-body p-0 px-3">
                             <form role="form" method="POST" action="{{  route('supplier.update', $supplier->id) }}" class="text-start">
@@ -37,7 +37,7 @@
                                     <label class="form-label">Address </label>
                                     <input type="text" class="form-control" name="address" value="{{ $supplier->address }}">
                                 </div>
-                                <div class="input-group input-group-outline mt-3 @if($supplier->balance) null is-filled @endif">
+                                <div class="input-group input-group-outline mt-3 null is-filled">
                                     <label class="form-label">Balance</label>
                                     <input type="text" class="form-control" name="balance" value="{{ $supplier->balance }}">
                                 </div>

@@ -143,14 +143,16 @@
                         </form>
                         <div class="row text-end my-2">
                             <div class="col-md-6 d-flex h-25">
-                                <div class="input-group input-group-outline is-filled form-select w-30 me-2 ms-5">
-                                    <select name="action" id="action" class="form-control" onchange="confirmAndSubmit()">
-                                        <option value="">Bulk Action</option>
-                                        <option value="delete">Delete</option>
-                                        <option value="status_on">Status ON</option>
-                                        <option value="status_off">Status OFF</option>
-                                    </select>
-                                </div>
+                                @can('delete', App\Models\Item::class)
+                                    <div class="input-group input-group-outline is-filled form-select w-30 me-2 ms-5">
+                                        <select name="action" id="action" class="form-control" onchange="confirmAndSubmit()">
+                                            <option value="">Bulk Action</option>
+                                            <option value="delete">Delete</option>
+                                            <option value="status_on">Status ON</option>
+                                            <option value="status_off">Status OFF</option>
+                                        </select>
+                                    </div>
+                                @endcan
                             </div>
                             <div class="col-md-6">
                                 <div class="me-5 text-start ml-260">
