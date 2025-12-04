@@ -133,9 +133,14 @@ Route::middleware(['auth'])->group(function () {
 	// Route::get('purchase_return', [PurchaseController::class, 'return'])->name('purchase.return');
 
 	//supplier payment
-	Route::resource('supplier_payment', SupplierPayment::class);
-	Route::get('/status/{id}/{status}', [SupplierPayment::class, 'status'])->name('supplier_payment_status');
-	Route::get('/supplier_payment_bulkaction', [SupplierPayment::class, 'bulkAction'])->name('supplier_payment.bulkAction');
+	Route::middleware('can:viewAny, App\Models\SupplierPayments')->group(function () {
+		Route::resource('supplier_payment', SupplierPayment::class)
+			->middleware('can:create, App\Models\SupplierPayments', ['only' => ['create', 'store']])
+			->middleware('can:update, App\Models\SupplierPayments', ['only' => ['edit', 'update']])
+			->middleware('can:delete, App\Models\SupplierPayments', ['only' => ['destroy']]);
+		Route::get('/status/{id}/{status}', [SupplierPayment::class, 'status'])->name('supplier_payment_status');
+		Route::get('/supplier_payment_bulkaction', [SupplierPayment::class, 'bulkAction'])->name('supplier_payment.bulkAction')->middleware('can:delete, App\Models\SupplierPayments');
+	});
 
 
 	//manage Expense
