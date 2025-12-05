@@ -98,7 +98,7 @@
                                                         </td>
                                                         <td class="align-middle text-center">
                                                             <span class="text-secondary text-sm">
-                                                                {{$supplier_payments->supplier->name}}
+                                                                {{$supplier_payments?->supplier?->name}}
                                                             </span>
                                                         </td>
                                                         <td class="align-middle text-center">
@@ -118,17 +118,17 @@
                                                                 </a>
                                                                 @if($supplier_payments->status == 0)
                                                                     <a href=" {{ route('supplier_payment_status', [$supplier_payments->id, 1]) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="Status OFF">
-                                                                        <i class="fa fa-eye-slash"></i>
+                                                                        <i class="material-icons">visibility_off</i>
                                                                     </a>
                                                                 @elseif($supplier_payments->status == 1)
                                                                     <a href="{{ route('supplier_payment_status', [$supplier_payments->id, 0]) }}" class="btn text-success btn-link pbtn fs-6 p-2" title="Status On">
-                                                                        <i class="fa fa-eye"></i>
+                                                                        <i class="material-icons">visibility</i>
                                                                     </a>
                                                                 @endif
                                                             @endcan
                                                             @can('delete', App\Model\SupplierPayments::class)
                                                                 <a href="javascript:void(0)" id="delete-user" data-url="{{ route('supplier_payment.destroy', $supplier_payments->id) }}" class="btn text-danger btn-link pbtn fs-6 p-2" title="delete">
-                                                                    <i class="fa fa-trash"></i>
+                                                                    <i class="material-icons">delete</i>
                                                                     <div class="ripple-container"></div>
                                                                 </a>
                                                             @endcan

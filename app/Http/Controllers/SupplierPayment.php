@@ -17,7 +17,8 @@ class SupplierPayment extends Controller
         $rowsPerPage = $request->input('rowsPerPage', 10);
         $supplier_id = $request->input('supplier_id') ?? null;
         $suppliers = Supplier::get();
-        $supplier_payment = SupplierPayments::with('supplier')->when(!empty($supplier_id), function ($query) use ($supplier_id) {
+        $supplier_payment = SupplierPayments::with('supplier')
+        ->when(!empty($supplier_id), function ($query) use ($supplier_id) {
             $query->where('supplier_id', $supplier_id);
         })->paginate($rowsPerPage);
         return view('supplier_payment.list', compact('supplier_payment', 'supplier_id', 'rowsPerPage', 'suppliers'));
