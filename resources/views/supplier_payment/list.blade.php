@@ -14,7 +14,7 @@
                             <select class="select2 w-100" name="supplier_id">
                                 <option value="0" selected>Search Supplier</option>
                                 @foreach($suppliers as $supplier)
-                                <option value="{{$supplier->id}}" {{$supplier_id == $supplier->id?'selected':''}}>{{$supplier->name}}</option>
+                                    <option value="{{$supplier->id}}" {{$supplier_id == $supplier->id?'selected':''}}>{{$supplier->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -52,7 +52,7 @@
                         @endif
                         <div class="me-3 my-3 text-end">
                             @can('create', App\Model\SupplierPayments::class)
-                            <a class="btn bg-gradient-dark mb-0" href="{{ route('supplier_payment.create')}}"><i class="material-icons text-sm">add</i></a>
+                                <a class="btn bg-gradient-dark mb-0" href="{{ route('supplier_payment.create')}}"><i class="material-icons text-sm">add</i></a>
                             @endcan
                         </div>
                         <form method="POST" action="{{ route('supplier_payment.bulkAction') }}" id="myForm">
